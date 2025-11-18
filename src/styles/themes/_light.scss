@@ -1,0 +1,38 @@
+:root[data-theme="light"] {
+  --background: #eff1f5;
+  --sidebar: #e6e9ef;
+  --titlebar: #dce0e8;
+  --tabs: #e6e9ef;
+  --editor: #eff1f5;
+  --hover: #ccd0da;
+  --statusbar: #dce0e8;
+  --terminal: #e6e9ef;
+  
+  --foreground: #4c4f69;
+  --statusbar-text: #5c5f77;
+  --terminal-text: #4c4f69;
+  --terminal-prompt: #d20f39;
+  --terminal-output: #40a02b;
+  
+  --accent: #8839ef;
+  --accent-foreground: #eff1f5;
+  
+  --border: #ccd0da;
+  
+  --folder: #df8e1d;
+  --file-tsx: #04a5e5;
+  
+  --close-hover: #d20f39;
+  
+  --comment: #9ca0b0;
+  
+  --syntax-comment: #9ca0b0;
+  --syntax-keyword: #8839ef;
+  --syntax-string: #40a02b;
+  --syntax-function: #1e66f5;
+  --syntax-variable: #fe640b;
+  --syntax-class: #df8e1d;
+  --syntax-property: #1e66f5;
+  --syntax-operator: #ea76cb;
+  --syntax-punctuation: #6c6f85;
+}

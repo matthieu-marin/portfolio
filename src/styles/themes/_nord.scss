@@ -1,0 +1,38 @@
+:root[data-theme="nord"] {
+  --background: #2e3440;
+  --sidebar: #282c36;
+  --titlebar: #242831;
+  --tabs: #282c36;
+  --editor: #2e3440;
+  --hover: #3b4252;
+  --statusbar: #242831;
+  --terminal: #282c36;
+  
+  --foreground: #eceff4;
+  --statusbar-text: #d8dee9;
+  --terminal-text: #eceff4;
+  --terminal-prompt: #88c0d0;
+  --terminal-output: #a3be8c;
+  
+  --accent: #88c0d0;
+  --accent-foreground: #2e3440;
+  
+  --border: #4c566a;
+  
+  --folder: #ebcb8b;
+  --file-tsx: #81a1c1;
+  
+  --close-hover: #bf616a;
+  
+  --comment: #616e88;
+  
+  --syntax-comment: #616e88;
+  --syntax-keyword: #81a1c1;
+  --syntax-string: #a3be8c;
+  --syntax-function: #88c0d0;
+  --syntax-variable: #d08770;
+  --syntax-class: #ebcb8b;
+  --syntax-property: #8fbcbb;
+  --syntax-operator: #b48ead;
+  --syntax-punctuation: #d8dee9;
+}

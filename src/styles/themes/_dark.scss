@@ -1,0 +1,39 @@
+:root[data-theme="dark"] {
+  --background: #1e1e2e;
+  --sidebar: #181825;
+  --titlebar: #11111b;
+  --tabs: #181825;
+  --editor: #1e1e2e;
+  --hover: #313244;
+  --statusbar: #11111b;
+  --terminal: #181825;
+  
+  --foreground: #cdd6f4;
+  --statusbar-text: #a6adc8;
+  --terminal-text: #cdd6f4;
+  --terminal-prompt: #f38ba8;
+  --terminal-output: #a6e3a1;
+  
+  --accent: #cba6f7;
+  --accent-foreground: #11111b;
+  
+  --border: #313244;
+  
+  --folder: #f9e2af;
+  --file-tsx: #89dceb;
+  
+  --close-hover: #f38ba8;
+  
+  --comment: #6c7086;
+  
+  --syntax-comment: #6c7086;
+  --syntax-keyword: #cba6f7;
+  --syntax-string: #a6e3a1;
+  --syntax-function: #89dceb;
+  --syntax-variable: #fab387;
+  --syntax-class: #f9e2af;
+  --syntax-property: #89b4fa;
+  --syntax-operator: #f5c2e7;
+  --syntax-punctuation: #bac2de;
+}
+

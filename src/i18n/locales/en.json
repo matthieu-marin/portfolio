@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
+    "experience": "Experience"
+  },
+  "home": {
+    "greeting": "Hello, I'm",
+    "title": "Full Stack Developer",
+    "subtitle": "Passionate about creating innovative web experiences"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Passionate developer with several years of experience creating modern web applications. I love solving complex problems and creating elegant user interfaces.",
+    "experience": "Experience",
+    "education": "Education"
+  },
+  "projects": {
+    "title": "My Projects",
+    "viewCode": "View Code",
+    "viewDemo": "View Demo"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "description": "Feel free to contact me to discuss your projects",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  },
+  "experience": {
+    "title": "Professional Experience"
+  },
+  "terminal": {
+    "welcome": "Welcome to the interactive terminal",
+    "help": "Type \"help\" to see available commands"
+  },
+  "status": {
+    "terminal": "Terminal",
+    "theme": "Theme"
+  }
+}
+

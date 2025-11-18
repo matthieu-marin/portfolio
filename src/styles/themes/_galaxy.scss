@@ -1,0 +1,38 @@
+:root[data-theme="galaxy"] {
+  --background: #0d1b2a;
+  --sidebar: #081220;
+  --titlebar: #050a14;
+  --tabs: #081220;
+  --editor: #0d1b2a;
+  --hover: #1b263b;
+  --statusbar: #050a14;
+  --terminal: #081220;
+  
+  --foreground: #e0e1dd;
+  --statusbar-text: #c0c1bd;
+  --terminal-text: #e0e1dd;
+  --terminal-prompt: #bb86fc;
+  --terminal-output: #03dac6;
+  
+  --accent: #bb86fc;
+  --accent-foreground: #050a14;
+  
+  --border: #415a77;
+  
+  --folder: #ffd60a;
+  --file-tsx: #03dac6;
+  
+  --close-hover: #cf6679;
+  
+  --comment: #778da9;
+  
+  --syntax-comment: #778da9;
+  --syntax-keyword: #bb86fc;
+  --syntax-string: #03dac6;
+  --syntax-function: #7cb9ff;
+  --syntax-variable: #ffd60a;
+  --syntax-class: #ff9bce;
+  --syntax-property: #03dac6;
+  --syntax-operator: #bb86fc;
+  --syntax-punctuation: #c0c1bd;
+}
