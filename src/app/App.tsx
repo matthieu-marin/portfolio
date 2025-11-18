@@ -4,7 +4,7 @@ import { NavigationProvider } from '../shared/contexts/NavigationContext';
 import { TabBar } from '../shared/components/TabBar';
 import { FileExplorer } from '../shared/components/FileExplorer';
 import { StatusBar } from '../shared/components/StatusBar';
-import { Terminal } from '../shared/components/Terminal';
+import { OutputPanel } from '../features/output-panel';
 import { LanguageSwitcher } from '../shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
 import {
@@ -206,7 +206,10 @@ function PortfolioContent() {
               >
                 <div className="absolute inset-x-0 -top-1 h-3" />
               </div>
-              <Terminal onClose={() => setIsTerminalVisible(false)} />
+              <OutputPanel 
+                mode="terminal" 
+                onClose={() => setIsTerminalVisible(false)} 
+              />
             </div>
           )}
         </div>

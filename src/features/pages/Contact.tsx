@@ -45,8 +45,8 @@ export function Contact() {
       {
         icon: Mail,
         property: 'email',
-        value: 'contact@example.com',
-        href: 'mailto:contact@example.com',
+        value: 'matthieu.marin@example.com',
+        href: 'mailto:matthieu.marin@example.com',
       },
       {
         icon: Phone,
@@ -71,7 +71,7 @@ export function Contact() {
       {
         icon: Linkedin,
         label: 'LinkedIn',
-        href: 'https://linkedin.com',
+        href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
         color: 'text-blue-400',
       },
       {

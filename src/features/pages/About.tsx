@@ -24,10 +24,10 @@ export function About() {
     icon: User,
     color: 'text-purple-400',
     borderColor: 'border-purple-400',
-    name: 'Votre Nom',
+    name: 'Matthieu Marin',
     role: 'Full Stack Developer',
     location: 'Paris, France',
-    email: 'contact@example.com',
+    email: 'matthieu.marin@example.com',
     bio: {
       fr: 'Passionné par le développement web et les technologies modernes. Je crée des applications web performantes et élégantes en utilisant les dernières technologies. Toujours en quête d\'apprentissage et d\'amélioration continue.',
       en: 'Passionate about web development and modern technologies. I create performant and elegant web applications using the latest technologies. Always seeking learning and continuous improvement.'

@@ -22,7 +22,7 @@ export function Home() {
     icon: Code2,
     color: 'text-purple-400',
     borderColor: 'border-purple-400',
-    name: 'Votre Nom',
+    name: 'Matthieu Marin',
     role: 'Full Stack Developer',
     tagline: {
       fr: 'Créateur d\'expériences web modernes et performantes',
@@ -39,8 +39,8 @@ export function Home() {
     ],
     socialLinks: [
       { icon: Github, label: 'GitHub', href: 'https://github.com', color: 'text-purple-400' },
-      { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com', color: 'text-blue-400' },
-      { icon: Mail, label: 'Email', href: 'mailto:contact@example.com', color: 'text-green-400' }
+      { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/', color: 'text-blue-400' },
+      { icon: Mail, label: 'Email', href: 'mailto:matthieu.marin@example.com', color: 'text-green-400' }
     ]
   };
 
