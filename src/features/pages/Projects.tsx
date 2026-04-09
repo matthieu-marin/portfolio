@@ -19,12 +19,24 @@ import { useNavigation } from '../../shared/contexts/NavigationContext';
 import { useEffect, useRef } from 'react';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
 import { ImagePreviewTooltip } from '../../shared/components/ImagePreviewTooltip';
+import { EditableText } from '../../shared/components/EditableText';
 
 export function Projects() {
   const { t } = useLanguage();
-  const { targetProjectId, setTargetProjectId, setCurrentPage } = useNavigation();
+  const { targetProjectId, setTargetProjectId, setTargetSkillId } = useNavigation();
   const projectRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+  // TODO: miss info for projects
+  // ## Informations manquantes — Projets personnels
+  // Aucun projet personnel fourni dans info.md.
+  // Pour chaque projet, il faudrait :
+  // - Nom du projet
+  // - Description courte (FR + EN)
+  // - Technologies utilisées
+  // - Lien GitHub ou démo
+  // - Période de réalisation
+  // - Image de prévisualisation (optionnel)
+  // Les projets ci-dessous sont des données fictives à remplacer.
   const projects = [
     {
       id: 'portfolio',
@@ -317,8 +329,7 @@ export function Projects() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">{t('projects.title')}</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value={t('projects.title')} editKey="projects.comment" /></span>
         </motion.div>
         <div className="space-y-6 md:space-y-8">
           {projects.map((project, projectIndex) => {
@@ -364,7 +375,7 @@ export function Projects() {
                     <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                       <span className="text-syntax-keyword">class</span>{' '}
                       <span className={`text-syntax-class ${project.color} break-words`} style={{ fontSize: '1.1em' }}>
-                        {project.title}
+                        <EditableText value={project.title} editKey={`projects.${projectIndex}.title`} />
                       </span>{' '}
                       <span className="text-syntax-punctuation">{'{'}</span>
                     </div>
@@ -398,14 +409,14 @@ export function Projects() {
                 </div>
                 <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base">
                   <div>
-                    <span className="text-syntax-property">status</span>
+                    <span className="text-syntax-property"><EditableText value="status" editKey="projects.prop.status" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{project.status}"</span>
+                    <span className="text-syntax-string">"<EditableText value={project.status} editKey={`projects.${projectIndex}.status`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   {project.repository && (
                     <div className="flex items-center gap-2">
-                      <span className="text-syntax-property">repository</span>
+                      <span className="text-syntax-property"><EditableText value="repository" editKey="projects.prop.repository" /></span>
                       <span className="text-syntax-punctuation">:</span>{' '}
                       <a 
                         href={project.repository}
@@ -419,7 +430,7 @@ export function Projects() {
                     </div>
                   )}
                   <div>
-                    <span className="text-syntax-property">technologies</span>
+                    <span className="text-syntax-property"><EditableText value="technologies" editKey="projects.prop.technologies" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -434,16 +445,17 @@ export function Projects() {
                             details={tech.details}
                             type="class"
                             onClick={() => {
-                              setCurrentPage('skills');
+                              setTargetSkillId(tech.skillId!);
+                              window.dispatchEvent(new Event('navigate-to-skill'));
                             }}
                           >
                             <span className={`text-syntax-class ${project.color}`}>
-                              {tech.name}
+                              <EditableText value={tech.name} editKey={`projects.${projectIndex}.tech.${idx}.name`} />
                             </span>
                           </ItemTooltip>
                         ) : (
                           <span className={`text-syntax-class ${project.color}`}>
-                            {tech.name}
+                            <EditableText value={tech.name} editKey={`projects.${projectIndex}.tech.${idx}.name`} />
                           </span>
                         )}
                         <span className="text-syntax-punctuation">()</span>
@@ -457,7 +469,7 @@ export function Projects() {
                     <span className="text-syntax-punctuation">];</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">features</span>
+                    <span className="text-syntax-property"><EditableText value="features" editKey="projects.prop.features" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -465,7 +477,7 @@ export function Projects() {
                     {project.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <Rocket className={`w-3 h-3 md:w-4 md:h-4 ${project.color} mt-0.5 flex-shrink-0`} />
-                        <span className="text-syntax-string">"{feature}"</span>
+                        <span className="text-syntax-string">"<EditableText value={feature} editKey={`projects.${projectIndex}.features.${idx}`} />"</span>
                         {idx < project.features.length - 1 && (
                           <span className="text-syntax-punctuation">,</span>
                         )}
@@ -476,7 +488,7 @@ export function Projects() {
                     <span className="text-syntax-punctuation">];</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">previews</span>
+                    <span className="text-syntax-property"><EditableText value="previews" editKey="projects.prop.previews" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>

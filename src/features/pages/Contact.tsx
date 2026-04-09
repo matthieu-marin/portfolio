@@ -4,14 +4,14 @@ import {
   Phone, 
   MapPin, 
   Send, 
-  Github, 
-  Linkedin, 
-  Twitter,
+  Github,
+  Linkedin,
   MessageSquare,
   Globe
 } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '../../i18n/hooks';
+import { EditableText } from '../../shared/components/EditableText';
 
 export function Contact() {
   const { t, language } = useLanguage();
@@ -45,23 +45,24 @@ export function Contact() {
       {
         icon: Mail,
         property: 'email',
-        value: 'matthieu.marin@example.com',
-        href: 'mailto:matthieu.marin@example.com',
+        value: 'matthieumarin51@gmail.com',
+        href: 'mailto:matthieumarin51@gmail.com',
       },
       {
         icon: Phone,
         property: 'phone',
-        value: '+33 6 12 34 56 78',
-        href: 'tel:+33612345678',
+        value: '07.83.33.47.50',
+        href: 'tel:+33783334750',
       },
       {
         icon: MapPin,
         property: 'location',
-        value: 'Paris, France',
+        value: 'Saint-Quentin, Hauts-de-France, France',
         href: null,
       },
     ],
     social: [
+      // TODO: miss info for github — URL GitHub non fournie dans info.md
       {
         icon: Github,
         label: 'GitHub',
@@ -73,12 +74,6 @@ export function Contact() {
         label: 'LinkedIn',
         href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
         color: 'text-blue-400',
-      },
-      {
-        icon: Twitter,
-        label: 'Twitter',
-        href: 'https://twitter.com',
-        color: 'text-cyan-400',
       },
     ]
   };
@@ -99,8 +94,7 @@ export function Contact() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">{t('contact.title')}</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value={t('contact.title')} editKey="contact.comment" /></span>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -116,7 +110,7 @@ export function Contact() {
                 <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                   <span className="text-syntax-keyword">class</span>{' '}
                   <span className={`text-syntax-class ${contactInfoData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                    {contactInfoData.title}
+                    <EditableText value={contactInfoData.title} editKey="contact.class.contactInfo" />
                   </span>{' '}
                   <span className="text-syntax-punctuation">{'{'}</span>
                 </div>
@@ -128,24 +122,24 @@ export function Contact() {
                 return (
                   <div key={info.property} className="flex items-center gap-2 min-w-0 break-words">
                     <Icon className={`w-3 h-3 md:w-4 md:h-4 ${contactInfoData.color} opacity-60`} />
-                    <span className="text-syntax-property">{info.property}</span>
+                    <span className="text-syntax-property"><EditableText value={info.property} editKey={`contact.prop.info.${info.property}`} /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     {info.href ? (
-                      <a 
+                      <a
                         href={info.href}
                         className={`text-syntax-string hover:underline ${contactInfoData.color} transition-colors`}
                       >
-                        "{info.value}"
+                        "<EditableText value={info.value} editKey={`contact.info.${info.property}`} />"
                       </a>
                     ) : (
-                      <span className="text-syntax-string">"{info.value}"</span>
+                      <span className="text-syntax-string">"<EditableText value={info.value} editKey={`contact.info.${info.property}`} />"</span>
                     )}
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                 );
               })}
               <div className="pt-2">
-                <span className="text-syntax-property">social</span>
+                <span className="text-syntax-property"><EditableText value="social" editKey="contact.prop.social" /></span>
                 <span className="text-syntax-punctuation">:</span>{' '}
                 <span className="text-syntax-punctuation">[</span>
               </div>
@@ -172,19 +166,19 @@ export function Contact() {
               </div>
               <div className="pt-2 flex items-center gap-2">
                 <Globe className={`w-3 h-3 md:w-4 md:h-4 ${contactInfoData.color} opacity-60`} />
-                <span className="text-syntax-property">availability</span>
+                <span className="text-syntax-property"><EditableText value="availability" editKey="contact.prop.availability" /></span>
                 <span className="text-syntax-punctuation">:</span>{' '}
                 <span className="text-syntax-string">
-                  "{language === 'fr' ? 'Disponible pour de nouveaux projets' : 'Available for new projects'}"
+                  "<EditableText value={language === 'fr' ? 'En alternance chez Renault Digital jusqu\'à juin 2026' : 'On apprenticeship at Renault Digital until June 2026'} editKey={`contact.availability.${language}`} />"
                 </span>
                 <span className="text-syntax-punctuation">;</span>
               </div>
               <div className="flex items-center gap-2">
                 <MessageSquare className={`w-3 h-3 md:w-4 md:h-4 ${contactInfoData.color} opacity-60`} />
-                <span className="text-syntax-property">responseTime</span>
+                <span className="text-syntax-property"><EditableText value="responseTime" editKey="contact.prop.responseTime" /></span>
                 <span className="text-syntax-punctuation">:</span>{' '}
                 <span className="text-syntax-string">
-                  "{language === 'fr' ? '24-48 heures' : '24-48 hours'}"
+                  "<EditableText value={language === 'fr' ? '24-48 heures' : '24-48 hours'} editKey={`contact.responseTime.${language}`} />"
                 </span>
                 <span className="text-syntax-punctuation">;</span>
               </div>
@@ -205,7 +199,7 @@ export function Contact() {
                 <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                   <span className="text-syntax-keyword">class</span>{' '}
                   <span className={`text-syntax-class ${messageFormData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                    {messageFormData.title}
+                    <EditableText value={messageFormData.title} editKey="contact.class.sendMessage" />
                   </span>{' '}
                   <span className="text-syntax-punctuation">{'{'}</span>
                 </div>

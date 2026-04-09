@@ -14,6 +14,7 @@ import {
   Target
 } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
+import { EditableText } from '../../shared/components/EditableText';
 
 export function About() {
   const { t, language } = useLanguage();
@@ -25,39 +26,39 @@ export function About() {
     color: 'text-purple-400',
     borderColor: 'border-purple-400',
     name: 'Matthieu Marin',
-    role: 'Full Stack Developer',
-    location: 'Paris, France',
-    email: 'matthieu.marin@example.com',
+    role: 'Développeur en alternance — Master Cloud Computing & Mobility',
+    location: 'Saint-Quentin, Hauts-de-France, France',
+    email: 'matthieumarin51@gmail.com',
     bio: {
-      fr: 'Passionné par le développement web et les technologies modernes. Je crée des applications web performantes et élégantes en utilisant les dernières technologies. Toujours en quête d\'apprentissage et d\'amélioration continue.',
-      en: 'Passionate about web development and modern technologies. I create performant and elegant web applications using the latest technologies. Always seeking learning and continuous improvement.'
+      fr: 'Actuellement étudiant en Master Cloud Computing & Mobility et alternant chez Renault Digital, je suis fort d\'une expérience en développement web acquise lors de cinq stages en tant que développeur web stagiaire. Passionné par la création d\'applications web innovantes, j\'évolue dans un environnement stimulant où je continue à apprendre et à développer mes compétences.',
+      en: 'Currently studying Master Cloud Computing & Mobility and working as an apprentice at Renault Digital, I have web development experience gained through five internships as a web developer. Passionate about creating innovative web applications, I thrive in a stimulating environment where I continue to learn and develop my skills.'
     },
     interests: {
       fr: [
-        'Développement d\'architectures scalables',
-        'Open Source et contribution communautaire',
-        'Design patterns et clean code',
-        'Performance et optimisation'
+        'Veille technologique active',
+        'Apprentissage continu',
+        'Ressources Java & Spring (Baeldung)',
+        'Formation en ligne (OpenClassrooms)'
       ],
       en: [
-        'Development of scalable architectures',
-        'Open Source and community contribution',
-        'Design patterns and clean code',
-        'Performance and optimization'
+        'Active technology watch',
+        'Continuous learning',
+        'Java & Spring resources (Baeldung)',
+        'Online learning (OpenClassrooms)'
       ]
     },
     hobbies: {
       fr: [
-        'Lecture de documentation technique',
-        'Contribution à des projets open source',
-        'Veille technologique et apprentissage',
-        'Partage de connaissances via articles et talks'
+        'Autonomie et prise d\'initiative dans les projets',
+        'Ponctualité et rigueur au quotidien',
+        'Curiosité pour les nouvelles technologies',
+        'Apprentissage de nouvelles compétences'
       ],
       en: [
-        'Reading technical documentation',
-        'Contributing to open source projects',
-        'Tech watch and learning',
-        'Sharing knowledge through articles and talks'
+        'Autonomy and initiative in projects',
+        'Punctuality and daily rigor',
+        'Curiosity for new technologies',
+        'Learning new skills'
       ]
     }
   };
@@ -71,55 +72,85 @@ export function About() {
     items: [
       {
         degree: {
-          fr: 'Master en Informatique',
-          en: 'Master in Computer Science'
+          fr: 'Master — Cloud Computing & Mobility',
+          en: 'Master — Cloud Computing & Mobility'
         },
-        school: 'Université de Paris',
-        period: '2017 - 2019',
-        location: 'Paris, France',
+        school: 'UPJV / INSSET — Saint-Quentin',
+        period: 'sept. 2024 – juin 2026',
+        location: 'Saint-Quentin, France',
         specialization: {
-          fr: 'Spécialisation en développement web et architecture logicielle',
-          en: 'Specialization in web development and software architecture'
+          fr: 'Informatique spécialisée en Cloud Computing et applications mobiles',
+          en: 'Computer science specializing in Cloud Computing and mobile applications'
         },
         highlights: {
+          // TODO: miss info for education[0].highlights — détails des matières/modules non fournis
           fr: [
-            'Architecture distribuée et microservices',
-            'Développement web full-stack avancé',
-            'Sécurité des applications web',
-            'Gestion de projet agile'
+            'Cloud Computing',
+            'Développement d\'applications mobiles',
+            'Architecture logicielle avancée',
+            'Gestion de projet agile (alternance Renault Digital)'
           ],
           en: [
-            'Distributed architecture and microservices',
-            'Advanced full-stack web development',
-            'Web application security',
-            'Agile project management'
+            'Cloud Computing',
+            'Mobile application development',
+            'Advanced software architecture',
+            'Agile project management (Renault Digital apprenticeship)'
           ]
         }
       },
       {
         degree: {
-          fr: 'Licence en Informatique',
-          en: 'Bachelor in Computer Science'
+          fr: 'Licence Professionnelle — Conception et développement d\'applications web et mobile',
+          en: 'Professional Bachelor — Web and Mobile Application Design and Development'
         },
-        school: 'Université Lyon 1',
-        period: '2014 - 2017',
-        location: 'Lyon, France',
+        school: 'UPJV / INSSET — Saint-Quentin',
+        period: 'sept. 2023 – août 2024',
+        location: 'Saint-Quentin, France',
         specialization: {
-          fr: 'Fondamentaux de la programmation et des systèmes',
-          en: 'Programming and systems fundamentals'
+          fr: 'Développement web et mobile, NoSQL et conception web',
+          en: 'Web and mobile development, NoSQL and web design'
         },
         highlights: {
+          // TODO: miss info for education[1].highlights — détails des 26 compétences mentionnées non fournis
           fr: [
-            'Algorithmique et structures de données',
-            'Programmation orientée objet',
-            'Bases de données relationnelles',
-            'Réseaux et systèmes d\'exploitation'
+            'Conception web',
+            'NoSQL',
+            'Développement mobile',
+            '26 compétences supplémentaires listées sur LinkedIn'
           ],
           en: [
-            'Algorithms and data structures',
-            'Object-oriented programming',
-            'Relational databases',
-            'Networks and operating systems'
+            'Web design',
+            'NoSQL',
+            'Mobile development',
+            '26 additional skills listed on LinkedIn'
+          ]
+        }
+      },
+      {
+        degree: {
+          fr: 'BTS SIO option B — Solutions logicielles et applications métiers',
+          en: 'BTS SIO option B — Software Solutions and Business Applications'
+        },
+        school: 'Lycée Paul Claudel — Laon',
+        period: 'sept. 2021 – juin 2023',
+        location: 'Laon, France',
+        specialization: {
+          fr: 'Solutions informatiques et applications métiers',
+          en: 'IT solutions and business applications'
+        },
+        highlights: {
+          // TODO: miss info for education[2].highlights — détails des matières BTS non fournis
+          fr: [
+            'Développement d\'applications',
+            'Solutions logicielles',
+            'Gestion de projet informatique',
+            'Bases de données et systèmes'
+          ],
+          en: [
+            'Application development',
+            'Software solutions',
+            'IT project management',
+            'Databases and systems'
           ]
         }
       }
@@ -134,20 +165,20 @@ export function About() {
     borderColor: 'border-pink-400',
     items: {
       fr: [
-        'Code propre et maintenable',
-        'Collaboration et communication',
-        'Innovation et créativité',
+        'Autonomie',
+        'Ponctualité',
+        'Curiosité',
         'Apprentissage continu',
-        'Qualité et excellence',
-        'Partage des connaissances'
+        'Veille technologique',
+        'Collaboration en équipe'
       ],
       en: [
-        'Clean and maintainable code',
-        'Collaboration and communication',
-        'Innovation and creativity',
+        'Autonomy',
+        'Punctuality',
+        'Curiosity',
         'Continuous learning',
-        'Quality and excellence',
-        'Knowledge sharing'
+        'Technology watch',
+        'Team collaboration'
       ]
     }
   };
@@ -160,8 +191,7 @@ export function About() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">{t('about.title')}</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value={t('about.title')} editKey="about.comment" /></span>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -175,7 +205,7 @@ export function About() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${profileData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  {profileData.title}
+                  <EditableText value={profileData.title} editKey="about.profile.title" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -183,38 +213,38 @@ export function About() {
           </div>
           <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base overflow-hidden">
             <div className="break-words">
-              <span className="text-syntax-property">name</span>
+              <span className="text-syntax-property"><EditableText value="name" editKey="about.prop.name" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <span className="text-syntax-string">"{profileData.name}"</span>
+              <span className="text-syntax-string">"<EditableText value={profileData.name} editKey="about.profile.name" />"</span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="break-words">
-              <span className="text-syntax-property">role</span>
+              <span className="text-syntax-property"><EditableText value="role" editKey="about.prop.role" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <span className="text-syntax-string">"{profileData.role}"</span>
+              <span className="text-syntax-string">"<EditableText value={profileData.role} editKey="about.profile.role" />"</span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="flex items-center gap-2 break-words">
               <MapPin className={`w-3 h-3 md:w-4 md:h-4 ${profileData.color} opacity-60`} />
-              <span className="text-syntax-property">location</span>
+              <span className="text-syntax-property"><EditableText value="location" editKey="about.prop.location" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <span className="text-syntax-string">"{profileData.location}"</span>
+              <span className="text-syntax-string">"<EditableText value={profileData.location} editKey="about.profile.location" />"</span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="flex items-center gap-2 break-words">
               <Mail className={`w-3 h-3 md:w-4 md:h-4 ${profileData.color} opacity-60`} />
-              <span className="text-syntax-property">email</span>
+              <span className="text-syntax-property"><EditableText value="email" editKey="about.prop.email" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <a 
+              <a
                 href={`mailto:${profileData.email}`}
                 className={`text-syntax-string hover:underline ${profileData.color} transition-colors`}
               >
-                "{profileData.email}"
+                "<EditableText value={profileData.email} editKey="about.profile.email" />"
               </a>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="break-words">
-              <span className="text-syntax-property">interests</span>
+              <span className="text-syntax-property"><EditableText value="interests" editKey="about.prop.interests" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -222,7 +252,7 @@ export function About() {
               {profileData.interests[language].map((interest, idx) => (
                 <div key={idx} className="flex items-start gap-2">
                   <Code2 className={`w-3 h-3 md:w-4 md:h-4 ${profileData.color} mt-0.5 flex-shrink-0`} />
-                  <span className="text-syntax-string">"{interest}"</span>
+                  <span className="text-syntax-string">"<EditableText value={interest} editKey={`about.profile.interests.${language}.${idx}`} />"</span>
                   {idx < profileData.interests[language].length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}
@@ -233,7 +263,7 @@ export function About() {
               <span className="text-syntax-punctuation">];</span>
             </div>
             <div className="break-words">
-              <span className="text-syntax-property">hobbies</span>
+              <span className="text-syntax-property"><EditableText value="hobbies" editKey="about.prop.hobbies" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -241,7 +271,7 @@ export function About() {
               {profileData.hobbies[language].map((hobby, idx) => (
                 <div key={idx} className="flex items-start gap-2">
                   <Coffee className={`w-3 h-3 md:w-4 md:h-4 ${profileData.color} mt-0.5 flex-shrink-0`} />
-                  <span className="text-syntax-string">"{hobby}"</span>
+                  <span className="text-syntax-string">"<EditableText value={hobby} editKey={`about.profile.hobbies.${language}.${idx}`} />"</span>
                   {idx < profileData.hobbies[language].length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}
@@ -268,7 +298,7 @@ export function About() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${educationData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  Education
+                  <EditableText value="Education" editKey="about.class.education" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -285,46 +315,46 @@ export function About() {
                   )}
                   <span className="text-syntax-keyword">class</span>{' '}
                   <span className={`text-syntax-class ${educationData.color}`}>
-                    {eduIdx === 0 ? 'master_informatique' : 'licence_informatique'}
+                    <EditableText value={eduIdx === 0 ? 'master_cloud_computing' : eduIdx === 1 ? 'licence_pro_web_mobile' : 'bts_sio_option_b'} editKey={`about.education.${eduIdx}.className`} />
                   </span>{' '}
                   <span className="text-syntax-punctuation">{'{'}</span>
                 </div>
 
                 <div className="ml-4 space-y-3">
                   <div>
-                    <span className="text-syntax-property">degree</span>
+                    <span className="text-syntax-property"><EditableText value="degree" editKey="about.prop.degree" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{edu.degree[language]}"</span>
+                    <span className="text-syntax-string">"<EditableText value={edu.degree[language]} editKey={`about.education.${eduIdx}.degree.${language}`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">school</span>
+                    <span className="text-syntax-property"><EditableText value="school" editKey="about.prop.school" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{edu.school}"</span>
+                    <span className="text-syntax-string">"<EditableText value={edu.school} editKey={`about.education.${eduIdx}.school`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <GraduationCap className={`w-3 h-3 md:w-4 md:h-4 ${educationData.color} opacity-60`} />
-                    <span className="text-syntax-property">period</span>
+                    <span className="text-syntax-property"><EditableText value="period" editKey="about.prop.period" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{edu.period}"</span>
+                    <span className="text-syntax-string">"<EditableText value={edu.period} editKey={`about.education.${eduIdx}.period`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className={`w-3 h-3 md:w-4 md:h-4 ${educationData.color} opacity-60`} />
-                    <span className="text-syntax-property">location</span>
+                    <span className="text-syntax-property"><EditableText value="location" editKey="about.prop.location" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{edu.location}"</span>
+                    <span className="text-syntax-string">"<EditableText value={edu.location} editKey={`about.education.${eduIdx}.location`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">specialization</span>
+                    <span className="text-syntax-property"><EditableText value="specialization" editKey="about.prop.specialization" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{edu.specialization[language]}"</span>
+                    <span className="text-syntax-string">"<EditableText value={edu.specialization[language]} editKey={`about.education.${eduIdx}.specialization.${language}`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">highlights</span>
+                    <span className="text-syntax-property"><EditableText value="highlights" editKey="about.prop.highlights" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -332,7 +362,7 @@ export function About() {
                     {edu.highlights[language].map((highlight, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <Book className={`w-3 h-3 md:w-4 md:h-4 ${educationData.color} mt-0.5 flex-shrink-0`} />
-                        <span className="text-syntax-string">"{highlight}"</span>
+                        <span className="text-syntax-string">"<EditableText value={highlight} editKey={`about.education.${eduIdx}.highlights.${language}.${idx}`} />"</span>
                         {idx < edu.highlights[language].length - 1 && (
                           <span className="text-syntax-punctuation">,</span>
                         )}
@@ -368,7 +398,7 @@ export function About() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${valuesData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  Values
+                  <EditableText value="Values" editKey="about.class.values" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -376,7 +406,7 @@ export function About() {
           </div>
           <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base overflow-hidden">
             <div>
-              <span className="text-syntax-property">coreValues</span>
+              <span className="text-syntax-property"><EditableText value="coreValues" editKey="about.prop.coreValues" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -384,7 +414,7 @@ export function About() {
               {valuesData.items[language].map((value, idx) => (
                 <div key={idx} className="flex items-start gap-2 min-w-0">
                   <Target className={`w-3 h-3 md:w-4 md:h-4 ${valuesData.color} mt-0.5 flex-shrink-0`} />
-                  <span className="text-syntax-string break-words">"{value}"</span>
+                  <span className="text-syntax-string break-words">"<EditableText value={value} editKey={`about.values.${language}.${idx}`} />"</span>
                   {idx < valuesData.items[language].length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}

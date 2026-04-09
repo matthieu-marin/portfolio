@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ThemeProvider, useTheme } from '../shared/contexts/ThemeContext';
 import { NavigationProvider } from '../shared/contexts/NavigationContext';
+import { EditProvider } from '../shared/contexts/EditContext';
 import { TabBar } from '../shared/components/TabBar';
 import { FileExplorer } from '../shared/components/FileExplorer';
 import { StatusBar } from '../shared/components/StatusBar';
@@ -226,7 +227,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <NavigationProvider>
-        <PortfolioContent />
+        <EditProvider>
+          <PortfolioContent />
+        </EditProvider>
       </NavigationProvider>
     </ThemeProvider>
   );

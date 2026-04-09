@@ -1,38 +1,43 @@
 import { motion } from 'motion/react';
-import { 
-  Code2, 
-  Server, 
-  Database, 
+import {
+  Code2,
+  Server,
+  Database,
   Wrench,
-  Boxes,
   FileCode2,
   Braces,
-  Palette,
   Code,
   Terminal,
   Package,
   GitBranch,
-  Container,
-  FileJson,
   Zap,
-  TestTube2
+  Globe,
 } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
 import { useNavigation } from '../../shared/contexts/NavigationContext';
 import { useEffect, useRef } from 'react';
 import { SkillDocumentation } from '../../shared/components/SkillDocumentation';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
+import { EditableText } from '../../shared/components/EditableText';
 
 const skillIdMap: Record<string, { category: string; skillName: string }> = {
-  'react': { category: 'Frontend', skillName: 'React' },
-  'typescript': { category: 'Frontend', skillName: 'TypeScript' },
+  'java': { category: 'Backend', skillName: 'Java' },
+  'springboot': { category: 'Backend', skillName: 'Spring Boot' },
   'nodejs': { category: 'Backend', skillName: 'Node.js' },
-  'tailwind': { category: 'Frontend', skillName: 'Tailwind CSS' },
+  'php': { category: 'Backend', skillName: 'PHP' },
+  'javascript': { category: 'Frontend', skillName: 'JavaScript' },
+  'react': { category: 'Frontend', skillName: 'React' },
+  'vuejs': { category: 'Frontend', skillName: 'Vue.js' },
+  'wordpress': { category: 'Frontend', skillName: 'WordPress' },
+  'mongodb': { category: 'Database', skillName: 'MongoDB' },
+  'sql': { category: 'Database', skillName: 'SQL' },
+  'git': { category: 'Tools', skillName: 'Git' },
+  'agile': { category: 'Tools', skillName: 'Agile/SCRUM' },
 };
 
 export function Skills() {
   const { t, language } = useLanguage();
-  const { targetSkillId, setTargetSkillId, setCurrentPage } = useNavigation();
+  const { targetSkillId, setTargetSkillId, setTargetProjectId, setTargetExperienceId } = useNavigation();
   const skillRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
@@ -54,45 +59,55 @@ export function Skills() {
       borderColor: 'border-green-400',
       description: 'Interface for server-side development technologies',
       skills: [
-        { 
+        {
+          id: 'java',
+          name: 'Java',
+          icon: Code,
+          level: 'Intermediate',
+          description: 'Langage orienté objet utilisé chez Renault Digital',
+          acquiredFrom: [
+            { type: 'experience', id: 'renault', name: 'RenaultDigital', displayName: 'Renault Digital', description: 'Développeur en alternance — Java, Spring Boot, Agile' }
+          ]
+        },
+        {
+          id: 'springboot',
+          name: 'Spring Boot',
+          icon: Zap,
+          level: 'Intermediate',
+          description: 'Framework Java pour le développement d\'applications web',
+          acquiredFrom: [
+            { type: 'experience', id: 'renault', name: 'RenaultDigital', displayName: 'Renault Digital', description: 'Développeur en alternance — Java, Spring Boot, Agile' }
+          ]
+        },
+        {
           id: 'nodejs',
           name: 'Node.js',
           icon: Terminal,
-          level: 'Expert',
+          level: 'Intermediate',
           description: 'JavaScript runtime for scalable server applications',
           acquiredFrom: [
-            { type: 'project', id: 'api', name: 'RESTAPIProject', displayName: 'REST API Project', description: 'RESTful API with authentication and database integration' },
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' }
+            { type: 'experience', id: 'faubourg', name: 'FabourgNumerique', displayName: 'Faubourg Numérique', description: 'Stage — Node.js, Vue.js, IoT' }
           ]
         },
-        { 
-          id: 'express',
-          name: 'Express',
-          icon: Zap,
-          level: 'Advanced',
-          description: 'Fast, minimalist web framework for Node.js',
+        {
+          id: 'php',
+          name: 'PHP',
+          icon: FileCode2,
+          level: 'Intermediate',
+          description: 'Langage de script côté serveur pour le développement web',
           acquiredFrom: [
-            { type: 'project', id: 'api', name: 'RESTAPIProject', displayName: 'REST API Project', description: 'RESTful API with authentication and database integration' }
+            { type: 'experience', id: 'chatterie2', name: 'ChatterieTerreBrasco', displayName: 'Chatterie de la Terre de Brasco', description: 'Stage — PHP, WordPress' },
+            { type: 'experience', id: 'chatterie1', name: 'ChatterieTerreBrasco', displayName: 'Chatterie de la Terre de Brasco', description: 'Stage — PHP, WordPress' }
           ]
         },
-        { 
+        {
           id: 'python',
           name: 'Python',
-          icon: Code,
-          level: 'Intermediate',
-          description: 'Versatile language for backend and data processing',
+          icon: Braces,
+          level: 'Beginner',
+          description: 'Langage polyvalent pour le scripting et l\'automatisation',
           acquiredFrom: [
-            { type: 'project', id: 'automation', name: 'AutomationScripts', displayName: 'Automation Scripts', description: 'Python scripts for task automation and data processing' }
-          ]
-        },
-        { 
-          id: 'graphql',
-          name: 'GraphQL',
-          icon: FileJson,
-          level: 'Advanced',
-          description: 'Query language for flexible API development',
-          acquiredFrom: [
-            { type: 'project', id: 'ecommerce', name: 'ECommercePlatform', displayName: 'E-Commerce Platform', description: 'Full-stack e-commerce solution with TypeScript' }
+            // TODO: miss info for python.acquiredFrom — contexte d'apprentissage non fourni dans info.md
           ]
         },
       ],
@@ -105,58 +120,46 @@ export function Skills() {
       borderColor: 'border-purple-400',
       description: 'Interface for client-side development technologies',
       skills: [
-        { 
-          id: 'react',
-          name: 'React',
-          icon: Boxes,
-          level: 'Expert',
-          description: 'Modern UI library for building interactive interfaces',
-          acquiredFrom: [
-            { type: 'project', id: 'portfolio', name: 'PortfolioProject', displayName: 'Portfolio Project', description: 'Personal portfolio showcasing projects and skills' },
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' }
-          ]
-        },
-        { 
-          id: 'typescript',
-          name: 'TypeScript',
-          icon: FileCode2,
-          level: 'Advanced',
-          description: 'Typed superset of JavaScript for robust applications',
-          acquiredFrom: [
-            { type: 'project', id: 'ecommerce', name: 'ECommercePlatform', displayName: 'E-Commerce Platform', description: 'Full-stack e-commerce solution with TypeScript' },
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' }
-          ]
-        },
-        { 
-          id: 'nextjs',
-          name: 'Next.js',
-          icon: Zap,
-          level: 'Advanced',
-          description: 'React framework for production-ready applications',
-          acquiredFrom: [
-            { type: 'project', id: 'portfolio', name: 'PortfolioProject', displayName: 'Portfolio Project', description: 'Personal portfolio showcasing projects and skills' }
-          ]
-        },
-        { 
-          id: 'tailwind',
-          name: 'Tailwind CSS',
-          icon: Palette,
-          level: 'Expert',
-          description: 'Utility-first CSS framework for rapid UI development',
-          acquiredFrom: [
-            { type: 'project', id: 'portfolio', name: 'PortfolioProject', displayName: 'Portfolio Project', description: 'Personal portfolio showcasing projects and skills' },
-            { type: 'project', id: 'dashboard', name: 'AdminDashboard', displayName: 'Admin Dashboard', description: 'Modern admin dashboard with real-time analytics' }
-          ]
-        },
-        { 
+        {
           id: 'javascript',
           name: 'JavaScript',
           icon: Braces,
-          level: 'Expert',
-          description: 'Core programming language for web development',
+          level: 'Advanced',
+          description: 'Langage principal du développement web',
           acquiredFrom: [
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' },
-            { type: 'experience', id: 'exp2', name: 'StartupB', displayName: 'Startup B', description: 'Frontend Developer at a fast-growing startup' }
+            { type: 'experience', id: 'faubourg', name: 'FabourgNumerique', displayName: 'Faubourg Numérique', description: 'Stage — Node.js, Vue.js, IoT' },
+            { type: 'experience', id: 'chatterie2', name: 'ChatterieTerreBrasco', displayName: 'Chatterie de la Terre de Brasco', description: 'Stage — PHP, WordPress' }
+          ]
+        },
+        {
+          id: 'react',
+          name: 'React',
+          icon: Boxes,
+          level: 'Intermediate',
+          description: 'Bibliothèque UI pour construire des interfaces interactives',
+          acquiredFrom: [
+            // TODO: miss info for react.acquiredFrom — contexte d'apprentissage non fourni dans info.md
+          ]
+        },
+        {
+          id: 'vuejs',
+          name: 'Vue.js',
+          icon: Zap,
+          level: 'Intermediate',
+          description: 'Framework JavaScript progressif pour le développement web',
+          acquiredFrom: [
+            { type: 'experience', id: 'faubourg', name: 'FabourgNumerique', displayName: 'Faubourg Numérique', description: 'Stage — Node.js, Vue.js, IoT' }
+          ]
+        },
+        {
+          id: 'wordpress',
+          name: 'WordPress',
+          icon: Globe,
+          level: 'Intermediate',
+          description: 'CMS open source pour la création de sites web',
+          acquiredFrom: [
+            { type: 'experience', id: 'chatterie2', name: 'ChatterieTerreBrasco', displayName: 'Chatterie de la Terre de Brasco', description: 'Stage — PHP, WordPress' },
+            { type: 'experience', id: 'chatterie1', name: 'ChatterieTerreBrasco', displayName: 'Chatterie de la Terre de Brasco', description: 'Stage — PHP, WordPress' }
           ]
         },
       ],
@@ -169,45 +172,24 @@ export function Skills() {
       borderColor: 'border-blue-400',
       description: 'Interface for database management systems',
       skills: [
-        { 
-          id: 'postgresql',
-          name: 'PostgreSQL',
-          icon: Database,
-          level: 'Advanced',
-          description: 'Powerful open-source relational database',
-          acquiredFrom: [
-            { type: 'project', id: 'ecommerce', name: 'ECommercePlatform', displayName: 'E-Commerce Platform', description: 'Full-stack e-commerce solution with TypeScript' },
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' }
-          ]
-        },
-        { 
+        {
           id: 'mongodb',
           name: 'MongoDB',
           icon: Database,
-          level: 'Advanced',
-          description: 'NoSQL database for flexible data models',
-          acquiredFrom: [
-            { type: 'project', id: 'social', name: 'SocialMediaApp', displayName: 'Social Media App', description: 'Real-time social platform with chat and notifications' }
-          ]
-        },
-        { 
-          id: 'redis',
-          name: 'Redis',
-          icon: Zap,
           level: 'Intermediate',
-          description: 'In-memory data structure store for caching',
+          description: 'Base de données NoSQL pour des modèles de données flexibles',
           acquiredFrom: [
-            { type: 'project', id: 'api', name: 'RESTAPIProject', displayName: 'REST API Project', description: 'RESTful API with authentication and database integration' }
+            { type: 'experience', id: 'faubourg', name: 'FabourgNumerique', displayName: 'Faubourg Numérique', description: 'Stage — Node.js, Vue.js, IoT' }
           ]
         },
-        { 
-          id: 'prisma',
-          name: 'Prisma',
-          icon: Package,
-          level: 'Advanced',
-          description: 'Next-generation ORM for type-safe database access',
+        {
+          id: 'sql',
+          name: 'SQL',
+          icon: Database,
+          level: 'Intermediate',
+          description: 'Langage de requête pour bases de données relationnelles',
           acquiredFrom: [
-            { type: 'project', id: 'ecommerce', name: 'ECommercePlatform', displayName: 'E-Commerce Platform', description: 'Full-stack e-commerce solution with TypeScript' }
+            // TODO: miss info for sql.acquiredFrom — contexte d'apprentissage non fourni dans info.md
           ]
         },
       ],
@@ -220,55 +202,25 @@ export function Skills() {
       borderColor: 'border-orange-400',
       description: 'Interface for development tools and utilities',
       skills: [
-        { 
+        {
           id: 'git',
           name: 'Git',
           icon: GitBranch,
-          level: 'Expert',
-          description: 'Distributed version control system',
-          acquiredFrom: [
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' },
-            { type: 'experience', id: 'exp2', name: 'StartupB', displayName: 'Startup B', description: 'Frontend Developer at a fast-growing startup' }
-          ]
-        },
-        { 
-          id: 'docker',
-          name: 'Docker',
-          icon: Container,
           level: 'Intermediate',
-          description: 'Platform for containerizing applications',
+          description: 'Système de contrôle de version distribué',
           acquiredFrom: [
-            { type: 'project', id: 'devops', name: 'DevOpsPipeline', displayName: 'DevOps Pipeline', description: 'CI/CD pipeline with Docker and Kubernetes' }
+            { type: 'experience', id: 'renault', name: 'RenaultDigital', displayName: 'Renault Digital', description: 'Développeur en alternance — Java, Spring Boot, Agile' },
+            { type: 'experience', id: 'faubourg', name: 'FabourgNumerique', displayName: 'Faubourg Numérique', description: 'Stage — Node.js, Vue.js, IoT' }
           ]
         },
-        { 
-          id: 'vscode',
-          name: 'VS Code',
-          icon: Code2,
-          level: 'Expert',
-          description: 'Feature-rich code editor',
+        {
+          id: 'agile',
+          name: 'Agile/SCRUM',
+          icon: Package,
+          level: 'Intermediate',
+          description: 'Méthode de gestion de projet itérative',
           acquiredFrom: [
-            { type: 'experience', id: 'exp1', name: 'CompanyA', displayName: 'Company A', description: 'Web Developer position focusing on React applications' }
-          ]
-        },
-        { 
-          id: 'vite',
-          name: 'Vite',
-          icon: Zap,
-          level: 'Advanced',
-          description: 'Next-generation frontend build tool',
-          acquiredFrom: [
-            { type: 'project', id: 'portfolio', name: 'PortfolioProject', displayName: 'Portfolio Project', description: 'Personal portfolio showcasing projects and skills' }
-          ]
-        },
-        { 
-          id: 'jest',
-          name: 'Jest',
-          icon: TestTube2,
-          level: 'Advanced',
-          description: 'Delightful JavaScript testing framework',
-          acquiredFrom: [
-            { type: 'project', id: 'testing', name: 'TestingSuite', displayName: 'Testing Suite', description: 'Comprehensive testing setup with unit and integration tests' }
+            { type: 'experience', id: 'renault', name: 'RenaultDigital', displayName: 'Renault Digital', description: 'Développeur en alternance — Java, Spring Boot, Agile' }
           ]
         },
       ],
@@ -283,8 +235,7 @@ export function Skills() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">{t('skills.title')}</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value={t('skills.title')} editKey="skills.comment" /></span>
         </motion.div>
         <div className="space-y-6 md:space-y-8">
           {skillInterfaces.map((skillInterface, interfaceIndex) => {
@@ -320,7 +271,7 @@ export function Skills() {
                     <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                       <span className="text-syntax-keyword">class</span>{' '}
                       <span className={`text-syntax-class ${skillInterface.color} break-words`} style={{ fontSize: '1.1em' }}>
-                        {skillInterface.name}
+                        <EditableText value={skillInterface.name} editKey={`skills.${skillInterface.id}.name`} />
                       </span>{' '}
                       <span className="text-syntax-punctuation">{'{'}</span>
                     </div>
@@ -346,20 +297,20 @@ export function Skills() {
                           <SkillIcon className={`w-4 h-4 md:w-5 md:h-5 ${skillInterface.color}`} />
                           <span className="text-syntax-keyword">class</span>{' '}
                           <span className={`text-syntax-class ${skillInterface.color}`}>
-                            {skill.name}
+                            <EditableText value={skill.name} editKey={`skills.${skillInterface.id}.${skill.id}.name`} />
                           </span>
                           {' '}
                           <span className="text-syntax-punctuation">{'{'}</span>
                         </div>
                         <div className="ml-4 md:ml-6 space-y-1">
                           <div>
-                            <span className="text-syntax-property">level</span>
+                            <span className="text-syntax-property"><EditableText value="level" editKey="skills.prop.level" /></span>
                             <span className="text-syntax-punctuation">:</span>{' '}
-                            <span className="text-syntax-string">"{skill.level}"</span>
+                            <span className="text-syntax-string">"<EditableText value={skill.level} editKey={`skills.${skillInterface.id}.${skill.id}.level`} />"</span>
                             <span className="text-syntax-punctuation">;</span>
                           </div>
                           <div>
-                            <span className="text-syntax-property">acquiredFrom</span>
+                            <span className="text-syntax-property"><EditableText value="acquiredFrom" editKey="skills.prop.acquiredFrom" /></span>
                             <span className="text-syntax-punctuation">:</span>{' '}
                             <span className="text-syntax-punctuation">[</span>
                           </div>
@@ -374,9 +325,11 @@ export function Skills() {
                                   type="class"
                                   onClick={() => {
                                     if (source.type === 'project') {
-                                      setCurrentPage('projects');
+                                      setTargetProjectId(source.id);
+                                      window.dispatchEvent(new Event('navigate-to-project'));
                                     } else {
-                                      setCurrentPage('experience');
+                                      setTargetExperienceId(source.id);
+                                      window.dispatchEvent(new Event('navigate-to-experience'));
                                     }
                                   }}
                                 >

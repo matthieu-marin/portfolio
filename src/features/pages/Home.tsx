@@ -12,35 +12,38 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
+import { EditableText } from '../../shared/components/EditableText';
 
 export function Home() {
   const { t, language } = useLanguage();
 
   const profileData = {
     id: 'profile',
-    title: 'FullStackDeveloper',
+    title: 'DeveloppeurAlternant',
     icon: Code2,
     color: 'text-purple-400',
     borderColor: 'border-purple-400',
     name: 'Matthieu Marin',
-    role: 'Full Stack Developer',
+    role: 'Développeur en alternance — Master Cloud Computing & Mobility',
     tagline: {
-      fr: 'Créateur d\'expériences web modernes et performantes',
-      en: 'Creator of modern and performant web experiences'
+      fr: 'Alternant chez Renault Digital, étudiant en Master Cloud Computing & Mobility à l\'UPJV/INSSET',
+      en: 'Apprentice at Renault Digital, Master Cloud Computing & Mobility student at UPJV/INSSET'
     },
     bio: {
-      fr: 'Passionné par le développement web, je transforme des idées en applications élégantes et fonctionnelles. Spécialisé en React, TypeScript et Node.js.',
-      en: 'Passionate about web development, I transform ideas into elegant and functional applications. Specialized in React, TypeScript and Node.js.'
+      fr: 'Actuellement étudiant en Master Cloud Computing & Mobility et alternant chez Renault Digital, fort d\'une expérience en développement web acquise lors de cinq stages. Passionné par la création d\'applications web innovantes, je maîtrise PHP, JavaScript, Node.js et Java.',
+      en: 'Currently studying Master Cloud Computing & Mobility and working as an apprentice at Renault Digital, with web development experience gained through five internships. Passionate about creating innovative web applications, proficient in PHP, JavaScript, Node.js and Java.'
     },
     stats: [
-      { label: { fr: 'Années d\'expérience', en: 'Years of experience' }, value: '5+' },
-      { label: { fr: 'Projets réalisés', en: 'Completed projects' }, value: '30+' },
-      { label: { fr: 'Technologies maîtrisées', en: 'Technologies mastered' }, value: '15+' }
+      { label: { fr: 'Années d\'expérience', en: 'Years of experience' }, value: '2+' },
+      // TODO: miss info for stats.projects — nombre de projets réalisés non fourni dans info.md
+      { label: { fr: 'Projets réalisés', en: 'Completed projects' }, value: '?' },
+      { label: { fr: 'Technologies maîtrisées', en: 'Technologies mastered' }, value: '10+' }
     ],
     socialLinks: [
+      // TODO: miss info for github — URL GitHub non fournie dans info.md
       { icon: Github, label: 'GitHub', href: 'https://github.com', color: 'text-purple-400' },
       { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/', color: 'text-blue-400' },
-      { icon: Mail, label: 'Email', href: 'mailto:matthieu.marin@example.com', color: 'text-green-400' }
+      { icon: Mail, label: 'Email', href: 'mailto:matthieumarin51@gmail.com', color: 'text-green-400' }
     ]
   };
 
@@ -52,20 +55,20 @@ export function Home() {
     borderColor: 'border-cyan-400',
     areas: {
       fr: [
-        'Architecture d\'applications web scalables',
-        'Développement d\'interfaces utilisateur modernes',
-        'APIs RESTful et microservices',
-        'Optimisation des performances',
-        'Tests unitaires et intégration continue',
-        'Mentorat et revue de code'
+        'Développement web full-stack (PHP, JavaScript, Java)',
+        'Frameworks modernes : React, Vue.js, Spring Boot',
+        'Cloud Computing & applications mobiles',
+        'Internet des Objets (IoT)',
+        'Gestion de bases de données SQL et NoSQL',
+        'Méthode agile (SCRUM) et gestion de projet'
       ],
       en: [
-        'Scalable web application architecture',
-        'Modern user interface development',
-        'RESTful APIs and microservices',
-        'Performance optimization',
-        'Unit testing and continuous integration',
-        'Mentoring and code review'
+        'Full-stack web development (PHP, JavaScript, Java)',
+        'Modern frameworks: React, Vue.js, Spring Boot',
+        'Cloud Computing & mobile applications',
+        'Internet of Things (IoT)',
+        'SQL and NoSQL database management',
+        'Agile methodology (SCRUM) and project management'
       ]
     }
   };
@@ -78,20 +81,20 @@ export function Home() {
     borderColor: 'border-pink-400',
     principles: {
       fr: [
-        'Code propre et maintenable',
-        'Design patterns et best practices',
+        'Autonomie et prise d\'initiative',
+        'Ponctualité et rigueur',
+        'Curiosité et apprentissage continu',
+        'Veille technologique active',
         'Collaboration en équipe agile',
-        'Apprentissage et amélioration continue',
-        'Focus sur l\'expérience utilisateur',
-        'Documentation claire et complète'
+        'Partage des connaissances'
       ],
       en: [
-        'Clean and maintainable code',
-        'Design patterns and best practices',
+        'Autonomy and initiative',
+        'Punctuality and rigor',
+        'Curiosity and continuous learning',
+        'Active technology watch',
         'Agile team collaboration',
-        'Continuous learning and improvement',
-        'Focus on user experience',
-        'Clear and complete documentation'
+        'Knowledge sharing'
       ]
     }
   };
@@ -104,8 +107,7 @@ export function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">Portfolio.tsx</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value="Portfolio.tsx" editKey="home.comment" /></span>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +121,7 @@ export function Home() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${profileData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  {profileData.title}
+                  <EditableText value={profileData.title} editKey="home.profile.title" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -127,27 +129,27 @@ export function Home() {
           </div>
           <div className="ml-4 md:ml-8 space-y-4 font-mono text-sm md:text-base overflow-hidden">
             <div className="break-words">
-              <span className="text-syntax-property">name</span>
+              <span className="text-syntax-property"><EditableText value="name" editKey="home.prop.name" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <span className="text-syntax-string">"{profileData.name}"</span>
+              <span className="text-syntax-string">"<EditableText value={profileData.name} editKey="home.profile.name" />"</span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="break-words">
-              <span className="text-syntax-property">role</span>
+              <span className="text-syntax-property"><EditableText value="role" editKey="home.prop.role" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
-              <span className="text-syntax-string">"{profileData.role}"</span>
+              <span className="text-syntax-string">"<EditableText value={profileData.role} editKey="home.profile.role" />"</span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div className="break-words">
-              <span className="text-syntax-property">bio</span>
+              <span className="text-syntax-property"><EditableText value="bio" editKey="home.prop.bio" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-string">
-                "{profileData.bio[language]}"
+                "<EditableText value={profileData.bio[language]} editKey={`home.profile.bio.${language}`} multiline />"
               </span>
               <span className="text-syntax-punctuation">;</span>
             </div>
             <div>
-              <span className="text-syntax-property">stats</span>
+              <span className="text-syntax-property"><EditableText value="stats" editKey="home.prop.stats" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">{'{'}</span>
             </div>
@@ -155,9 +157,9 @@ export function Home() {
               {profileData.stats.map((stat, idx) => (
                 <div key={idx} className="flex items-center gap-2 min-w-0">
                   <Sparkles className={`w-3 h-3 md:w-4 md:h-4 ${profileData.color} flex-shrink-0`} />
-                  <span className="text-syntax-property break-words">{stat.label[language]}</span>
+                  <span className="text-syntax-property break-words"><EditableText value={stat.label[language]} editKey={`home.profile.stats.${idx}.label.${language}`} /></span>
                   <span className="text-syntax-punctuation">:</span>{' '}
-                  <span className={`${profileData.color}`}>{stat.value}</span>
+                  <span className={`${profileData.color}`}><EditableText value={stat.value} editKey={`home.profile.stats.${idx}.value`} /></span>
                   {idx < profileData.stats.length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}
@@ -168,7 +170,7 @@ export function Home() {
               <span className="text-syntax-punctuation">{'}'};</span>
             </div>
             <div>
-              <span className="text-syntax-property">connect</span>
+              <span className="text-syntax-property"><EditableText value="connect" editKey="home.prop.connect" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -217,7 +219,7 @@ export function Home() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${expertiseData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  {expertiseData.title}
+                  <EditableText value={expertiseData.title} editKey="home.expertise.title" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -225,7 +227,7 @@ export function Home() {
           </div>
           <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base overflow-hidden">
             <div>
-              <span className="text-syntax-property">areas</span>
+              <span className="text-syntax-property"><EditableText value="areas" editKey="home.prop.areas" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -233,7 +235,7 @@ export function Home() {
               {expertiseData.areas[language].map((area, idx) => (
                 <div key={idx} className="flex items-start gap-2 min-w-0">
                   <Code2 className={`w-3 h-3 md:w-4 md:h-4 ${expertiseData.color} mt-0.5 flex-shrink-0`} />
-                  <span className="text-syntax-string break-words">"{area}"</span>
+                  <span className="text-syntax-string break-words">"<EditableText value={area} editKey={`home.expertise.areas.${language}.${idx}`} />"</span>
                   {idx < expertiseData.areas[language].length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}
@@ -260,7 +262,7 @@ export function Home() {
               <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                 <span className="text-syntax-keyword">class</span>{' '}
                 <span className={`text-syntax-class ${approachData.color} break-words`} style={{ fontSize: '1.1em' }}>
-                  {approachData.title}
+                  <EditableText value={approachData.title} editKey="home.approach.title" />
                 </span>{' '}
                 <span className="text-syntax-punctuation">{'{'}</span>
               </div>
@@ -268,7 +270,7 @@ export function Home() {
           </div>
           <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base overflow-hidden">
             <div>
-              <span className="text-syntax-property">principles</span>
+              <span className="text-syntax-property"><EditableText value="principles" editKey="home.prop.principles" /></span>
               <span className="text-syntax-punctuation">:</span>{' '}
               <span className="text-syntax-punctuation">[</span>
             </div>
@@ -276,7 +278,7 @@ export function Home() {
               {approachData.principles[language].map((principle, idx) => (
                 <div key={idx} className="flex items-start gap-2 min-w-0">
                   <Rocket className={`w-3 h-3 md:w-4 md:h-4 ${approachData.color} mt-0.5 flex-shrink-0`} />
-                  <span className="text-syntax-string break-words">"{principle}"</span>
+                  <span className="text-syntax-string break-words">"<EditableText value={principle} editKey={`home.approach.principles.${language}.${idx}`} />"</span>
                   {idx < approachData.principles[language].length - 1 && (
                     <span className="text-syntax-punctuation">,</span>
                   )}
@@ -297,7 +299,7 @@ export function Home() {
           transition={{ delay: 0.4 }}
           className="font-mono text-syntax-comment text-xs md:text-sm pt-4"
         >
-          <div>{'// export default FullStackDeveloper;'}</div>
+          <div>{'// export default '}<EditableText value="FullStackDeveloper" editKey="home.exportComment" className="text-syntax-comment" />{';'}</div>
         </motion.div>
       </div>
     </div>

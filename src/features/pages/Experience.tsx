@@ -13,229 +13,223 @@ import { useLanguage } from '../../i18n/hooks';
 import { useNavigation } from '../../shared/contexts/NavigationContext';
 import { useEffect, useRef } from 'react';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
+import { EditableText } from '../../shared/components/EditableText';
 
 export function Experience() {
   const { t, language } = useLanguage();
-  const { targetExperienceId, setTargetExperienceId, setCurrentPage } = useNavigation();
+  const { targetExperienceId, setTargetExperienceId, setTargetSkillId } = useNavigation();
   const experienceRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const experiences = [
     {
-      id: 'exp1',
-      company: 'TechCompany',
-      position: 'Senior Full Stack Developer',
+      id: 'renault',
+      company: 'RenaultDigital',
+      position: 'Développeur (Alternance)',
       icon: Code2,
       color: 'text-purple-400',
       borderColor: 'border-purple-400',
-      period: '2021 - Present',
-      location: 'Paris, France',
+      period: 'sept. 2024 – aujourd\'hui',
+      location: 'Saint-Quentin, Hauts-de-France · Hybride',
       description: {
-        fr: 'Direction technique et développement d\'applications web complexes',
-        en: 'Technical leadership and development of complex web applications'
+        fr: 'Développement en contrat d\'alternance dans le cadre du Master Cloud Computing & Mobility',
+        en: 'Development as part of apprenticeship contract within the Master Cloud Computing & Mobility program'
       },
       current: true,
       technologies: [
-        { 
-          name: 'NodeJS', 
-          skillId: 'nodejs',
-          description: 'JavaScript runtime for scalable server applications',
-          details: 'Used for: Backend API, Microservices, Real-time features'
+        {
+          name: 'Java',
+          skillId: 'java',
+          description: 'Langage de programmation orienté objet',
+          details: 'Utilisé pour : développement backend, applications d\'entreprise'
         },
-        { 
-          name: 'PostgreSQL', 
-          skillId: 'postgresql',
-          description: 'Powerful open-source relational database',
-          details: 'Used for: Data persistence, Complex queries, ACID compliance'
+        {
+          name: 'SpringBoot',
+          skillId: 'springboot',
+          description: 'Framework Java pour applications web',
+          details: 'Utilisé pour : APIs REST, microservices, architecture backend'
         },
-        { 
-          name: 'Docker', 
-          skillId: 'docker',
-          description: 'Containerization platform for deployment',
-          details: 'Used for: Development environment, CI/CD, Production deployment'
-        },
-        { 
-          name: 'React', 
-          skillId: 'react',
-          description: 'Modern UI library for building interactive interfaces',
-          details: 'Used for: Component architecture, State management, Complex UIs'
-        },
-        { 
-          name: 'TypeScript', 
-          skillId: 'typescript',
-          description: 'Typed superset of JavaScript for robust applications',
-          details: 'Used for: Type safety, Better IDE support, Reduced bugs'
+        {
+          name: 'AgileScrum',
+          skillId: 'agile',
+          description: 'Méthode de gestion de projet agile',
+          details: 'Utilisé pour : sprints, rétrospectives, planification'
         },
       ],
       responsibilities: {
+        // TODO: miss info for renault.responsibilities — détails des missions non fournis dans info.md
         fr: [
-          'Architecture de systèmes scalables et maintenables',
-          'Mentorat technique d\'une équipe de 5 développeurs',
-          'Optimisation des performances et de la qualité du code',
-          'Mise en place de pipelines CI/CD et automatisation'
+          'Développement d\'applications en Java / Spring Boot',
+          'Participation aux cérémonies agile (SCRUM)',
+          'Collaboration avec les équipes Renault Digital',
         ],
         en: [
-          'Architecture of scalable and maintainable systems',
-          'Technical mentoring of a team of 5 developers',
-          'Performance optimization and code quality',
-          'Implementation of CI/CD pipelines and automation'
+          'Application development in Java / Spring Boot',
+          'Participation in agile ceremonies (SCRUM)',
+          'Collaboration with Renault Digital teams',
         ]
       },
       achievements: {
+        // TODO: miss info for renault.achievements — aucune réalisation chiffrée fournie dans info.md
         fr: [
-          'Réduction de 40% du temps de chargement des pages',
-          'Migration complète vers TypeScript avec zéro régression',
-          'Amélioration de 60% de la couverture de tests'
+          'En cours — alternance jusqu\'à juin 2026',
         ],
         en: [
-          '40% reduction in page load time',
-          'Complete migration to TypeScript with zero regression',
-          '60% improvement in test coverage'
+          'Ongoing — apprenticeship until June 2026',
         ]
       }
     },
     {
-      id: 'exp2',
-      company: 'StartupInnovante',
-      position: 'Full Stack Developer',
+      id: 'faubourg',
+      company: 'FabourgNumerique',
+      position: 'Stagiaire Développement Web',
       icon: Rocket,
       color: 'text-blue-400',
       borderColor: 'border-blue-400',
-      period: '2019 - 2021',
-      location: 'Lyon, France',
+      period: 'mai 2024 – août 2024 · 4 mois',
+      location: 'Saint-Quentin, Hauts-de-France · Hybride',
       description: {
-        fr: 'Développement de solutions web innovantes et APIs RESTful',
-        en: 'Development of innovative web solutions and RESTful APIs'
+        fr: 'Projet Territoire Connecté et Durable — plateforme web IoT en collaboration avec La Somme Numérique',
+        en: 'Connected and Sustainable Territory project — IoT web platform in collaboration with La Somme Numérique'
       },
       current: false,
       technologies: [
-        { 
-          name: 'NodeJS', 
+        {
+          name: 'NodeJS',
           skillId: 'nodejs',
           description: 'JavaScript runtime for scalable server applications',
-          details: 'Used for: REST API, Authentication, Business logic'
+          details: 'Utilisé pour : backend du projet IoT'
         },
-        { 
-          name: 'MongoDB', 
-          skillId: 'mongodb',
-          description: 'NoSQL database for flexible data models',
-          details: 'Used for: Document storage, Fast queries, Scalability'
+        {
+          name: 'VueJS',
+          skillId: 'vuejs',
+          description: 'Framework JavaScript progressif',
+          details: 'Utilisé pour : interface web de la plateforme'
         },
-        { 
-          name: 'Express', 
-          skillId: 'express',
-          description: 'Fast, minimalist web framework for Node.js',
-          details: 'Used for: REST API, Middleware, Request handling'
-        },
-        { 
-          name: 'AWS', 
+        {
+          name: 'IoT',
           skillId: null,
-          description: 'Cloud computing platform',
-          details: 'Used for: Hosting, Storage, CDN, Serverless functions'
-        },
-        { 
-          name: 'React', 
-          skillId: 'react',
-          description: 'Modern UI library for building interactive interfaces',
-          details: 'Used for: SPA development, Component architecture, State management'
+          description: 'Internet des Objets',
+          details: 'Utilisé pour : gestion de données capteurs'
         },
       ],
       responsibilities: {
+        // TODO: miss info for faubourg.responsibilities — détails des missions non fournis dans info.md
         fr: [
-          'Développement full-stack de fonctionnalités end-to-end',
-          'Création d\'APIs RESTful scalables et documentées',
-          'Intégration de services tiers et APIs externes',
-          'Optimisation des requêtes et performances backend'
+          'Développement de la plateforme web pour la gestion de données IoT',
+          'Travail sur le projet Territoire Connecté et Durable',
+          'Collaboration avec La Somme Numérique',
         ],
         en: [
-          'Full-stack development of end-to-end features',
-          'Creation of scalable and documented RESTful APIs',
-          'Integration of third-party services and external APIs',
-          'Query optimization and backend performance'
+          'Development of the web platform for IoT data management',
+          'Work on the Connected and Sustainable Territory project',
+          'Collaboration with La Somme Numérique',
         ]
       },
       achievements: {
+        // TODO: miss info for faubourg.achievements — aucune réalisation chiffrée fournie dans info.md
         fr: [
-          'Développement de 3 produits MVP en moins de 6 mois',
-          'Mise en place d\'une architecture microservices',
-          'Contribution à l\'augmentation de 200% des utilisateurs actifs'
+          'Livraison de la plateforme web IoT en 4 mois',
         ],
         en: [
-          'Development of 3 MVP products in less than 6 months',
-          'Implementation of microservices architecture',
-          'Contribution to 200% increase in active users'
+          'Delivery of the IoT web platform in 4 months',
         ]
       }
     },
     {
-      id: 'exp3',
-      company: 'AgenceWeb',
-      position: 'Développeur Frontend',
+      id: 'chatterie2',
+      company: 'ChatterieTerreBrasco',
+      position: 'Stagiaire Développement Web',
       icon: Building2,
       color: 'text-green-400',
       borderColor: 'border-green-400',
-      period: '2017 - 2019',
-      location: 'Paris, France',
+      period: 'février 2023',
+      location: 'France',
       description: {
-        fr: 'Création d\'interfaces utilisateur responsive et accessibles',
-        en: 'Creation of responsive and accessible user interfaces'
+        fr: 'Finalisation du site web vitrine précédemment débuté lors du stage précédent',
+        en: 'Finalization of the showcase website previously started during the previous internship'
       },
       current: false,
       technologies: [
-        { 
-          name: 'JavaScript', 
-          skillId: null,
-          description: 'Programming language for the web',
-          details: 'Used for: DOM manipulation, Event handling, Async operations'
+        {
+          name: 'PHP',
+          skillId: 'php',
+          description: 'Langage de script côté serveur',
+          details: 'Utilisé pour : développement backend du site'
         },
-        { 
-          name: 'VueJS', 
-          skillId: null,
-          description: 'Progressive JavaScript framework',
-          details: 'Used for: Reactive UI, Component system, State management'
-        },
-        { 
-          name: 'HTML5', 
-          skillId: null,
-          description: 'Markup language for structuring web content',
-          details: 'Used for: Semantic HTML, Accessibility, SEO'
-        },
-        { 
-          name: 'CSS3', 
-          skillId: null,
-          description: 'Styling language for web pages',
-          details: 'Used for: Layouts, Animations, Responsive design'
-        },
-        { 
-          name: 'SASS', 
-          skillId: null,
-          description: 'CSS preprocessor for better styling',
-          details: 'Used for: Variables, Mixins, Nested rules'
+        {
+          name: 'WordPress',
+          skillId: 'wordpress',
+          description: 'CMS open source',
+          details: 'Utilisé pour : création et gestion du site vitrine'
         },
       ],
       responsibilities: {
+        // TODO: miss info for chatterie2.responsibilities — détails des missions non fournis dans info.md
         fr: [
-          'Intégration de maquettes UI/UX avec pixel-perfect',
-          'Développement de composants réutilisables et modulaires',
-          'Collaboration étroite avec l\'équipe design',
-          'Assurer la compatibilité cross-browser et responsive'
+          'Finalisation du site web vitrine de l\'association',
+          'Développement PHP et intégration WordPress',
         ],
         en: [
-          'Pixel-perfect UI/UX mockup integration',
-          'Development of reusable and modular components',
-          'Close collaboration with design team',
-          'Ensure cross-browser and responsive compatibility'
+          'Finalization of the association\'s showcase website',
+          'PHP development and WordPress integration',
         ]
       },
       achievements: {
+        // TODO: miss info for chatterie2.achievements — aucune réalisation chiffrée fournie dans info.md
         fr: [
-          'Livraison de plus de 20 projets client avec succès',
-          'Création d\'une bibliothèque de composants réutilisables',
-          'Amélioration du score d\'accessibilité moyen de 85% à 98%'
+          'Site web vitrine finalisé et livré',
         ],
         en: [
-          'Successful delivery of over 20 client projects',
-          'Creation of a reusable component library',
-          'Improvement of average accessibility score from 85% to 98%'
+          'Showcase website finalized and delivered',
+        ]
+      }
+    },
+    {
+      id: 'chatterie1',
+      company: 'ChatterieTerreBrasco',
+      position: 'Stagiaire Développement Web',
+      icon: Building2,
+      color: 'text-orange-400',
+      borderColor: 'border-orange-400',
+      period: 'mai 2022',
+      location: 'France',
+      description: {
+        fr: 'Commencement du développement d\'une application web vitrine pour l\'association',
+        en: 'Start of development of a showcase web application for the association'
+      },
+      current: false,
+      technologies: [
+        {
+          name: 'PHP',
+          skillId: 'php',
+          description: 'Langage de script côté serveur',
+          details: 'Utilisé pour : développement backend du site'
+        },
+        {
+          name: 'WordPress',
+          skillId: 'wordpress',
+          description: 'CMS open source',
+          details: 'Utilisé pour : création du site vitrine'
+        },
+      ],
+      responsibilities: {
+        // TODO: miss info for chatterie1.responsibilities — détails des missions non fournis dans info.md
+        fr: [
+          'Démarrage du développement du site web vitrine',
+          'Mise en place de l\'environnement WordPress',
+        ],
+        en: [
+          'Start of showcase website development',
+          'WordPress environment setup',
+        ]
+      },
+      achievements: {
+        // TODO: miss info for chatterie1.achievements — aucune réalisation chiffrée fournie dans info.md
+        fr: [
+          'Base du site web vitrine développée',
+        ],
+        en: [
+          'Showcase website base developed',
         ]
       }
     }
@@ -258,8 +252,7 @@ export function Experience() {
           animate={{ opacity: 1, y: 0 }}
           className="font-mono text-sm md:text-base"
         >
-          <span className="text-syntax-comment">{'// '}</span>
-          <span className="text-syntax-comment">{t('experience.title')}</span>
+          <span className="text-syntax-comment">{'// '}<EditableText value={t('experience.title')} editKey="experience.comment" /></span>
         </motion.div>
         <div className="space-y-6 md:space-y-8">
           {experiences.map((exp, expIndex) => {
@@ -268,14 +261,17 @@ export function Experience() {
 
             let borderClasses = '';
             switch (exp.id) {
-              case 'exp1':
+              case 'renault':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-purple-400 hover:border-purple-400';
                 break;
-              case 'exp2':
+              case 'faubourg':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-blue-400 hover:border-blue-400';
                 break;
-              case 'exp3':
+              case 'chatterie2':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-green-400 hover:border-green-400';
+                break;
+              case 'chatterie1':
+                borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-orange-400 hover:border-orange-400';
                 break;
             }
 
@@ -296,7 +292,7 @@ export function Experience() {
                     <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
                       <span className="text-syntax-keyword">class</span>{' '}
                       <span className={`text-syntax-class ${exp.color} break-words`} style={{ fontSize: '1.1em' }}>
-                        {exp.company}
+                        <EditableText value={exp.company} editKey={`experience.${expIndex}.company`} />
                       </span>{' '}
                       <span className="text-syntax-punctuation">{'{'}</span>
                     </div>
@@ -311,27 +307,27 @@ export function Experience() {
                 </div>
                 <div className="ml-4 md:ml-8 space-y-3 font-mono text-sm md:text-base overflow-hidden">
                   <div className="break-words">
-                    <span className="text-syntax-property">position</span>
+                    <span className="text-syntax-property"><EditableText value="position" editKey="experience.prop.position" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{exp.position}"</span>
+                    <span className="text-syntax-string">"<EditableText value={exp.position} editKey={`experience.${expIndex}.position`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div className="flex items-center gap-2 min-w-0 break-words">
                     <Calendar className={`w-3 h-3 md:w-4 md:h-4 ${exp.color} opacity-60 flex-shrink-0`} />
-                    <span className="text-syntax-property">period</span>
+                    <span className="text-syntax-property"><EditableText value="period" editKey="experience.prop.period" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{exp.period}"</span>
+                    <span className="text-syntax-string">"<EditableText value={exp.period} editKey={`experience.${expIndex}.period`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div className="flex items-center gap-2 min-w-0 break-words">
                     <MapPin className={`w-3 h-3 md:w-4 md:h-4 ${exp.color} opacity-60 flex-shrink-0`} />
-                    <span className="text-syntax-property">location</span>
+                    <span className="text-syntax-property"><EditableText value="location" editKey="experience.prop.location" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
-                    <span className="text-syntax-string">"{exp.location}"</span>
+                    <span className="text-syntax-string">"<EditableText value={exp.location} editKey={`experience.${expIndex}.location`} />"</span>
                     <span className="text-syntax-punctuation">;</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">technologies</span>
+                    <span className="text-syntax-property"><EditableText value="technologies" editKey="experience.prop.technologies" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -346,16 +342,17 @@ export function Experience() {
                             details={tech.details}
                             type="class"
                             onClick={() => {
-                              setCurrentPage('skills');
+                              setTargetSkillId(tech.skillId!);
+                              window.dispatchEvent(new Event('navigate-to-skill'));
                             }}
                           >
                             <span className={`text-syntax-class ${exp.color}`}>
-                              {tech.name}
+                              <EditableText value={tech.name} editKey={`experience.${expIndex}.tech.${idx}.name`} />
                             </span>
                           </ItemTooltip>
                         ) : (
                           <span className={`text-syntax-class ${exp.color}`}>
-                            {tech.name}
+                            <EditableText value={tech.name} editKey={`experience.${expIndex}.tech.${idx}.name`} />
                           </span>
                         )}
                         <span className="text-syntax-punctuation">()</span>
@@ -369,7 +366,7 @@ export function Experience() {
                     <span className="text-syntax-punctuation">];</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">responsibilities</span>
+                    <span className="text-syntax-property"><EditableText value="responsibilities" editKey="experience.prop.responsibilities" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -377,7 +374,7 @@ export function Experience() {
                     {exp.responsibilities[language].map((resp, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <Target className={`w-3 h-3 md:w-4 md:h-4 ${exp.color} mt-0.5 flex-shrink-0`} />
-                        <span className="text-syntax-string">"{resp}"</span>
+                        <span className="text-syntax-string">"<EditableText value={resp} editKey={`experience.${expIndex}.resp.${language}.${idx}`} />"</span>
                         {idx < exp.responsibilities[language].length - 1 && (
                           <span className="text-syntax-punctuation">,</span>
                         )}
@@ -388,7 +385,7 @@ export function Experience() {
                     <span className="text-syntax-punctuation">];</span>
                   </div>
                   <div>
-                    <span className="text-syntax-property">achievements</span>
+                    <span className="text-syntax-property"><EditableText value="achievements" editKey="experience.prop.achievements" /></span>
                     <span className="text-syntax-punctuation">:</span>{' '}
                     <span className="text-syntax-punctuation">[</span>
                   </div>
@@ -396,7 +393,7 @@ export function Experience() {
                     {exp.achievements[language].map((achievement, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <Award className={`w-3 h-3 md:w-4 md:h-4 ${exp.color} mt-0.5 flex-shrink-0`} />
-                        <span className="text-syntax-string">"{achievement}"</span>
+                        <span className="text-syntax-string">"<EditableText value={achievement} editKey={`experience.${expIndex}.ach.${language}.${idx}`} />"</span>
                         {idx < exp.achievements[language].length - 1 && (
                           <span className="text-syntax-punctuation">,</span>
                         )}

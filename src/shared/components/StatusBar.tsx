@@ -1,7 +1,8 @@
-import { Terminal, GitBranch, AlertCircle, Wifi, Moon, Sun, Settings, Gamepad2, Zap, Sunset, Rocket, Snowflake } from 'lucide-react';
+import { Terminal, GitBranch, AlertCircle, Wifi, Moon, Sun, Settings, Gamepad2, Zap, Sunset, Rocket, Snowflake, RotateCcw } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../../i18n/hooks';
 import { useState, useRef, useEffect } from 'react';
+import { useEditContext } from '../contexts/EditContext';
 
 interface StatusBarProps {
   onTerminalToggle: () => void;
@@ -11,6 +12,7 @@ interface StatusBarProps {
 export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProps) {
   const { theme, setTheme } = useTheme();
   const { language } = useLanguage();
+  const { hasEdits, resetEdits } = useEditContext();
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const themeMenuRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +70,16 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
           <Wifi className="w-3 h-3" />
           <span>Connected</span>
         </div>
+        {hasEdits && (
+          <button
+            onClick={resetEdits}
+            title="Reset all edits"
+            className="flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover text-yellow-400"
+          >
+            <RotateCcw className="w-3 h-3" />
+            <span>Reset edits</span>
+          </button>
+        )}
         <button
           onClick={onTerminalToggle}
           className={`flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover ${

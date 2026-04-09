@@ -63,7 +63,20 @@
     "project4Desc": "Weather dashboard",
     "whoami": "A developer who loves turning coffee into code ☕→💻",
     "unknownCommand": "Unknown command",
-    "unknownCommandHelp": "Type 'help' to see available commands"
+    "unknownCommandHelp": "Type 'help' to see available commands",
+    "helpExtra": "Standard commands also work. Try ls, cd, cat, git, npm…",
+    "helpResetEdits": "Reset all local content edits",
+    "contactEmail": "Email",
+    "contactGithub": "GitHub",
+    "contactLinkedin": "LinkedIn",
+    "contactLocation": "Location",
+    "exitMessage": "You can't leave. This is a portfolio, not a real terminal.",
+    "sudoPasswordPrompt": "[sudo] password for user:",
+    "sudoWrongPassword": "Sorry, try again. ({n}/3)",
+    "sudoMaxAttempts": "sudo: 3 incorrect password attempts",
+    "sudoHint": "(hint: it's \"password\")",
+    "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
+    "sudoSuccess2": "Oh wait — we're in a fake terminal."
   },
   "status": {
     "terminal": "Terminal",

@@ -63,7 +63,20 @@
     "project4Desc": "Tableau de bord météo",
     "whoami": "Un développeur qui aime transformer le café en code ☕→💻",
     "unknownCommand": "Commande inconnue",
-    "unknownCommandHelp": "Tapez 'help' pour voir les commandes disponibles"
+    "unknownCommandHelp": "Tapez 'help' pour voir les commandes disponibles",
+    "helpExtra": "Les commandes standard fonctionnent aussi. Essayez ls, cd, cat, git, npm…",
+    "helpResetEdits": "Réinitialise les modifications locales",
+    "contactEmail": "Email",
+    "contactGithub": "GitHub",
+    "contactLinkedin": "LinkedIn",
+    "contactLocation": "Localisation",
+    "exitMessage": "Impossible de quitter. C'est un portfolio, pas un vrai terminal.",
+    "sudoPasswordPrompt": "[sudo] mot de passe pour user :",
+    "sudoWrongPassword": "Désolé, essayez encore. ({n}/3)",
+    "sudoMaxAttempts": "sudo : 3 tentatives de mot de passe incorrectes",
+    "sudoHint": "(indice : c'est \"password\")",
+    "sudoSuccess1": "Mot de passe accepté... pas très sécurisé mais le mot de passe est bon.",
+    "sudoSuccess2": "Ah mais attendez — on est dans un faux terminal."
   },
   "status": {
     "terminal": "Terminal",
