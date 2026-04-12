@@ -8,13 +8,13 @@
     "experience": "Experience"
   },
   "home": {
-    "greeting": "Hello, I'm",
-    "title": "Full Stack Developer",
-    "subtitle": "Passionate about creating innovative web experiences"
+    "greeting": "Hi, I'm",
+    "title": "Apprentice Developer — Master Cloud Computing & Mobility",
+    "subtitle": "Java, Spring Boot, JavaScript: from Renault Digital backends to React/Vue interfaces"
   },
   "about": {
     "title": "About Me",
-    "description": "Passionate developer with several years of experience creating modern web applications. I love solving complex problems and creating elegant user interfaces.",
+    "description": "Master Cloud Computing & Mobility student (UPJV / INSSET) and apprentice at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/WordPress internships.",
     "experience": "Experience",
     "education": "Education"
   },
@@ -31,7 +31,7 @@
   },
   "contact": {
     "title": "Contact Me",
-    "description": "Feel free to contact me to discuss your projects",
+    "description": "Feel free to reach out about opportunities or collaborations",
     "name": "Name",
     "email": "Email",
     "message": "Message",
@@ -51,17 +51,17 @@
     "helpContact": "Contact info",
     "helpClear": "Clear terminal",
     "helpWhoami": "Who am I?",
-    "aboutLine1": "Full Stack Developer passionate about creating modern web applications.",
-    "aboutLine2": "Specialized in React, TypeScript, Node.js and more.",
+    "aboutLine1": "Apprentice developer at Renault Digital, Master Cloud Computing & Mobility student.",
+    "aboutLine2": "Four pro experiences: Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/WordPress).",
     "skillsFrontend": "Frontend",
     "skillsBackend": "Backend",
     "skillsTools": "Tools",
     "skillsOther": "Other",
-    "project1Desc": "This interactive portfolio",
-    "project2Desc": "Online shopping app",
-    "project3Desc": "Task management tool",
-    "project4Desc": "Weather dashboard",
-    "whoami": "A developer who loves turning coffee into code ☕→💻",
+    "project1Desc": "This interactive portfolio (React + TypeScript)",
+    "project2Desc": "Connected & Sustainable Territory IoT platform (Vue.js + Node.js)",
+    "project3Desc": "Chatterie de la Terre de Brasco showcase site (PHP/WordPress)",
+    "project4Desc": "",
+    "whoami": "An apprentice who loves turning coffee into Java code ☕→💻",
     "unknownCommand": "Unknown command",
     "unknownCommandHelp": "Type 'help' to see available commands",
     "helpExtra": "Standard commands also work. Try ls, cd, cat, git, npm…",
@@ -83,4 +83,3 @@
     "theme": "Theme"
   }
 }
-

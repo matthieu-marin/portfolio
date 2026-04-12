@@ -6,6 +6,7 @@ import {
   Wrench,
   FileCode2,
   Braces,
+  Boxes,
   Code,
   Terminal,
   Package,
@@ -107,7 +108,7 @@ export function Skills() {
           level: 'Beginner',
           description: 'Langage polyvalent pour le scripting et l\'automatisation',
           acquiredFrom: [
-            // TODO: miss info for python.acquiredFrom — contexte d'apprentissage non fourni dans info.md
+            { type: 'experience', id: 'studies', name: 'Etudes', displayName: 'BTS SIO / Master UPJV', description: 'Apprentissage durant le BTS SIO option B et le Master Cloud Computing' }
           ]
         },
       ],
@@ -138,7 +139,7 @@ export function Skills() {
           level: 'Intermediate',
           description: 'Bibliothèque UI pour construire des interfaces interactives',
           acquiredFrom: [
-            // TODO: miss info for react.acquiredFrom — contexte d'apprentissage non fourni dans info.md
+            { type: 'project', id: 'portfolio', name: 'PortfolioIDE', displayName: 'Portfolio IDE', description: 'Ce portfolio — React 18, TypeScript, Tailwind v4, Motion' }
           ]
         },
         {
@@ -189,7 +190,8 @@ export function Skills() {
           level: 'Intermediate',
           description: 'Langage de requête pour bases de données relationnelles',
           acquiredFrom: [
-            // TODO: miss info for sql.acquiredFrom — contexte d'apprentissage non fourni dans info.md
+            { type: 'experience', id: 'renault', name: 'RenaultDigital', displayName: 'Renault Digital', description: 'Développeur en alternance — bases relationnelles côté backend Java/Spring' },
+            { type: 'experience', id: 'studies', name: 'Etudes', displayName: 'BTS SIO / Licence Pro', description: 'Modules base de données du BTS SIO et de la Licence Pro' }
           ]
         },
       ],

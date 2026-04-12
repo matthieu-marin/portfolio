@@ -1,17 +1,11 @@
 import { motion } from 'motion/react';
-import { 
-  ExternalLink, 
-  Github, 
-  Code2, 
-  ShoppingCart, 
-  CheckSquare, 
-  Cloud, 
-  BarChart3, 
-  FileText,
-  Zap,
-  Database,
-  Globe,
+import {
+  ExternalLink,
+  Github,
+  Code2,
   Rocket,
+  Cat,
+  Radio,
   Image as ImageIcon
 } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
@@ -26,17 +20,8 @@ export function Projects() {
   const { targetProjectId, setTargetProjectId, setTargetSkillId } = useNavigation();
   const projectRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // TODO: miss info for projects
-  // ## Informations manquantes — Projets personnels
-  // Aucun projet personnel fourni dans info.md.
-  // Pour chaque projet, il faudrait :
-  // - Nom du projet
-  // - Description courte (FR + EN)
-  // - Technologies utilisées
-  // - Lien GitHub ou démo
-  // - Période de réalisation
-  // - Image de prévisualisation (optionnel)
-  // Les projets ci-dessous sont des données fictives à remplacer.
+  // Projets réels dérivés de info.md (1 projet perso + 2 issus de stages).
+  // TODO github URL: l'URL GitHub n'est pas fournie dans info.md — les liens "github" sont laissés à undefined.
   const projects = [
     {
       id: 'portfolio',
@@ -44,271 +29,122 @@ export function Projects() {
       icon: Code2,
       color: 'text-purple-400',
       borderColor: 'border-purple-400',
-      description: 'Interactive portfolio inspired by VS Code with integrated terminal and custom themes',
-      repository: 'https://github.com/yourusername/portfolio-ide',
-      technologies: [
-        { 
-          name: 'React', 
-          skillId: 'react',
-          description: 'Modern UI library for building interactive interfaces',
-          details: 'Used for: Component architecture, State management, Hooks'
-        },
-        { 
-          name: 'TypeScript', 
-          skillId: 'typescript',
-          description: 'Typed superset of JavaScript for robust applications',
-          details: 'Used for: Type safety, Better IDE support, Reduced bugs'
-        },
-        { 
-          name: 'TailwindCSS', 
-          skillId: 'tailwind',
-          description: 'Utility-first CSS framework for rapid UI development',
-          details: 'Used for: Styling, Theme system, Responsive design'
-        },
-        { 
-          name: 'Motion', 
-          skillId: null,
-          description: 'Animation library for React',
-          details: 'Used for: Page transitions, Hover effects, Smooth animations'
-        },
-      ],
-      features: [
-        'Multi-theme system (Dark, Light, Steampunk)',
-        'Interactive terminal with custom commands',
-        'File explorer navigation',
-        'Responsive design with mobile support'
-      ],
-      previews: [
-        { label: 'Main Interface', imageUrl: 'https://images.unsplash.com/photo-1659841064804-5f507b1b488a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0Zm9saW8lMjB3ZWJzaXRlJTIwZGFyayUyMHRoZW1lfGVufDF8fHx8MTc2MzQxMTUyMnww&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Terminal View', imageUrl: 'https://images.unsplash.com/photo-1659841064804-5f507b1b488a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0Zm9saW8lMjB3ZWJzaXRlJTIwZGFyayUyMHRoZW1lfGVufDF8fHx8MTc2MzQxMTUyMnww&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Steampunk Theme', imageUrl: 'https://images.unsplash.com/photo-1659841064804-5f507b1b488a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0Zm9saW8lMjB3ZWJzaXRlJTIwZGFyayUyMHRoZW1lfGVufDF8fHx8MTc2MzQxMTUyMnww&ixlib=rb-4.1.0&q=80&w=1080' },
-      ],
-      status: 'Production',
-      github: 'https://github.com',
-      demo: 'https://example.com',
-    },
-    {
-      id: 'ecommerce',
-      title: 'ECommercePlatform',
-      icon: ShoppingCart,
-      color: 'text-blue-400',
-      borderColor: 'border-blue-400',
-      description: 'Full-featured e-commerce platform with secure payment and inventory management',
-      repository: 'https://github.com/yourusername/ecommerce-platform',
-      technologies: [
-        { 
-          name: 'NextJS', 
-          skillId: 'nextjs',
-          description: 'React framework for production-ready applications',
-          details: 'Used for: SSR/SSG, API Routes, File-based routing'
-        },
-        { 
-          name: 'PostgreSQL', 
-          skillId: 'postgresql',
-          description: 'Powerful open-source relational database',
-          details: 'Used for: Data persistence, Complex queries, ACID compliance'
-        },
-        { 
-          name: 'Prisma', 
-          skillId: 'prisma',
-          description: 'Next-generation ORM for type-safe database access',
-          details: 'Used for: Database migrations, Type-safe queries, Schema management'
-        },
-        { 
-          name: 'Stripe', 
-          skillId: null,
-          description: 'Payment processing platform',
-          details: 'Used for: Payment gateway, Subscription management, Secure transactions'
-        },
-      ],
-      features: [
-        'Secure payment processing with Stripe',
-        'Real-time inventory management',
-        'Admin dashboard for analytics',
-        'Product search and filtering'
-      ],
-      previews: [
-        { label: 'Product Grid', imageUrl: 'https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlY29tbWVyY2UlMjBzaG9wcGluZyUyMGNhcnR8ZW58MXx8fHwxNzYzNDExNTIzfDA&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Checkout Flow', imageUrl: 'https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlY29tbWVyY2UlMjBzaG9wcGluZyUyMGNhcnR8ZW58MXx8fHwxNzYzNDExNTIzfDA&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Admin Dashboard', imageUrl: 'https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlY29tbWVyY2UlMjBzaG9wcGluZyUyMGNhcnR8ZW58MXx8fHwxNzYzNDExNTIzfDA&ixlib=rb-4.1.0&q=80&w=1080' },
-      ],
-      status: 'Production',
-      github: 'https://github.com',
-      demo: 'https://example.com',
-    },
-    {
-      id: 'taskmanager',
-      title: 'TaskManagerPro',
-      icon: CheckSquare,
-      color: 'text-green-400',
-      borderColor: 'border-green-400',
-      description: 'Collaborative task management app with real-time synchronization',
-      repository: 'https://github.com/yourusername/task-manager-pro',
-      technologies: [
-        { 
-          name: 'React', 
-          skillId: 'react',
-          description: 'Modern UI library for building interactive interfaces',
-          details: 'Used for: Real-time UI updates, Component composition, Hooks'
-        },
-        { 
-          name: 'NodeJS', 
-          skillId: 'nodejs',
-          description: 'JavaScript runtime for scalable server applications',
-          details: 'Used for: Backend API, WebSocket server, Authentication'
-        },
-        { 
-          name: 'MongoDB', 
-          skillId: 'mongodb',
-          description: 'NoSQL database for flexible data models',
-          details: 'Used for: Document storage, Fast queries, Scalability'
-        },
-        { 
-          name: 'SocketIO', 
-          skillId: null,
-          description: 'Real-time bidirectional event-based communication',
-          details: 'Used for: Live updates, Collaboration, Notifications'
-        },
-      ],
-      features: [
-        'Real-time collaboration with Socket.io',
-        'Task assignment and tracking',
-        'Team workspace management',
-        'Notifications and reminders'
-      ],
-      previews: [
-        { label: 'Task Board', imageUrl: 'https://images.unsplash.com/photo-1629819126368-d85e9138d2c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0YXNrJTIwbWFuYWdlciUyMGRhc2hib2FyZHxlbnwxfHx8fDE3NjM0MTE1MjN8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Calendar View', imageUrl: 'https://images.unsplash.com/photo-1629819126368-d85e9138d2c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0YXNrJTIwbWFuYWdlciUyMGRhc2hib2FyZHxlbnwxfHx8fDE3NjM0MTE1MjN8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-      ],
-      status: 'Development',
-      github: 'https://github.com',
-      demo: 'https://example.com',
-    },
-    {
-      id: 'weather',
-      title: 'WeatherDashboard',
-      icon: Cloud,
-      color: 'text-cyan-400',
-      borderColor: 'border-cyan-400',
-      description: 'Weather dashboard with data visualizations and detailed forecasts',
+      description: 'Portfolio interactif inspiré de VS Code avec terminal intégré et thèmes personnalisés',
       repository: undefined,
       technologies: [
-        { 
-          name: 'React', 
+        {
+          name: 'React',
           skillId: 'react',
-          description: 'Modern UI library for building interactive interfaces',
-          details: 'Used for: Dynamic charts, Data visualization, Responsive UI'
+          description: 'Bibliothèque UI moderne pour interfaces interactives',
+          details: 'Utilisé pour : architecture composants, hooks, gestion d\'état'
         },
-        { 
-          name: 'D3JS', 
+        {
+          name: 'TypeScript',
           skillId: null,
-          description: 'Data visualization library',
-          details: 'Used for: Custom charts, Interactive maps, Data-driven graphics'
+          description: 'Superset typé de JavaScript',
+          details: 'Utilisé pour : sûreté de type, autocomplétion IDE, refactor sereins'
         },
-        { 
-          name: 'Recharts', 
+        {
+          name: 'TailwindCSS',
           skillId: null,
-          description: 'Composable charting library built on React',
-          details: 'Used for: Line charts, Bar charts, Area charts'
+          description: 'Framework CSS utility-first',
+          details: 'Utilisé pour : styling, système de thèmes, responsive'
+        },
+        {
+          name: 'Motion',
+          skillId: null,
+          description: 'Bibliothèque d\'animation pour React',
+          details: 'Utilisé pour : transitions de pages, effets au survol'
         },
       ],
       features: [
-        'Interactive weather maps',
-        '7-day forecast with hourly details',
-        'Historical data analysis',
-        'Location-based weather alerts'
+        'Système multi-thèmes (Dark, Light, Steampunk, Cyberpunk, Synthwave, Galaxy, Nord, Pixel)',
+        'Terminal interactif avec commandes Unix simulées',
+        'Navigation par explorateur de fichiers',
+        'Bilingue (FR/EN) et responsive mobile'
       ],
       previews: [
-        { label: 'Main Dashboard', imageUrl: 'https://images.unsplash.com/photo-1705077031869-51b60754302a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWF0aGVyJTIwZm9yZWNhc3QlMjBhcHB8ZW58MXx8fHwxNzYzNDExNTIzfDA&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Forecast View', imageUrl: 'https://images.unsplash.com/photo-1705077031869-51b60754302a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWF0aGVyJTIwZm9yZWNhc3QlMjBhcHB8ZW58MXx8fHwxNzYzNDExNTIzfDA&ixlib=rb-4.1.0&q=80&w=1080' },
-      ],
-      status: 'Production',
-      github: undefined,
-      demo: 'https://example.com',
-    },
-    {
-      id: 'analytics',
-      title: 'SocialMediaAnalytics',
-      icon: BarChart3,
-      color: 'text-pink-400',
-      borderColor: 'border-pink-400',
-      description: 'Social media analysis tool with detailed reports and visualizations',
-      repository: 'https://github.com/yourusername/social-analytics',
-      technologies: [
-        { 
-          name: 'VueJS', 
-          skillId: null,
-          description: 'Progressive JavaScript framework',
-          details: 'Used for: Reactive UI, Component system, State management'
-        },
-        { 
-          name: 'Express', 
-          skillId: 'express',
-          description: 'Fast, minimalist web framework for Node.js',
-          details: 'Used for: REST API, Middleware, Request handling'
-        },
-        { 
-          name: 'Redis', 
-          skillId: 'redis',
-          description: 'In-memory data structure store for caching',
-          details: 'Used for: Session storage, Cache layer, Real-time analytics'
-        },
-      ],
-      features: [
-        'Multi-platform analytics integration',
-        'Custom report generation',
-        'Engagement metrics tracking',
-        'Scheduled data exports'
-      ],
-      previews: [
-        { label: 'Analytics Overview', imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmFseXRpY3MlMjBkYXNoYm9hcmQlMjBjaGFydHN8ZW58MXx8fHwxNzYzMzcyODE4fDA&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Reports', imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmFseXRpY3MlMjBkYXNoYm9hcmQlMjBjaGFydHN8ZW58MXx8fHwxNzYzMzcyODE4fDA&ixlib=rb-4.1.0&q=80&w=1080' },
+        { label: 'Interface principale', imageUrl: 'https://images.unsplash.com/photo-1659841064804-5f507b1b488a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80' },
       ],
       status: 'Production',
       github: undefined,
       demo: undefined,
     },
     {
-      id: 'cms',
-      title: 'BlogCMS',
-      icon: FileText,
-      color: 'text-orange-400',
-      borderColor: 'border-orange-400',
-      description: 'Content management system for blogs with Markdown editor and SEO optimization',
-      repository: 'https://github.com/yourusername/blog-cms',
+      id: 'iot-territoire',
+      title: 'TerritoireConnecteDurable',
+      icon: Radio,
+      color: 'text-blue-400',
+      borderColor: 'border-blue-400',
+      description: 'Plateforme web IoT pour la gestion de données capteurs, développée chez Faubourg Numérique en collaboration avec La Somme Numérique',
+      repository: undefined,
       technologies: [
-        { 
-          name: 'NextJS', 
-          skillId: 'nextjs',
-          description: 'React framework for production-ready applications',
-          details: 'Used for: Static generation, SEO optimization, Image optimization'
+        {
+          name: 'NodeJS',
+          skillId: 'nodejs',
+          description: 'Runtime JavaScript serveur',
+          details: 'Utilisé pour : ingestion des données capteurs, API REST'
         },
-        { 
-          name: 'MDX', 
-          skillId: null,
-          description: 'Markdown for the component era',
-          details: 'Used for: Content authoring, Component embedding, Rich formatting'
+        {
+          name: 'VueJS',
+          skillId: 'vuejs',
+          description: 'Framework JavaScript progressif',
+          details: 'Utilisé pour : interface de visualisation des données IoT'
         },
-        { 
-          name: 'TailwindCSS', 
-          skillId: 'tailwind',
-          description: 'Utility-first CSS framework for rapid UI development',
-          details: 'Used for: Custom themes, Responsive design, Typography'
+        {
+          name: 'MongoDB',
+          skillId: 'mongodb',
+          description: 'Base NoSQL orientée documents',
+          details: 'Utilisé pour : stockage flexible des relevés capteurs'
         },
       ],
       features: [
-        'Markdown editor with live preview',
-        'SEO optimization tools',
-        'Custom taxonomy and tagging',
-        'Static site generation'
+        'Ingestion de données IoT (capteurs Internet des Objets)',
+        'Interface de visualisation des relevés',
+        'Collaboration avec La Somme Numérique',
+        'Livré dans le cadre d\'un stage de 4 mois'
       ],
       previews: [
-        { label: 'Editor Interface', imageUrl: 'https://images.unsplash.com/photo-1762939079730-23708c0dd337?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9nJTIwY21zJTIwaW50ZXJmYWNlfGVufDF8fHx8MTc2MzQxMTUyNHww&ixlib=rb-4.1.0&q=80&w=1080' },
-        { label: 'Blog Preview', imageUrl: 'https://images.unsplash.com/photo-1762939079730-23708c0dd337?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9nJTIwY21zJTIwaW50ZXJmYWNlfGVufDF8fHx8MTc2MzQxMTUyNHww&ixlib=rb-4.1.0&q=80&w=1080' },
+        { label: 'Dashboard de visualisation', imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80' },
       ],
-      status: 'Production',
-      github: 'https://github.com',
-      demo: 'https://example.com',
+      status: 'Livré',
+      github: undefined,
+      demo: undefined,
+    },
+    {
+      id: 'chatterie-vitrine',
+      title: 'ChatterieTerreBrascoSite',
+      icon: Cat,
+      color: 'text-orange-400',
+      borderColor: 'border-orange-400',
+      description: 'Site vitrine de l\'association Chatterie de la Terre de Brasco, démarré en 2022 et finalisé lors du second stage en 2023',
+      repository: undefined,
+      technologies: [
+        {
+          name: 'PHP',
+          skillId: 'php',
+          description: 'Langage de script côté serveur',
+          details: 'Utilisé pour : développement backend du site et templates'
+        },
+        {
+          name: 'WordPress',
+          skillId: 'wordpress',
+          description: 'CMS open-source',
+          details: 'Utilisé pour : gestion de contenu et structure du site vitrine'
+        },
+      ],
+      features: [
+        'Site vitrine pour l\'association',
+        'Gestion de contenu via WordPress',
+        'Premier stage : conception et démarrage du site',
+        'Second stage : finalisation et livraison'
+      ],
+      previews: [
+        { label: 'Page d\'accueil', imageUrl: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80' },
+      ],
+      status: 'Livré',
+      github: undefined,
+      demo: undefined,
     },
   ];
 
@@ -341,19 +177,10 @@ export function Projects() {
               case 'portfolio':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-purple-400 hover:border-purple-400';
                 break;
-              case 'ecommerce':
+              case 'iot-territoire':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-blue-400 hover:border-blue-400';
                 break;
-              case 'taskmanager':
-                borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-green-400 hover:border-green-400';
-                break;
-              case 'weather':
-                borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-cyan-400 hover:border-cyan-400';
-                break;
-              case 'analytics':
-                borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-pink-400 hover:border-pink-400';
-                break;
-              case 'cms':
+              case 'chatterie-vitrine':
                 borderClasses = 'border-4 border-t-accent/20 border-r-accent/20 border-b-accent/20 border-l-orange-400 hover:border-orange-400';
                 break;
             }

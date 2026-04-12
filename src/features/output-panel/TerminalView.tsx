@@ -342,27 +342,24 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
 
       case 'skills':
         return [
-          `Frontend : React, TypeScript, Tailwind CSS, Next.js`,
-          `Backend  : Node.js, Express, PostgreSQL, MongoDB`,
-          `Tools    : Git, Docker, VS Code`,
-          `Other    : REST APIs, GraphQL, WebSockets`,
+          `Frontend : JavaScript, React, Vue.js, WordPress`,
+          `Backend  : Java, Spring Boot, Node.js, PHP, Python`,
+          `Database : MongoDB, SQL, NoSQL`,
+          `Tools    : Git, Agile/SCRUM`,
         ];
 
       case 'projects':
         return [
-          '1. Portfolio IDE         — VS Code-inspired portfolio',
-          '2. E-commerce Platform   — Full-stack shop with Stripe',
-          '3. Task Manager Pro      — Real-time collaborative tasks',
-          '4. Weather Dashboard     — Data viz with D3.js',
-          '5. Social Media Analytics— Reports & visualizations',
+          '1. Portfolio IDE              — VS Code-inspired portfolio (React/TS)',
+          '2. Territoire Connecté Durable — IoT platform (Vue.js + Node.js)',
+          '3. Chatterie Terre de Brasco  — Showcase site (PHP/WordPress)',
         ];
 
       case 'contact':
         return [
-          `${t('terminal.contactEmail')}    : matthieu.marin@example.com`,
-          `${t('terminal.contactGithub')}   : github.com/matthieumarin`,
+          `${t('terminal.contactEmail')}    : matthieumarin51@gmail.com`,
           `${t('terminal.contactLinkedin')} : linkedin.com/in/matthieu-marin-b46865267`,
-          `${t('terminal.contactLocation')} : Paris, France`,
+          `${t('terminal.contactLocation')} : Saint-Quentin, Hauts-de-France`,
         ];
 
       case 'whoami':

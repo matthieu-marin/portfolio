@@ -80,13 +80,14 @@ function PortfolioContent() {
     window.addEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
     window.addEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
     window.addEventListener('navigate-to-project', handleNavigateToProject as EventListener);
-    
+
     return () => {
       window.removeEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
       window.removeEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
       window.removeEventListener('navigate-to-project', handleNavigateToProject as EventListener);
     };
-  }, []);
+    // Re-register when openTabs changes so the listeners close over the latest state.
+  }, [openTabs]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
