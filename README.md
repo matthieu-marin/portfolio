@@ -44,3 +44,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+  # One-Page Portfolio Design
+
+  This is a code bundle for One-Page Portfolio Design. The original project is available at https://www.figma.com/design/LfkCfcIsglNSdflthuTcBz/One-Page-Portfolio-Design.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  

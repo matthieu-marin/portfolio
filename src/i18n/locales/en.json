@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
+    "experience": "Experience"
+  },
+  "home": {
+    "greeting": "Hello, I'm",
+    "title": "Full Stack Developer",
+    "subtitle": "Passionate about creating innovative web experiences"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Passionate developer with several years of experience creating modern web applications. I love solving complex problems and creating elegant user interfaces.",
+    "experience": "Experience",
+    "education": "Education"
+  },
+  "projects": {
+    "title": "My Projects",
+    "viewCode": "View Code",
+    "viewDemo": "View Demo"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "description": "Feel free to contact me to discuss your projects",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  },
+  "experience": {
+    "title": "Professional Experience"
+  },
+  "terminal": {
+    "welcome": "Welcome to the interactive terminal",
+    "help": "Type \"help\" to see available commands",
+    "helpTitle": "Available commands",
+    "helpHelp": "Show this help",
+    "helpAbout": "About me",
+    "helpSkills": "Skills",
+    "helpProjects": "List projects",
+    "helpContact": "Contact info",
+    "helpClear": "Clear terminal",
+    "helpWhoami": "Who am I?",
+    "aboutLine1": "Full Stack Developer passionate about creating modern web applications.",
+    "aboutLine2": "Specialized in React, TypeScript, Node.js and more.",
+    "skillsFrontend": "Frontend",
+    "skillsBackend": "Backend",
+    "skillsTools": "Tools",
+    "skillsOther": "Other",
+    "project1Desc": "This interactive portfolio",
+    "project2Desc": "Online shopping app",
+    "project3Desc": "Task management tool",
+    "project4Desc": "Weather dashboard",
+    "whoami": "A developer who loves turning coffee into code ☕→💻",
+    "unknownCommand": "Unknown command",
+    "unknownCommandHelp": "Type 'help' to see available commands",
+    "helpExtra": "Standard commands also work. Try ls, cd, cat, git, npm…",
+    "helpResetEdits": "Reset all local content edits",
+    "contactEmail": "Email",
+    "contactGithub": "GitHub",
+    "contactLinkedin": "LinkedIn",
+    "contactLocation": "Location",
+    "exitMessage": "You can't leave. This is a portfolio, not a real terminal.",
+    "sudoPasswordPrompt": "[sudo] password for user:",
+    "sudoWrongPassword": "Sorry, try again. ({n}/3)",
+    "sudoMaxAttempts": "sudo: 3 incorrect password attempts",
+    "sudoHint": "(hint: it's \"password\")",
+    "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
+    "sudoSuccess2": "Oh wait — we're in a fake terminal."
+  },
+  "status": {
+    "terminal": "Terminal",
+    "theme": "Theme"
+  }
+}
+

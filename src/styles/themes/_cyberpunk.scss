@@ -1,0 +1,38 @@
+:root[data-theme="cyberpunk"] {
+  --background: #0a0a0f;
+  --sidebar: #050508;
+  --titlebar: #020204;
+  --tabs: #050508;
+  --editor: #0a0a0f;
+  --hover: #1a1a2e;
+  --statusbar: #020204;
+  --terminal: #050508;
+  
+  --foreground: #00f5ff;
+  --statusbar-text: #00d4e6;
+  --terminal-text: #00f5ff;
+  --terminal-prompt: #ff006e;
+  --terminal-output: #b967ff;
+  
+  --accent: #ff006e;
+  --accent-foreground: #ffffff;
+  
+  --border: #ff006e;
+  
+  --folder: #b967ff;
+  --file-tsx: #00f5ff;
+  
+  --close-hover: #ff006e;
+  
+  --comment: #6b6b8e;
+  
+  --syntax-comment: #6b6b8e;
+  --syntax-keyword: #ff006e;
+  --syntax-string: #00ff9f;
+  --syntax-function: #00f5ff;
+  --syntax-variable: #ffd60a;
+  --syntax-class: #b967ff;
+  --syntax-property: #00d4e6;
+  --syntax-operator: #ff006e;
+  --syntax-punctuation: #00f5ff;
+}
