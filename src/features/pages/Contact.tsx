@@ -1,10 +1,9 @@
 import { motion } from 'motion/react';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Send, 
-  Github,
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
   Linkedin,
   MessageSquare,
   Globe
@@ -23,9 +22,16 @@ export function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert(language === 'fr' ? 'Message envoyé ! (simulation)' : 'Message sent! (simulation)');
-    setFormData({ name: '', email: '', message: '' });
+    // No backend yet — open the user's mail client pre-filled with their message.
+    const subject = encodeURIComponent(
+      language === 'fr'
+        ? `Contact portfolio — ${formData.name}`
+        : `Portfolio contact — ${formData.name}`
+    );
+    const body = encodeURIComponent(
+      `${formData.message}\n\n— ${formData.name} (${formData.email})`
+    );
+    window.location.href = `mailto:matthieumarin51@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -62,13 +68,7 @@ export function Contact() {
       },
     ],
     social: [
-      // TODO: miss info for github — URL GitHub non fournie dans info.md
-      {
-        icon: Github,
-        label: 'GitHub',
-        href: 'https://github.com',
-        color: 'text-purple-400',
-      },
+      // TODO github URL: l'URL GitHub n'est pas fournie dans info.md — entrée retirée pour ne pas exposer un lien placeholder
       {
         icon: Linkedin,
         label: 'LinkedIn',

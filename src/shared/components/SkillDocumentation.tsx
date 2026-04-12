@@ -15,110 +15,240 @@ interface SkillDocumentationProps {
 }
 
 const skillDocs: Record<string, { fr: SkillDoc; en: SkillDoc }> = {
-  react: {
+  java: {
     fr: {
-      name: 'React',
-      description: 'Bibliothèque JavaScript développée par Facebook pour créer des interfaces utilisateur interactives et réactives avec une approche basée sur les composants.',
+      name: 'Java',
+      description: 'Langage orienté objet utilisé chez Renault Digital pour développer des services backend robustes et typés.',
       keyFeatures: [
-        'Virtual DOM pour des performances optimales',
-        'Composants réutilisables et modulaires',
-        'Hooks pour la gestion d\'état',
-        'Écosystème riche et communauté active'
+        'Typage statique fort',
+        'JVM portable et performante',
+        'Écosystème enterprise mature (Spring, Hibernate)',
+        'Outillage de qualité (Maven, JUnit)'
       ],
-      experience: '5+ années d\'expérience en production',
-      projects: ['Applications web complexes', 'Dashboards interactifs', 'Systèmes de design']
+      experience: 'Alternance en cours chez Renault Digital depuis sept. 2024',
+      projects: ['Services backend Renault Digital']
     },
     en: {
-      name: 'React',
-      description: 'JavaScript library developed by Facebook for building interactive and reactive user interfaces with a component-based approach.',
+      name: 'Java',
+      description: 'Object-oriented language used at Renault Digital to build robust, statically-typed backend services.',
       keyFeatures: [
-        'Virtual DOM for optimal performance',
-        'Reusable and modular components',
-        'Hooks for state management',
-        'Rich ecosystem and active community'
+        'Strong static typing',
+        'Portable and performant JVM',
+        'Mature enterprise ecosystem (Spring, Hibernate)',
+        'Quality tooling (Maven, JUnit)'
       ],
-      experience: '5+ years of production experience',
-      projects: ['Complex web applications', 'Interactive dashboards', 'Design systems']
+      experience: 'Apprenticeship in progress at Renault Digital since Sept 2024',
+      projects: ['Renault Digital backend services']
     }
   },
-  typescript: {
+  springboot: {
     fr: {
-      name: 'TypeScript',
-      description: 'Superset de JavaScript développé par Microsoft qui ajoute un typage statique optionnel pour améliorer la maintenabilité et la robustesse du code.',
+      name: 'Spring Boot',
+      description: 'Framework Java pour bâtir rapidement des APIs REST et microservices configurables, utilisé au quotidien chez Renault Digital.',
       keyFeatures: [
-        'Typage statique pour moins d\'erreurs',
-        'Autocomplétion et IntelliSense',
-        'Refactoring sécurisé',
-        'Compatible avec JavaScript existant'
+        'Configuration par convention',
+        'Injection de dépendances',
+        'Starters pour intégrations courantes',
+        'Tests d\'intégration via Spring Test'
       ],
-      experience: '4+ années en développement strictement typé',
-      projects: ['Applications enterprise', 'APIs type-safe', 'Librairies réutilisables']
+      experience: 'Utilisé en alternance depuis sept. 2024',
+      projects: ['Backends REST Renault Digital']
     },
     en: {
-      name: 'TypeScript',
-      description: 'JavaScript superset developed by Microsoft that adds optional static typing to improve code maintainability and robustness.',
+      name: 'Spring Boot',
+      description: 'Java framework for quickly building configurable REST APIs and microservices, used daily at Renault Digital.',
       keyFeatures: [
-        'Static typing for fewer errors',
-        'Autocomplete and IntelliSense',
-        'Safe refactoring',
-        'Compatible with existing JavaScript'
+        'Convention over configuration',
+        'Dependency injection',
+        'Starters for common integrations',
+        'Integration testing via Spring Test'
       ],
-      experience: '4+ years in strictly typed development',
-      projects: ['Enterprise applications', 'Type-safe APIs', 'Reusable libraries']
+      experience: 'Used in apprenticeship since Sept 2024',
+      projects: ['Renault Digital REST backends']
     }
   },
   nodejs: {
     fr: {
       name: 'Node.js',
-      description: 'Environnement d\'exécution JavaScript côté serveur basé sur le moteur V8 de Chrome, permettant de construire des applications réseau rapides et scalables.',
+      description: 'Runtime JavaScript serveur utilisé pour le projet Territoire Connecté & Durable chez Faubourg Numérique.',
       keyFeatures: [
         'I/O non-bloquant et asynchrone',
-        'NPM - le plus grand écosystème de packages',
-        'Performance élevée pour les APIs',
-        'Même langage frontend et backend'
+        'Écosystème NPM massif',
+        'Idéal pour APIs et services temps réel',
+        'Mêmes outils côté front et back'
       ],
-      experience: '5+ années en développement backend',
-      projects: ['APIs RESTful', 'Microservices', 'Applications temps réel']
+      experience: 'Stage de 4 mois chez Faubourg Numérique (2024)',
+      projects: ['Plateforme IoT Territoire Connecté & Durable']
     },
     en: {
       name: 'Node.js',
-      description: 'Server-side JavaScript runtime based on Chrome\'s V8 engine, enabling fast and scalable network applications.',
+      description: 'Server-side JavaScript runtime used for the Connected & Sustainable Territory project at Faubourg Numérique.',
       keyFeatures: [
         'Non-blocking, asynchronous I/O',
-        'NPM - the largest package ecosystem',
-        'High performance for APIs',
-        'Same language frontend and backend'
+        'Massive NPM ecosystem',
+        'Ideal for APIs and realtime services',
+        'Same tooling on front and back'
       ],
-      experience: '5+ years in backend development',
-      projects: ['RESTful APIs', 'Microservices', 'Real-time applications']
+      experience: '4-month internship at Faubourg Numérique (2024)',
+      projects: ['Connected & Sustainable Territory IoT platform']
     }
   },
-  tailwind: {
+  vuejs: {
     fr: {
-      name: 'Tailwind CSS',
-      description: 'Framework CSS utility-first qui permet de construire rapidement des designs modernes et responsives directement dans le HTML.',
+      name: 'Vue.js',
+      description: 'Framework JavaScript progressif utilisé pour l\'interface de la plateforme IoT chez Faubourg Numérique.',
       keyFeatures: [
-        'Approche utility-first',
-        'Customisation complète via config',
-        'Purge automatique du CSS inutilisé',
-        'Design système cohérent'
+        'Single File Components',
+        'Réactivité fine',
+        'Courbe d\'apprentissage douce',
+        'Composition API'
       ],
-      experience: '3+ années pour des interfaces modernes',
-      projects: ['Sites web responsives', 'Applications SaaS', 'Design systems']
+      experience: 'Stage Faubourg Numérique (2024)',
+      projects: ['Frontend Territoire Connecté & Durable']
     },
     en: {
-      name: 'Tailwind CSS',
-      description: 'Utility-first CSS framework for rapidly building modern, responsive designs directly in HTML.',
+      name: 'Vue.js',
+      description: 'Progressive JavaScript framework used to build the IoT platform front end at Faubourg Numérique.',
       keyFeatures: [
-        'Utility-first approach',
-        'Full customization via config',
-        'Automatic purging of unused CSS',
-        'Consistent design system'
+        'Single File Components',
+        'Fine-grained reactivity',
+        'Gentle learning curve',
+        'Composition API'
       ],
-      experience: '3+ years building modern interfaces',
-      projects: ['Responsive websites', 'SaaS applications', 'Design systems']
+      experience: 'Faubourg Numérique internship (2024)',
+      projects: ['Connected & Sustainable Territory frontend']
     }
-  }
+  },
+  react: {
+    fr: {
+      name: 'React',
+      description: 'Bibliothèque UI utilisée pour ce portfolio (React 18 + TypeScript) et au cours du Master Cloud Computing.',
+      keyFeatures: [
+        'Architecture composant',
+        'Hooks pour la gestion d\'état',
+        'Virtual DOM',
+        'Écosystème riche'
+      ],
+      experience: 'Projets personnels et études (2023+)',
+      projects: ['Portfolio IDE (ce site)']
+    },
+    en: {
+      name: 'React',
+      description: 'UI library used to build this portfolio (React 18 + TypeScript) and during the Master Cloud Computing program.',
+      keyFeatures: [
+        'Component architecture',
+        'Hooks for state management',
+        'Virtual DOM',
+        'Rich ecosystem'
+      ],
+      experience: 'Personal projects and studies (2023+)',
+      projects: ['Portfolio IDE (this site)']
+    }
+  },
+  php: {
+    fr: {
+      name: 'PHP',
+      description: 'Langage côté serveur utilisé lors des deux stages chez la Chatterie de la Terre de Brasco pour développer un site vitrine WordPress.',
+      keyFeatures: [
+        'Intégration native avec WordPress',
+        'Déploiement simple sur hébergeur classique',
+        'Vaste écosystème de CMS',
+        'Syntaxe accessible'
+      ],
+      experience: 'Deux stages associatifs (2022 puis 2023)',
+      projects: ['Site vitrine Chatterie de la Terre de Brasco']
+    },
+    en: {
+      name: 'PHP',
+      description: 'Server-side language used during both internships at Chatterie de la Terre de Brasco to build a WordPress showcase site.',
+      keyFeatures: [
+        'Native WordPress integration',
+        'Simple deployment on classic hosting',
+        'Vast CMS ecosystem',
+        'Accessible syntax'
+      ],
+      experience: 'Two associative internships (2022 then 2023)',
+      projects: ['Chatterie de la Terre de Brasco showcase site']
+    }
+  },
+  wordpress: {
+    fr: {
+      name: 'WordPress',
+      description: 'CMS open-source utilisé chez la Chatterie de la Terre de Brasco pour créer et finaliser un site vitrine.',
+      keyFeatures: [
+        'Thèmes et plugins extensibles',
+        'Back-office prêt à l\'emploi',
+        'Hébergement standardisé',
+        'Personnalisation via PHP/Twig'
+      ],
+      experience: 'Deux stages (2022 et 2023)',
+      projects: ['Site vitrine Chatterie de la Terre de Brasco']
+    },
+    en: {
+      name: 'WordPress',
+      description: 'Open-source CMS used at Chatterie de la Terre de Brasco to build and finalize a showcase site.',
+      keyFeatures: [
+        'Extensible themes and plugins',
+        'Ready-to-use admin panel',
+        'Standardized hosting',
+        'Customization via PHP/Twig'
+      ],
+      experience: 'Two internships (2022 and 2023)',
+      projects: ['Chatterie de la Terre de Brasco showcase site']
+    }
+  },
+  mongodb: {
+    fr: {
+      name: 'MongoDB',
+      description: 'Base NoSQL orientée documents utilisée pendant le stage Faubourg Numérique pour stocker les données capteurs IoT.',
+      keyFeatures: [
+        'Modèle document flexible',
+        'Indexation puissante',
+        'Scalabilité horizontale',
+        'Aggregation pipeline'
+      ],
+      experience: 'Stage Faubourg Numérique (2024) et études',
+      projects: ['Plateforme IoT Territoire Connecté & Durable']
+    },
+    en: {
+      name: 'MongoDB',
+      description: 'Document-oriented NoSQL database used during the Faubourg Numérique internship to store IoT sensor data.',
+      keyFeatures: [
+        'Flexible document model',
+        'Powerful indexing',
+        'Horizontal scalability',
+        'Aggregation pipeline'
+      ],
+      experience: 'Faubourg Numérique internship (2024) and studies',
+      projects: ['Connected & Sustainable Territory IoT platform']
+    }
+  },
+  agile: {
+    fr: {
+      name: 'Agile / SCRUM',
+      description: 'Méthode de gestion de projet pratiquée au quotidien chez Renault Digital : sprints, daily, rétrospectives.',
+      keyFeatures: [
+        'Sprints courts et itératifs',
+        'Cérémonies SCRUM',
+        'Backlog priorisé',
+        'Amélioration continue'
+      ],
+      experience: 'Alternance Renault Digital depuis sept. 2024',
+      projects: ['Équipe agile Renault Digital']
+    },
+    en: {
+      name: 'Agile / SCRUM',
+      description: 'Project management method practiced daily at Renault Digital: sprints, dailies, retrospectives.',
+      keyFeatures: [
+        'Short iterative sprints',
+        'SCRUM ceremonies',
+        'Prioritized backlog',
+        'Continuous improvement'
+      ],
+      experience: 'Renault Digital apprenticeship since Sept 2024',
+      projects: ['Renault Digital agile team']
+    }
+  },
 };
 
 export function SkillDocumentation({ skillId, language }: SkillDocumentationProps) {
@@ -160,7 +290,7 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       </div>
       <div>
         <div className="text-syntax-comment text-xs mb-2">
-          Experience
+          {language === 'fr' ? 'Expérience' : 'Experience'}
         </div>
         <div className="bg-background/50 p-3 rounded ml-2">
           <code className="text-syntax-string">{doc.experience}</code>
@@ -169,7 +299,7 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       <div>
         <div className="flex items-center gap-2 text-syntax-variable mb-3">
           <Code className="w-4 h-4" />
-          <span>{language === 'fr' ? 'Projets réalisés' : 'Projects Completed'}</span>
+          <span>{language === 'fr' ? 'Projets concernés' : 'Related projects'}</span>
         </div>
         <div className="flex flex-wrap gap-2 ml-2">
           {doc.projects.map((project, index) => (

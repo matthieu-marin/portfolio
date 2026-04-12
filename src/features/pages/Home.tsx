@@ -1,12 +1,10 @@
 import { motion } from 'motion/react';
-import { 
-  User, 
-  Code2, 
-  Briefcase, 
+import {
+  User,
+  Code2,
   Rocket,
-  Github, 
-  Linkedin, 
-  Mail, 
+  Linkedin,
+  Mail,
   Download,
   Terminal,
   Sparkles
@@ -30,20 +28,18 @@ export function Home() {
       en: 'Apprentice at Renault Digital, Master Cloud Computing & Mobility student at UPJV/INSSET'
     },
     bio: {
-      fr: 'Actuellement étudiant en Master Cloud Computing & Mobility et alternant chez Renault Digital, fort d\'une expérience en développement web acquise lors de cinq stages. Passionné par la création d\'applications web innovantes, je maîtrise PHP, JavaScript, Node.js et Java.',
-      en: 'Currently studying Master Cloud Computing & Mobility and working as an apprentice at Renault Digital, with web development experience gained through five internships. Passionate about creating innovative web applications, proficient in PHP, JavaScript, Node.js and Java.'
+      fr: 'Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital, je m\'appuie sur quatre expériences en développement web (un stage IoT chez Faubourg Numérique et deux stages PHP/WordPress associatifs) pour construire des applications web utiles et bien testées. Mes terrains de jeu : Java/Spring Boot côté backend, JavaScript/React/Vue côté frontend.',
+      en: 'Master Cloud Computing & Mobility student at UPJV / INSSET and apprentice at Renault Digital, drawing on four web-development experiences (an IoT internship at Faubourg Numérique and two PHP/WordPress associative internships) to ship useful, well-tested apps. Comfort zone: Java/Spring Boot on the back end, JavaScript/React/Vue on the front end.'
     },
     stats: [
-      { label: { fr: 'Années d\'expérience', en: 'Years of experience' }, value: '2+' },
-      // TODO: miss info for stats.projects — nombre de projets réalisés non fourni dans info.md
-      { label: { fr: 'Projets réalisés', en: 'Completed projects' }, value: '?' },
-      { label: { fr: 'Technologies maîtrisées', en: 'Technologies mastered' }, value: '10+' }
+      { label: { fr: 'Années d\'expérience pro', en: 'Years of pro experience' }, value: '1+' },
+      { label: { fr: 'Expériences en entreprise', en: 'Professional experiences' }, value: '4' },
+      { label: { fr: 'Technologies pratiquées', en: 'Technologies used' }, value: '10+' }
     ],
     socialLinks: [
-      // TODO: miss info for github — URL GitHub non fournie dans info.md
-      { icon: Github, label: 'GitHub', href: 'https://github.com', color: 'text-purple-400' },
       { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/', color: 'text-blue-400' },
       { icon: Mail, label: 'Email', href: 'mailto:matthieumarin51@gmail.com', color: 'text-green-400' }
+      // TODO: miss info for github — URL GitHub non fournie dans info.md, lien retiré pour ne pas exposer un placeholder
     ]
   };
 
@@ -191,13 +187,15 @@ export function Home() {
                   </a>
                 );
               })}
-              <button 
+              <a
+                href="/cv-matthieu-marin.pdf"
+                download
                 className="flex items-center gap-2 px-3 md:px-4 py-2.5 md:py-3 bg-background hover:bg-hover rounded-lg transition-colors text-sm border-2 border-accent"
                 aria-label="Download CV"
               >
                 <Download className="w-4 h-4 md:w-5 md:h-5" />
                 <span>CV</span>
-              </button>
+              </a>
             </div>
             <div>
               <span className="text-syntax-punctuation">];</span>
