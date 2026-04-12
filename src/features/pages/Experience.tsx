@@ -49,6 +49,30 @@ export function Experience() {
           details: 'Utilisé pour : APIs REST, microservices, architecture backend'
         },
         {
+          name: 'GoogleCloud',
+          skillId: null,
+          description: 'Plateforme cloud Google',
+          details: 'Utilisé pour : Kubernetes Engine, Pub/Sub, Cloud Functions'
+        },
+        {
+          name: 'Docker',
+          skillId: null,
+          description: 'Conteneurisation d\'applications',
+          details: 'Utilisé pour : containerisation des services'
+        },
+        {
+          name: 'GitLab',
+          skillId: null,
+          description: 'Plateforme DevOps CI/CD',
+          details: 'Utilisé pour : pipelines CI/CD, gestion du code source'
+        },
+        {
+          name: 'Dynatrace',
+          skillId: null,
+          description: 'Outil de monitoring applicatif',
+          details: 'Utilisé pour : observabilité et monitoring des applications'
+        },
+        {
           name: 'AgileScrum',
           skillId: 'agile',
           description: 'Méthode de gestion de projet agile',
@@ -56,20 +80,24 @@ export function Experience() {
         },
       ],
       responsibilities: {
-        // TODO: miss info for renault.responsibilities — détails des missions non fournis dans info.md
         fr: [
           'Développement d\'applications en Java / Spring Boot',
+          'Utilisation de Google Cloud (Kubernetes Engine, Pub/Sub, Cloud Functions)',
+          'Conteneurisation avec Docker',
+          'Pratiques DevOps sur GitLab (pipelines CI/CD)',
+          'Monitoring applicatif avec Dynatrace',
           'Participation aux cérémonies agile (SCRUM)',
-          'Collaboration avec les équipes Renault Digital',
         ],
         en: [
           'Application development in Java / Spring Boot',
+          'Google Cloud usage (Kubernetes Engine, Pub/Sub, Cloud Functions)',
+          'Containerization with Docker',
+          'DevOps practices on GitLab (CI/CD pipelines)',
+          'Application monitoring with Dynatrace',
           'Participation in agile ceremonies (SCRUM)',
-          'Collaboration with Renault Digital teams',
         ]
       },
       achievements: {
-        // TODO: miss info for renault.achievements — aucune réalisation chiffrée fournie dans info.md
         fr: [
           'En cours — alternance jusqu\'à juin 2026',
         ],
@@ -111,22 +139,28 @@ export function Experience() {
           description: 'Internet des Objets',
           details: 'Utilisé pour : gestion de données capteurs'
         },
+        {
+          name: 'Grafana',
+          skillId: null,
+          description: 'Outil de visualisation et monitoring',
+          details: 'Utilisé pour : tableaux de bord et monitoring de la plateforme'
+        },
       ],
       responsibilities: {
-        // TODO: miss info for faubourg.responsibilities — détails des missions non fournis dans info.md
         fr: [
           'Développement de la plateforme web pour la gestion de données IoT',
           'Travail sur le projet Territoire Connecté et Durable',
+          'Mise en place du monitoring avec Grafana',
           'Collaboration avec La Somme Numérique',
         ],
         en: [
           'Development of the web platform for IoT data management',
           'Work on the Connected and Sustainable Territory project',
+          'Setting up monitoring with Grafana',
           'Collaboration with La Somme Numérique',
         ]
       },
       achievements: {
-        // TODO: miss info for faubourg.achievements — aucune réalisation chiffrée fournie dans info.md
         fr: [
           'Livraison de la plateforme web IoT en 4 mois',
         ],
@@ -299,7 +333,7 @@ export function Experience() {
                     {exp.current && (
                       <div className="ml-auto flex-shrink-0">
                         <span className="px-3 py-1 bg-accent/20 text-accent text-xs rounded-full border border-accent/30 font-mono">
-                          {language === 'fr' ? 'Actuel' : 'Current'}
+                          {t('experience.current')}
                         </span>
                       </div>
                     )}

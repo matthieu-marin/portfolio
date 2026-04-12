@@ -35,10 +35,17 @@
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "send": "Send"
+    "send": "Send",
+    "availability": "Available from late August 2026",
+    "placeholder": {
+      "name": "Your name",
+      "email": "your@email.com",
+      "message": "Your message..."
+    }
   },
   "experience": {
-    "title": "Professional Experience"
+    "title": "Professional Experience",
+    "current": "Current"
   },
   "terminal": {
     "welcome": "Welcome to the interactive terminal",
@@ -77,6 +84,11 @@
     "sudoHint": "(hint: it's \"password\")",
     "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
     "sudoSuccess2": "Oh wait — we're in a fake terminal."
+  },
+  "skill": {
+    "keyFeatures": "Key Features",
+    "relatedProjects": "Related projects",
+    "endDoc": "End of documentation"
   },
   "status": {
     "terminal": "Terminal",

@@ -169,16 +169,7 @@ export function Contact() {
                 <span className="text-syntax-property"><EditableText value="availability" editKey="contact.prop.availability" /></span>
                 <span className="text-syntax-punctuation">:</span>{' '}
                 <span className="text-syntax-string">
-                  "<EditableText value={language === 'fr' ? 'En alternance chez Renault Digital jusqu\'à juin 2026' : 'On apprenticeship at Renault Digital until June 2026'} editKey={`contact.availability.${language}`} />"
-                </span>
-                <span className="text-syntax-punctuation">;</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MessageSquare className={`w-3 h-3 md:w-4 md:h-4 ${contactInfoData.color} opacity-60`} />
-                <span className="text-syntax-property"><EditableText value="responseTime" editKey="contact.prop.responseTime" /></span>
-                <span className="text-syntax-punctuation">:</span>{' '}
-                <span className="text-syntax-string">
-                  "<EditableText value={language === 'fr' ? '24-48 heures' : '24-48 hours'} editKey={`contact.responseTime.${language}`} />"
+                  "<EditableText value={t('contact.availability')} editKey="contact.availability" />"
                 </span>
                 <span className="text-syntax-punctuation">;</span>
               </div>
@@ -220,7 +211,7 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground text-sm md:text-base font-mono"
-                  placeholder={language === 'fr' ? '"Votre nom"' : '"Your name"'}
+                  placeholder={`"${t('contact.placeholder.name')}"`}
                 />
               </div>
               <div className="space-y-2">
@@ -237,7 +228,7 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground text-sm md:text-base font-mono"
-                  placeholder={language === 'fr' ? '"votre@email.com"' : '"your@email.com"'}
+                  placeholder={`"${t('contact.placeholder.email')}"`}
                 />
               </div>
               <div className="space-y-2">
@@ -254,7 +245,7 @@ export function Contact() {
                   required
                   rows={6}
                   className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground resize-none text-sm md:text-base font-mono"
-                  placeholder={language === 'fr' ? '"Votre message..."' : '"Your message..."'}
+                  placeholder={`"${t('contact.placeholder.message')}"`}
                 />
               </div>
               <div className="flex items-center gap-2 pt-2">
@@ -265,7 +256,7 @@ export function Contact() {
                   className={`flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-accent hover:bg-accent/80 text-accent-foreground rounded-lg transition-colors font-mono text-sm md:text-base`}
                 >
                   <Send className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  <span>{language === 'fr' ? 'send()' : 'send()'}</span>
+                  <span>{'send()'}</span>
                 </button>
                 <span className="text-syntax-punctuation font-mono text-sm">;</span>
               </div>

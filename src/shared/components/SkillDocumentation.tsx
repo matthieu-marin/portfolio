@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { BookOpen, Code, Zap, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../../i18n/hooks';
 
 interface SkillDoc {
   name: string;
@@ -252,6 +253,7 @@ const skillDocs: Record<string, { fr: SkillDoc; en: SkillDoc }> = {
 };
 
 export function SkillDocumentation({ skillId, language }: SkillDocumentationProps) {
+  const { t } = useLanguage();
   const doc = skillDocs[skillId]?.[language];
 
   if (!doc) return null;
@@ -265,19 +267,20 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       <div className="flex items-center gap-3 border-b border-border pb-3">
         <BookOpen className="w-5 h-5 text-accent" />
         <h3 className="text-syntax-class text-lg">
-          {language === 'fr' ? 'Documentation' : 'Documentation'}: {doc.name}
+          {'Documentation'}: {doc.name}
         </h3>
       </div>
       <div>
         <div className="text-syntax-comment text-xs mb-2">
-          /** {language === 'fr' ? 'Description' : 'Description'} */
+          {'/** Description */'}
+
         </div>
         <p className="text-foreground/90 ml-2">{doc.description}</p>
       </div>
       <div>
         <div className="flex items-center gap-2 text-syntax-keyword mb-3">
           <Zap className="w-4 h-4" />
-          <span>{language === 'fr' ? 'Fonctionnalités clés' : 'Key Features'}</span>
+          <span>{t('skill.keyFeatures')}</span>
         </div>
         <ul className="space-y-2 ml-6">
           {doc.keyFeatures.map((feature, index) => (
@@ -290,7 +293,7 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       </div>
       <div>
         <div className="text-syntax-comment text-xs mb-2">
-          {language === 'fr' ? 'Expérience' : 'Experience'}
+          {t('nav.experience')}
         </div>
         <div className="bg-background/50 p-3 rounded ml-2">
           <code className="text-syntax-string">{doc.experience}</code>
@@ -299,7 +302,7 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       <div>
         <div className="flex items-center gap-2 text-syntax-variable mb-3">
           <Code className="w-4 h-4" />
-          <span>{language === 'fr' ? 'Projets concernés' : 'Related projects'}</span>
+          <span>{t('skill.relatedProjects')}</span>
         </div>
         <div className="flex flex-wrap gap-2 ml-2">
           {doc.projects.map((project, index) => (
@@ -315,7 +318,7 @@ export function SkillDocumentation({ skillId, language }: SkillDocumentationProp
       <div className="pt-3 border-t border-border">
         <div className="text-syntax-comment text-xs">
           <span className="text-syntax-punctuation">{'<'}</span>
-          <span>{language === 'fr' ? 'Fin de la documentation' : 'End of documentation'}</span>
+          <span>{t('skill.endDoc')}</span>
           <span className="text-syntax-punctuation">{' />'}</span>
         </div>
       </div>

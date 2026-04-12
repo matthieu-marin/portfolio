@@ -35,10 +35,17 @@
     "name": "Nom",
     "email": "Email",
     "message": "Message",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "availability": "Disponible à partir de fin août 2026",
+    "placeholder": {
+      "name": "Votre nom",
+      "email": "votre@email.com",
+      "message": "Votre message..."
+    }
   },
   "experience": {
-    "title": "Expérience Professionnelle"
+    "title": "Expérience Professionnelle",
+    "current": "Actuel"
   },
   "terminal": {
     "welcome": "Bienvenue dans le terminal interactif",
@@ -77,6 +84,11 @@
     "sudoHint": "(indice : c'est \"password\")",
     "sudoSuccess1": "Mot de passe accepté... pas très sécurisé mais le mot de passe est bon.",
     "sudoSuccess2": "Ah mais attendez — on est dans un faux terminal."
+  },
+  "skill": {
+    "keyFeatures": "Fonctionnalités clés",
+    "relatedProjects": "Projets concernés",
+    "endDoc": "Fin de la documentation"
   },
   "status": {
     "terminal": "Terminal",

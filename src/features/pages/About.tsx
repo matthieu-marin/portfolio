@@ -83,17 +83,18 @@ export function About() {
           en: 'Computer science specializing in Cloud Computing and mobile applications'
         },
         highlights: {
-          // TODO: miss info for education[0].highlights — détails des matières/modules non fournis
           fr: [
-            'Cloud Computing',
-            'Développement d\'applications mobiles',
-            'Architecture logicielle avancée',
+            'Découverte des outils cloud : Google Cloud, AWS, Azure',
+            'DevOps avec Terraform pour la livraison continue (CD)',
+            'Intégration continue (CI) avec contrôle qualité via SonarQube sur GitHub',
+            'Développement d\'applications mobiles avancées',
             'Gestion de projet agile (alternance Renault Digital)'
           ],
           en: [
-            'Cloud Computing',
-            'Mobile application development',
-            'Advanced software architecture',
+            'Introduction to cloud tools: Google Cloud, AWS, Azure',
+            'DevOps with Terraform for continuous delivery (CD)',
+            'Continuous integration (CI) with code quality control via SonarQube on GitHub',
+            'Advanced mobile application development',
             'Agile project management (Renault Digital apprenticeship)'
           ]
         }
@@ -111,18 +112,17 @@ export function About() {
           en: 'Web and mobile development, NoSQL and web design'
         },
         highlights: {
-          // TODO: miss info for education[1].highlights — détails des 26 compétences mentionnées non fournis
           fr: [
-            'Conception web',
-            'NoSQL',
+            'Conception et développement d\'applications web et mobiles',
+            'Bases de données NoSQL (MongoDB)',
             'Développement mobile',
-            '26 compétences supplémentaires listées sur LinkedIn'
+            'Versionnement et collaboration avec Git'
           ],
           en: [
-            'Web design',
-            'NoSQL',
+            'Web and mobile application design and development',
+            'NoSQL databases (MongoDB)',
             'Mobile development',
-            '26 additional skills listed on LinkedIn'
+            'Version control and collaboration with Git'
           ]
         }
       },

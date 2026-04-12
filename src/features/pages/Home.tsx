@@ -28,8 +28,8 @@ export function Home() {
       en: 'Apprentice at Renault Digital, Master Cloud Computing & Mobility student at UPJV/INSSET'
     },
     bio: {
-      fr: 'Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital, je m\'appuie sur quatre expériences en développement web (un stage IoT chez Faubourg Numérique et deux stages PHP/WordPress associatifs) pour construire des applications web utiles et bien testées. Mes terrains de jeu : Java/Spring Boot côté backend, JavaScript/React/Vue côté frontend.',
-      en: 'Master Cloud Computing & Mobility student at UPJV / INSSET and apprentice at Renault Digital, drawing on four web-development experiences (an IoT internship at Faubourg Numérique and two PHP/WordPress associative internships) to ship useful, well-tested apps. Comfort zone: Java/Spring Boot on the back end, JavaScript/React/Vue on the front end.'
+      fr: 'Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital, je m\'appuie sur quatre expériences en développement web pour construire des applications robustes et bien testées. Mes terrains de jeu : Java/Spring Boot côté backend, JavaScript/React côté frontend, et les outils cloud (Google Cloud, Docker) en infrastructure.',
+      en: 'Master Cloud Computing & Mobility student at UPJV / INSSET and apprentice at Renault Digital, drawing on four web-development experiences to build robust, well-tested applications. Comfort zone: Java/Spring Boot on the back end, JavaScript/React on the front end, and cloud tooling (Google Cloud, Docker) for infrastructure.'
     },
     stats: [
       { label: { fr: 'Années d\'expérience pro', en: 'Years of pro experience' }, value: '1+' },
@@ -51,19 +51,17 @@ export function Home() {
     borderColor: 'border-cyan-400',
     areas: {
       fr: [
-        'Développement web full-stack (PHP, JavaScript, Java)',
-        'Frameworks modernes : React, Vue.js, Spring Boot',
+        'Développement web full-stack (JavaScript, Java)',
+        'Frameworks modernes : React, Spring Boot',
         'Cloud Computing & applications mobiles',
-        'Internet des Objets (IoT)',
-        'Gestion de bases de données SQL et NoSQL',
+        'Bases de données relationnelles (MySQL, PostgreSQL) et non relationnelles (MongoDB)',
         'Méthode agile (SCRUM) et gestion de projet'
       ],
       en: [
-        'Full-stack web development (PHP, JavaScript, Java)',
-        'Modern frameworks: React, Vue.js, Spring Boot',
+        'Full-stack web development (JavaScript, Java)',
+        'Modern frameworks: React, Spring Boot',
         'Cloud Computing & mobile applications',
-        'Internet of Things (IoT)',
-        'SQL and NoSQL database management',
+        'Relational databases (MySQL, PostgreSQL) and non-relational (MongoDB)',
         'Agile methodology (SCRUM) and project management'
       ]
     }
