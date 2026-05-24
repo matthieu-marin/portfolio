@@ -8,7 +8,7 @@
 | Bundler | Vite 6.3.5 + `@vitejs/plugin-react-swc` |
 | Styling | Tailwind CSS v4 (prebuilt in `src/index.css`) + Sass (`src/styles/main.scss`) |
 | UI Kit | shadcn-style components built on Radix UI + `cva` + `cn()` |
-| Animation | `motion/react` (pages, effects, tooltips) + `framer-motion` (FileExplorer only) |
+| Animation | `motion/react` (toutes les animations) |
 | i18n | i18next + react-i18next — FR default, EN available |
 | Charts | recharts |
 | State | React Context + local state (no Redux / Zustand / React Query) |
@@ -37,8 +37,9 @@ src/
 ├── shared/
 │   ├── components/
 │   │   ├── TabBar.tsx
-│   │   ├── FileExplorer.tsx   # Uses framer-motion (only place)
+│   │   ├── FileExplorer.tsx
 │   │   ├── StatusBar.tsx
+│   │   ├── EditableText.tsx  # Inline contentEditable wired to EditContext
 │   │   ├── ThemeSwitcher.tsx
 │   │   ├── LanguageSwitcher.tsx
 │   │   ├── SkillDocumentation.tsx
@@ -46,10 +47,12 @@ src/
 │   │   ├── ItemTooltip.tsx
 │   │   ├── ImagePreviewTooltip.tsx
 │   │   ├── ImageWithFallback.tsx
-│   │   └── ui/               # Full shadcn/Radix component set + utils.ts
+│   │   ├── ui/               # Full shadcn/Radix component set + utils.ts
+│   │   └── layout/           # PageShell, CodeCard, ClassHeader, CodeProperty primitives
 │   ├── contexts/
 │   │   ├── ThemeContext.tsx   # useTheme hook
-│   │   └── NavigationContext.tsx # useNavigation hook
+│   │   ├── NavigationContext.tsx # useNavigation hook (deep-link refs only — no setCurrentPage)
+│   │   └── EditContext.tsx   # useEditContext — in-memory live edits dictionary
 │   └── effects/              # Per-theme visual canvas effects
 │       ├── SteampunkGears.tsx
 │       ├── PixelEffects.tsx
@@ -105,9 +108,23 @@ Theme stored in `localStorage` via `ThemeContext`. Each theme has a matching SCS
 
 ## Animation conventions
 
-- Use **`motion` from `'motion/react'`** in all feature pages, effects, and new components.
-- Only **`FileExplorer.tsx`** uses `framer-motion` — do not spread this further.
+- Use **`motion` from `'motion/react'`** in all components — `framer-motion` is no longer installed.
 - Common pattern: `<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>` with `AnimatePresence` for unmount transitions.
+
+## Layout primitives
+
+All pages render via the shared primitives in `src/shared/components/layout/`:
+
+| Primitive | Purpose |
+|---|---|
+| `<PageShell commentTitle="X">` | Page outer wrapper with the `// X` comment header |
+| `<CodeCard accentColor="purple">` | Themed card with left accent border, hover, motion |
+| `<ClassHeader icon={...} title="X" />` + `<ClassClose />` | `class X {` ... `}` envelope |
+| `<ClassBody>` | Indented body (`ml-4 md:ml-8`) |
+| `<CodeProperty name="email" value="..." link="mailto:...">` | `name: "value";` line |
+| `<CodeArrayProperty name="items" variant="list" \| "inline">` + `<CodeArrayItem variant="string" \| "pill" \| "instance">` | `items: [ ... ];` block, pill variant for chips |
+
+`accentColor` ∈ `'purple' \| 'cyan' \| 'pink' \| 'blue' \| 'green' \| 'orange' \| 'yellow' \| 'red'` — mapping centralized in `src/shared/components/layout/accent.ts`. Never hand-write the four-side border accent pattern again.
 
 ## i18n conventions
 
@@ -117,15 +134,9 @@ Theme stored in `localStorage` via `ThemeContext`. Each theme has a matching SCS
 
 ## Known issues
 
-1. **`setCurrentPage` missing from NavigationContext**: `Skills.tsx`, `Experience.tsx`, `Projects.tsx` destructure `setCurrentPage` from `useNavigation()` but the context does not define it. Cross-page navigation should go through `App.tsx`'s `openFile`.
+1. **Stale closure historically possible in `App.tsx`**: `navigate-to-*` event listeners now re-register on `openTabs` changes (`useEffect(..., [openTabs])`) — keep it that way when modifying tab logic.
 
-2. **Stale closure risk in `App.tsx`**: `navigate-to-*` event listeners are registered with `[]` deps but reference `openFile` which closes over `openTabs`. Re-register listeners when tabs change.
-
-3. **Dual motion packages**: `motion/react` and `framer-motion` both installed. New code must always use `motion/react`.
-
-4. **`react-scripts` residual**: Listed in `package.json` but Vite is the real bundler. Do not run `react-scripts` commands.
-
-5. **`public/index.html` vs root `index.html`**: Vite uses the root one; `public/index.html` is a CRA leftover.
+2. **`public/index.html` vs root `index.html`**: Vite uses the root one; `public/index.html` is a CRA leftover.
 
 ## Content structure
 

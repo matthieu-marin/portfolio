@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ThemeProvider, useTheme } from '../shared/contexts/ThemeContext';
 import { NavigationProvider } from '../shared/contexts/NavigationContext';
 import { EditProvider } from '../shared/contexts/EditContext';
@@ -8,6 +8,8 @@ import { StatusBar } from '../shared/components/StatusBar';
 import { OutputPanel } from '../features/output-panel';
 import { LanguageSwitcher } from '../shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
+import { CommandPalette } from '../shared/components/CommandPalette';
+import { useKeyboardShortcuts } from '../shared/hooks/useKeyboardShortcuts';
 import {
   SteampunkGears,
   PixelEffects,
@@ -22,7 +24,8 @@ import { Projects } from '../features/pages/Projects';
 import { Skills } from '../features/pages/Skills';
 import { Contact } from '../features/pages/Contact';
 import { Experience } from '../features/pages/Experience';
-import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose, Command as CommandIcon } from 'lucide-react';
+import { Toaster } from 'sonner';
 
 type Page = 'home' | 'about' | 'projects' | 'skills' | 'contact' | 'experience';
 
@@ -34,13 +37,14 @@ interface Tab {
 
 function PortfolioContent() {
   const [openTabs, setOpenTabs] = useState<Tab[]>([
-    { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx' }
+    { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx' },
   ]);
   const [activeTab, setActiveTab] = useState<Page>('home');
   const [isTerminalVisible, setIsTerminalVisible] = useState(false);
   const [terminalHeight, setTerminalHeight] = useState(256);
   const [isResizingTerminal, setIsResizingTerminal] = useState(false);
   const [isExplorerVisible, setIsExplorerVisible] = useState(true);
+  const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { theme } = useTheme();
 
   const MIN_TERMINAL_HEIGHT = 100;
@@ -49,33 +53,27 @@ function PortfolioContent() {
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 640;
-      if (isMobile) {
-        setIsExplorerVisible(false);
-      } else {
-        setIsExplorerVisible(true);
-      }
+      setIsExplorerVisible(!isMobile);
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const openFile = useCallback((id: Page, name: string, path: string) => {
+    setOpenTabs((prev) =>
+      prev.find((tab) => tab.id === id) ? prev : [...prev, { id, name, path }]
+    );
+    setActiveTab(id);
   }, []);
 
   useEffect(() => {
-    const handleNavigateToSkill = () => {
-      openFile('skills', 'Skills.tsx', 'src/pages/Skills.tsx');
-    };
-
-    const handleNavigateToExperience = () => {
+    const handleNavigateToSkill = () => openFile('skills', 'Skills.tsx', 'src/pages/Skills.tsx');
+    const handleNavigateToExperience = () =>
       openFile('experience', 'Experience.tsx', 'src/pages/Experience.tsx');
-    };
-
-    const handleNavigateToProject = () => {
+    const handleNavigateToProject = () =>
       openFile('projects', 'Projects.tsx', 'src/pages/Projects.tsx');
-    };
 
     window.addEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
     window.addEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
@@ -86,13 +84,11 @@ function PortfolioContent() {
       window.removeEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
       window.removeEventListener('navigate-to-project', handleNavigateToProject as EventListener);
     };
-    // Re-register when openTabs changes so the listeners close over the latest state.
-  }, [openTabs]);
+  }, [openFile]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizingTerminal) return;
-
       const newHeight = window.innerHeight - e.clientY;
       if (newHeight >= MIN_TERMINAL_HEIGHT && newHeight <= MAX_TERMINAL_HEIGHT) {
         setTerminalHeight(newHeight);
@@ -102,10 +98,7 @@ function PortfolioContent() {
         setTerminalHeight(MIN_TERMINAL_HEIGHT);
       }
     };
-
-    const handleMouseUp = () => {
-      setIsResizingTerminal(false);
-    };
+    const handleMouseUp = () => setIsResizingTerminal(false);
 
     if (isResizingTerminal) {
       document.addEventListener('mousemove', handleMouseMove);
@@ -113,7 +106,6 @@ function PortfolioContent() {
       document.body.style.cursor = 'row-resize';
       document.body.style.userSelect = 'none';
     }
-
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
@@ -122,21 +114,38 @@ function PortfolioContent() {
     };
   }, [isResizingTerminal]);
 
-  const openFile = (id: Page, name: string, path: string) => {
-    if (!openTabs.find(tab => tab.id === id)) {
-      setOpenTabs([...openTabs, { id, name, path }]);
-    }
-    setActiveTab(id);
-  };
+  const closeTab = useCallback(
+    (id: Page) => {
+      setOpenTabs((prev) => {
+        const newTabs = prev.filter((tab) => tab.id !== id);
+        if (activeTab === id && newTabs.length > 0) {
+          setActiveTab(newTabs[newTabs.length - 1].id);
+        }
+        return newTabs;
+      });
+    },
+    [activeTab]
+  );
 
-  const closeTab = (id: Page) => {
-    const newTabs = openTabs.filter(tab => tab.id !== id);
-    setOpenTabs(newTabs);
-    
-    if (activeTab === id && newTabs.length > 0) {
-      setActiveTab(newTabs[newTabs.length - 1].id);
-    }
-  };
+  const closeActiveTab = useCallback(() => {
+    closeTab(activeTab);
+  }, [activeTab, closeTab]);
+
+  const switchTabByIndex = useCallback(
+    (index: number) => {
+      const target = openTabs[index];
+      if (target) setActiveTab(target.id);
+    },
+    [openTabs]
+  );
+
+  useKeyboardShortcuts({
+    onCommandPalette: () => setIsCommandOpen(true),
+    onToggleExplorer: () => setIsExplorerVisible((v) => !v),
+    onToggleTerminal: () => setIsTerminalVisible((v) => !v),
+    onCloseTab: closeActiveTab,
+    onSwitchTab: switchTabByIndex,
+  });
 
   const renderPage = () => {
     switch (activeTab) {
@@ -170,55 +179,79 @@ function PortfolioContent() {
           <button
             onClick={() => setIsExplorerVisible(!isExplorerVisible)}
             className="p-1 hover:bg-accent rounded transition-colors"
-            aria-label={isExplorerVisible ? "Hide explorer" : "Show explorer"}
-            title={isExplorerVisible ? "Hide explorer" : "Show explorer"}
+            aria-label={isExplorerVisible ? 'Hide explorer' : 'Show explorer'}
+            title={isExplorerVisible ? 'Hide explorer (⌘B)' : 'Show explorer (⌘B)'}
           >
-            {isExplorerVisible ? <PanelLeftClose className="w-5 h-5" /> : <PanelLeftOpen className="w-5 h-5" />}
+            {isExplorerVisible ? (
+              <PanelLeftClose className="w-5 h-5" />
+            ) : (
+              <PanelLeftOpen className="w-5 h-5" />
+            )}
           </button>
           <span className="font-mono text-sm md:text-base">Portfolio IDE</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          <button
+            onClick={() => setIsCommandOpen(true)}
+            className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded border border-border bg-background/50 hover:bg-hover transition-colors text-xs font-mono"
+            aria-label="Open command palette"
+            title="Command palette (⌘K)"
+          >
+            <CommandIcon className="w-3.5 h-3.5" />
+            <span className="opacity-70">⌘K</span>
+          </button>
           <ThemeSwitcher />
           <LanguageSwitcher />
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden relative">
         {isExplorerVisible && (
-          <FileExplorer 
-            onFileSelect={openFile} 
-            onVisibilityChange={setIsExplorerVisible}
-          />
+          <FileExplorer onFileSelect={openFile} onVisibilityChange={setIsExplorerVisible} />
         )}
         <div className="flex-1 flex flex-col min-w-0">
-          <TabBar 
-            tabs={openTabs} 
-            activeTab={activeTab} 
+          <TabBar
+            tabs={openTabs}
+            activeTab={activeTab}
             onTabClick={setActiveTab}
             onTabClose={closeTab}
           />
-          
-          <div className="flex-1 overflow-auto">
-            {renderPage()}
-          </div>
+
+          <div className="flex-1 overflow-auto">{renderPage()}</div>
           {isTerminalVisible && (
-            <div className="border-t border-border relative" style={{ height: terminalHeight }}>
+            <div
+              className="border-t border-border relative"
+              style={{ height: terminalHeight }}
+            >
               <div
                 className="absolute top-0 left-0 right-0 h-1 bg-transparent hover:bg-accent cursor-row-resize transition-colors z-10"
                 onMouseDown={() => setIsResizingTerminal(true)}
               >
                 <div className="absolute inset-x-0 -top-1 h-3" />
               </div>
-              <OutputPanel 
-                mode="terminal" 
-                onClose={() => setIsTerminalVisible(false)} 
-              />
+              <OutputPanel mode="terminal" onClose={() => setIsTerminalVisible(false)} />
             </div>
           )}
         </div>
       </div>
-      <StatusBar 
+      <StatusBar
         onTerminalToggle={() => setIsTerminalVisible(!isTerminalVisible)}
         isTerminalVisible={isTerminalVisible}
+        openTabsCount={openTabs.length}
+      />
+
+      <CommandPalette
+        open={isCommandOpen}
+        onOpenChange={setIsCommandOpen}
+        onOpenFile={openFile}
+        onToggleTerminal={() => setIsTerminalVisible((v) => !v)}
+        onToggleExplorer={() => setIsExplorerVisible((v) => !v)}
+      />
+
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          className: 'font-mono text-xs',
+        }}
       />
     </div>
   );
@@ -235,4 +268,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-

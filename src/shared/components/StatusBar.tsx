@@ -1,4 +1,20 @@
-import { Terminal, GitBranch, AlertCircle, Wifi, Moon, Sun, Settings, Gamepad2, Zap, Sunset, Rocket, Snowflake, RotateCcw } from 'lucide-react';
+import {
+  Terminal,
+  GitBranch,
+  AlertCircle,
+  Wifi,
+  Moon,
+  Sun,
+  Settings,
+  Gamepad2,
+  Zap,
+  Sunset,
+  Rocket,
+  Snowflake,
+  RotateCcw,
+  Keyboard,
+  FileCode,
+} from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../../i18n/hooks';
 import { useState, useRef, useEffect } from 'react';
@@ -7,14 +23,39 @@ import { useEditContext } from '../contexts/EditContext';
 interface StatusBarProps {
   onTerminalToggle: () => void;
   isTerminalVisible: boolean;
+  openTabsCount?: number;
 }
 
-export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProps) {
+const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
+  { keys: '⌘K', label: { fr: 'Palette de commandes', en: 'Command palette' } },
+  { keys: '⌘B', label: { fr: "Basculer l'explorateur", en: 'Toggle explorer' } },
+  { keys: '⌘`', label: { fr: 'Basculer le terminal', en: 'Toggle terminal' } },
+  { keys: '⌘W', label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
+  { keys: '⌘1…6', label: { fr: 'Aller à l’onglet n', en: 'Go to tab n' } },
+];
+
+function useNow(intervalMs = 60_000) {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), intervalMs);
+    return () => window.clearInterval(id);
+  }, [intervalMs]);
+  return now;
+}
+
+export function StatusBar({
+  onTerminalToggle,
+  isTerminalVisible,
+  openTabsCount = 0,
+}: StatusBarProps) {
   const { theme, setTheme } = useTheme();
   const { language } = useLanguage();
   const { hasEdits, resetEdits } = useEditContext();
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const themeMenuRef = useRef<HTMLDivElement>(null);
+  const shortcutsRef = useRef<HTMLDivElement>(null);
+  const now = useNow();
 
   const themes = [
     { id: 'dark' as const, name: 'Dark', icon: Moon },
@@ -38,7 +79,7 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
     nord: '#282c36',
   };
 
-  const currentTheme = themes.find(t => t.id === theme);
+  const currentTheme = themes.find((t) => t.id === theme);
   const CurrentIcon = currentTheme?.icon || Moon;
 
   useEffect(() => {
@@ -46,15 +87,27 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
       if (themeMenuRef.current && !themeMenuRef.current.contains(event.target as Node)) {
         setIsThemeMenuOpen(false);
       }
+      if (shortcutsRef.current && !shortcutsRef.current.contains(event.target as Node)) {
+        setIsShortcutsOpen(false);
+      }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const formattedDate = now.toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short',
+  });
+  const formattedTime = now.toLocaleTimeString(language === 'fr' ? 'fr-FR' : 'en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
   return (
     <div className="h-6 bg-statusbar text-statusbar-text flex items-center justify-between px-3 md:px-2 text-xs border-t border-border">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 md:gap-4">
         <div className="flex items-center gap-1">
           <GitBranch className="w-3 h-3" />
           <span>main</span>
@@ -62,6 +115,15 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
         <div className="hidden md:flex items-center gap-1">
           <AlertCircle className="w-3 h-3" />
           <span>0</span>
+        </div>
+        <div className="hidden md:flex items-center gap-1">
+          <FileCode className="w-3 h-3" />
+          <span>{openTabsCount}</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-2 opacity-70">
+          <span>{formattedDate}</span>
+          <span>·</span>
+          <span>{formattedTime}</span>
         </div>
       </div>
 
@@ -80,6 +142,32 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
             <span>Reset edits</span>
           </button>
         )}
+        <div ref={shortcutsRef} className="relative">
+          <button
+            onClick={() => setIsShortcutsOpen((v) => !v)}
+            className="hidden md:flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover"
+            title={language === 'fr' ? 'Raccourcis clavier' : 'Keyboard shortcuts'}
+            aria-label="Keyboard shortcuts"
+          >
+            <Keyboard className="w-3 h-3" />
+          </button>
+          {isShortcutsOpen && (
+            <div
+              className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[240px] z-50 font-mono"
+              style={{ backgroundColor: menuBackgrounds[theme] }}
+            >
+              <div className="px-3 py-2 border-b border-border text-[11px] uppercase tracking-wide opacity-70">
+                {language === 'fr' ? 'Raccourcis' : 'Shortcuts'}
+              </div>
+              {SHORTCUTS.map((s) => (
+                <div key={s.keys} className="flex items-center justify-between px-3 py-1.5 text-xs">
+                  <span>{s.label[language]}</span>
+                  <span className="opacity-70 ml-3">{s.keys}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <button
           onClick={onTerminalToggle}
           className={`flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover ${
@@ -87,7 +175,7 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
           }`}
         >
           <Terminal className="w-3 h-3" />
-          <span>Terminal</span>
+          <span className="hidden md:inline">Terminal</span>
         </button>
         <span className="uppercase">{language}</span>
         <div ref={themeMenuRef} className="relative">
@@ -96,11 +184,14 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
             className="flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover"
           >
             <CurrentIcon className="w-3 h-3" />
-            <span className="capitalize">{theme}</span>
+            <span className="capitalize hidden md:inline">{theme}</span>
           </button>
           {isThemeMenuOpen && (
-            <div className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[120px] z-50" style={{ backgroundColor: menuBackgrounds[theme] }}>
-              {themes.map(t => {
+            <div
+              className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[120px] z-50"
+              style={{ backgroundColor: menuBackgrounds[theme] }}
+            >
+              {themes.map((t) => {
                 const Icon = t.icon;
                 return (
                   <button
@@ -125,4 +216,3 @@ export function StatusBar({ onTerminalToggle, isTerminalVisible }: StatusBarProp
     </div>
   );
 }
-

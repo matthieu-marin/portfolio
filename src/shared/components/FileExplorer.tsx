@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronRight, ChevronDown, Folder, FileCode, FolderOpen } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface FileExplorerProps {
   onFileSelect: (id: any, name: string, path: string) => void;
