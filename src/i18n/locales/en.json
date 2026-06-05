@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "title": "Matthieu Marin — Portfolio",
+    "description": "Matthieu Marin's portfolio — Apprentice developer at Renault Digital, Master's in Cloud Computing & Mobility (UPJV / INSSET). Java, Spring Boot, JavaScript, React, Vue.js.",
+    "htmlLang": "en"
+  },
   "nav": {
     "home": "Home",
     "about": "About",
@@ -41,7 +46,37 @@
       "name": "Your name",
       "email": "your@email.com",
       "message": "Your message..."
+    },
+    "toast": {
+      "sent": "Message sent!",
+      "sentDescription": "I'll get back to you soon.",
+      "failed": "Sending failed"
     }
+  },
+  "commandPalette": {
+    "title": "Command Palette",
+    "description": "Type a command, switch theme, open a page…",
+    "placeholder": "Type a command…",
+    "noResults": "No results found.",
+    "group": {
+      "goTo": "Go to",
+      "theme": "Theme",
+      "language": "Language",
+      "view": "View",
+      "actions": "Actions"
+    },
+    "active": "active",
+    "toggleExplorer": "Toggle Explorer",
+    "toggleTerminal": "Toggle Terminal",
+    "downloadCV": "Download CV",
+    "openLinkedin": "Open LinkedIn",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied",
+    "copyFailed": "Copy failed"
+  },
+  "statusBar": {
+    "shortcuts": "Shortcuts",
+    "shortcutsTitle": "Keyboard shortcuts"
   },
   "experience": {
     "title": "Professional Experience",

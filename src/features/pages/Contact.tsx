@@ -36,23 +36,16 @@ export function Contact() {
       const result = await provider.send({ ...formData, language });
       if (result.ok) {
         if (provider.isAsync) {
-          toast.success(
-            language === 'fr' ? 'Message envoyé !' : 'Message sent!',
-            {
-              description:
-                language === 'fr'
-                  ? 'Je te recontacte dès que possible.'
-                  : "I'll get back to you soon.",
-            }
-          );
+          toast.success(t('contact.toast.sent'), {
+            description: t('contact.toast.sentDescription'),
+          });
           setFormData({ name: '', email: '', message: '' });
         }
         // Mailto opens the client — no toast needed.
       } else {
-        toast.error(
-          language === 'fr' ? "L'envoi a échoué" : 'Sending failed',
-          { description: result.error }
-        );
+        toast.error(t('contact.toast.failed'), {
+          description: result.error,
+        });
       }
     } finally {
       setSubmitting(false);

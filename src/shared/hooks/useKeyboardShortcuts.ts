@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export interface ShortcutHandlers {
   onCommandPalette?: () => void;
@@ -17,15 +17,20 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
+  // Keep the latest handlers in a ref so the listener mounts only once.
+  const handlersRef = useRef(handlers);
+  handlersRef.current = handlers;
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const isMod = e.ctrlKey || e.metaKey;
       if (!isMod) return;
+      const h = handlersRef.current;
 
       // Cmd+K → command palette. Even when typing.
       if (e.key === 'k' || e.key === 'K') {
         e.preventDefault();
-        handlers.onCommandPalette?.();
+        h.onCommandPalette?.();
         return;
       }
 
@@ -35,34 +40,35 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
       // Cmd+B → toggle explorer
       if (e.key === 'b' || e.key === 'B') {
         e.preventDefault();
-        handlers.onToggleExplorer?.();
+        h.onToggleExplorer?.();
         return;
       }
 
       // Cmd+` → toggle terminal
       if (e.key === '`') {
         e.preventDefault();
-        handlers.onToggleTerminal?.();
+        h.onToggleTerminal?.();
         return;
       }
 
-      // Cmd+W → close current tab
-      if ((e.key === 'w' || e.key === 'W') && !e.shiftKey) {
-        // Prevent browser tab close (Mac Safari/Chrome may not allow override but try)
+      // Cmd+Shift+W → close current IDE tab. Cmd+W is reserved by the
+      // browser (most engines don't honour preventDefault on it), so we
+      // require Shift to avoid closing the browser tab by accident.
+      if ((e.key === 'w' || e.key === 'W') && e.shiftKey) {
         e.preventDefault();
-        handlers.onCloseTab?.();
+        h.onCloseTab?.();
         return;
       }
 
       // Cmd+1..6 → switch tab by index
       if (/^[1-6]$/.test(e.key)) {
         e.preventDefault();
-        handlers.onSwitchTab?.(parseInt(e.key, 10) - 1);
+        h.onSwitchTab?.(parseInt(e.key, 10) - 1);
         return;
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [handlers]);
+  }, []);
 }

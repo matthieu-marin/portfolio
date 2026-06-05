@@ -15,7 +15,7 @@ export function SkillTooltip({ skillName, description, usage, children, onClick 
   const [isCtrlPressed, setIsCtrlPressed] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -107,15 +107,6 @@ export function SkillTooltip({ skillName, description, usage, children, onClick 
       e.preventDefault();
       onClick();
     }
-  };
-
-  const getTransformStyle = () => {
-    if (alignment === 'center') {
-      return 'translateX(-50%)';
-    } else if (alignment === 'right') {
-      return 'translateX(-100%)';
-    }
-    return 'translateX(0)';
   };
 
   return (

@@ -33,24 +33,25 @@ import {
 import { useTheme, type Theme } from '../contexts/ThemeContext';
 import { useLanguage } from '../../i18n/hooks';
 import { toast } from 'sonner';
-
-export type PageId = 'home' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+import type { Page } from '../../app/types';
 
 interface PageDef {
-  id: PageId;
+  id: Page;
   name: string;
   path: string;
-  label: { fr: string; en: string };
+  // Both translations are kept in the searchable value so users can find a
+  // page by its name in either language regardless of the current locale.
+  searchTokens: string;
   icon: typeof HomeIcon;
 }
 
 const PAGES: PageDef[] = [
-  { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx', label: { fr: 'Accueil', en: 'Home' }, icon: HomeIcon },
-  { id: 'about', name: 'About.tsx', path: 'src/pages/About.tsx', label: { fr: 'À propos', en: 'About' }, icon: User },
-  { id: 'experience', name: 'Experience.tsx', path: 'src/pages/Experience.tsx', label: { fr: 'Expérience', en: 'Experience' }, icon: Briefcase },
-  { id: 'projects', name: 'Projects.tsx', path: 'src/pages/Projects.tsx', label: { fr: 'Projets', en: 'Projects' }, icon: FolderGit2 },
-  { id: 'skills', name: 'Skills.tsx', path: 'src/pages/Skills.tsx', label: { fr: 'Compétences', en: 'Skills' }, icon: Wrench },
-  { id: 'contact', name: 'Contact.tsx', path: 'src/pages/Contact.tsx', label: { fr: 'Contact', en: 'Contact' }, icon: Mail },
+  { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx', searchTokens: 'Accueil Home', icon: HomeIcon },
+  { id: 'about', name: 'About.tsx', path: 'src/pages/About.tsx', searchTokens: 'À propos About', icon: User },
+  { id: 'experience', name: 'Experience.tsx', path: 'src/pages/Experience.tsx', searchTokens: 'Expérience Experience', icon: Briefcase },
+  { id: 'projects', name: 'Projects.tsx', path: 'src/pages/Projects.tsx', searchTokens: 'Projets Projects', icon: FolderGit2 },
+  { id: 'skills', name: 'Skills.tsx', path: 'src/pages/Skills.tsx', searchTokens: 'Compétences Skills', icon: Wrench },
+  { id: 'contact', name: 'Contact.tsx', path: 'src/pages/Contact.tsx', searchTokens: 'Contact', icon: Mail },
 ];
 
 const THEMES: { id: Theme; name: string; icon: typeof Moon }[] = [
@@ -67,7 +68,7 @@ const THEMES: { id: Theme; name: string; icon: typeof Moon }[] = [
 interface CommandPaletteProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onOpenFile: (id: PageId, name: string, path: string) => void;
+  onOpenFile: (id: Page, name: string, path: string) => void;
   onToggleTerminal: () => void;
   onToggleExplorer: () => void;
 }
@@ -80,7 +81,7 @@ export function CommandPalette({
   onToggleExplorer,
 }: CommandPaletteProps) {
   const { theme, setTheme } = useTheme();
-  const { language, setLanguage } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
 
   const run = (fn: () => void) => () => {
     onOpenChange(false);
@@ -89,8 +90,8 @@ export function CommandPalette({
 
   const copyEmail = run(() => {
     void navigator.clipboard.writeText('matthieumarin51@gmail.com').then(
-      () => toast.success(language === 'fr' ? 'Email copié' : 'Email copied'),
-      () => toast.error(language === 'fr' ? 'Échec de la copie' : 'Copy failed')
+      () => toast.success(t('commandPalette.emailCopied')),
+      () => toast.error(t('commandPalette.copyFailed'))
     );
   });
 
@@ -98,32 +99,24 @@ export function CommandPalette({
     <CommandDialog
       open={open}
       onOpenChange={onOpenChange}
-      title={language === 'fr' ? 'Palette de commandes' : 'Command Palette'}
-      description={
-        language === 'fr'
-          ? 'Tape une commande, change de thème, ouvre une page…'
-          : 'Type a command, switch theme, open a page…'
-      }
+      title={t('commandPalette.title')}
+      description={t('commandPalette.description')}
     >
-      <CommandInput
-        placeholder={language === 'fr' ? 'Tape une commande…' : 'Type a command…'}
-      />
+      <CommandInput placeholder={t('commandPalette.placeholder')} />
       <CommandList>
-        <CommandEmpty>
-          {language === 'fr' ? 'Aucun résultat.' : 'No results found.'}
-        </CommandEmpty>
+        <CommandEmpty>{t('commandPalette.noResults')}</CommandEmpty>
 
-        <CommandGroup heading={language === 'fr' ? 'Aller à' : 'Go to'}>
+        <CommandGroup heading={t('commandPalette.group.goTo')}>
           {PAGES.map((p) => {
             const Icon = p.icon;
             return (
               <CommandItem
                 key={p.id}
                 onSelect={run(() => onOpenFile(p.id, p.name, p.path))}
-                value={`go-${p.id} ${p.label.fr} ${p.label.en} ${p.name}`}
+                value={`go-${p.id} ${p.searchTokens} ${p.name}`}
               >
                 <Icon className="w-4 h-4" />
-                <span>{p.label[language]}</span>
+                <span>{t(`nav.${p.id}`)}</span>
                 <span className="ml-auto font-mono text-[10px] opacity-50">{p.name}</span>
               </CommandItem>
             );
@@ -132,19 +125,19 @@ export function CommandPalette({
 
         <CommandSeparator />
 
-        <CommandGroup heading={language === 'fr' ? 'Thème' : 'Theme'}>
-          {THEMES.map((t) => {
-            const Icon = t.icon;
+        <CommandGroup heading={t('commandPalette.group.theme')}>
+          {THEMES.map((th) => {
+            const Icon = th.icon;
             return (
               <CommandItem
-                key={t.id}
-                onSelect={run(() => setTheme(t.id))}
-                value={`theme-${t.id} ${t.name}`}
+                key={th.id}
+                onSelect={run(() => setTheme(th.id))}
+                value={`theme-${th.id} ${th.name}`}
               >
                 <Icon className="w-4 h-4" />
-                <span>{t.name}</span>
-                {theme === t.id && (
-                  <CommandShortcut>{language === 'fr' ? 'actif' : 'active'}</CommandShortcut>
+                <span>{th.name}</span>
+                {theme === th.id && (
+                  <CommandShortcut>{t('commandPalette.active')}</CommandShortcut>
                 )}
               </CommandItem>
             );
@@ -153,14 +146,16 @@ export function CommandPalette({
 
         <CommandSeparator />
 
-        <CommandGroup heading={language === 'fr' ? 'Langue' : 'Language'}>
+        <CommandGroup heading={t('commandPalette.group.language')}>
           <CommandItem
             onSelect={run(() => setLanguage('fr'))}
             value="lang-fr Français French"
           >
             <Languages className="w-4 h-4" />
             <span>Français</span>
-            {language === 'fr' && <CommandShortcut>actif</CommandShortcut>}
+            {language === 'fr' && (
+              <CommandShortcut>{t('commandPalette.active')}</CommandShortcut>
+            )}
           </CommandItem>
           <CommandItem
             onSelect={run(() => setLanguage('en'))}
@@ -168,28 +163,30 @@ export function CommandPalette({
           >
             <Languages className="w-4 h-4" />
             <span>English</span>
-            {language === 'en' && <CommandShortcut>active</CommandShortcut>}
+            {language === 'en' && (
+              <CommandShortcut>{t('commandPalette.active')}</CommandShortcut>
+            )}
           </CommandItem>
         </CommandGroup>
 
         <CommandSeparator />
 
-        <CommandGroup heading={language === 'fr' ? 'Affichage' : 'View'}>
+        <CommandGroup heading={t('commandPalette.group.view')}>
           <CommandItem onSelect={run(onToggleExplorer)} value="toggle-explorer">
             <PanelLeft className="w-4 h-4" />
-            <span>{language === 'fr' ? "Basculer l'explorateur" : 'Toggle Explorer'}</span>
+            <span>{t('commandPalette.toggleExplorer')}</span>
             <CommandShortcut>⌘B</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={run(onToggleTerminal)} value="toggle-terminal">
             <Terminal className="w-4 h-4" />
-            <span>{language === 'fr' ? 'Basculer le terminal' : 'Toggle Terminal'}</span>
+            <span>{t('commandPalette.toggleTerminal')}</span>
             <CommandShortcut>⌘`</CommandShortcut>
           </CommandItem>
         </CommandGroup>
 
         <CommandSeparator />
 
-        <CommandGroup heading={language === 'fr' ? 'Actions' : 'Actions'}>
+        <CommandGroup heading={t('commandPalette.group.actions')}>
           <CommandItem
             onSelect={run(() => {
               const a = document.createElement('a');
@@ -200,7 +197,7 @@ export function CommandPalette({
             value="download-cv"
           >
             <Download className="w-4 h-4" />
-            <span>{language === 'fr' ? 'Télécharger le CV' : 'Download CV'}</span>
+            <span>{t('commandPalette.downloadCV')}</span>
           </CommandItem>
           <CommandItem
             onSelect={run(() =>
@@ -213,11 +210,11 @@ export function CommandPalette({
             value="open-linkedin"
           >
             <Linkedin className="w-4 h-4" />
-            <span>{language === 'fr' ? 'Ouvrir LinkedIn' : 'Open LinkedIn'}</span>
+            <span>{t('commandPalette.openLinkedin')}</span>
           </CommandItem>
           <CommandItem onSelect={copyEmail} value="copy-email">
             <Copy className="w-4 h-4" />
-            <span>{language === 'fr' ? "Copier l'email" : 'Copy email'}</span>
+            <span>{t('commandPalette.copyEmail')}</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>

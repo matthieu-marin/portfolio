@@ -3,21 +3,24 @@ import { initReactI18next } from 'react-i18next';
 import fr from './locales/fr.json';
 import en from './locales/en.json';
 
-const savedLanguage = localStorage.getItem('portfolio-language') || 'fr';
+function readSavedLanguage(): string {
+  try {
+    return localStorage.getItem('portfolio-language') || 'fr';
+  } catch {
+    return 'fr';
+  }
+}
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      fr: { translation: fr },
-      en: { translation: en },
-    },
-    lng: savedLanguage,
-    fallbackLng: 'fr',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+i18n.use(initReactI18next).init({
+  resources: {
+    fr: { translation: fr },
+    en: { translation: en },
+  },
+  lng: readSavedLanguage(),
+  fallbackLng: 'fr',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;
-

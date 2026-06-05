@@ -1,6 +1,23 @@
-import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 
-export type Theme = 'dark' | 'light' | 'steampunk' | 'pixel' | 'cyberpunk' | 'synthwave' | 'galaxy' | 'nord';
+export type Theme =
+  | 'dark'
+  | 'light'
+  | 'steampunk'
+  | 'pixel'
+  | 'cyberpunk'
+  | 'synthwave'
+  | 'galaxy'
+  | 'nord';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,28 +28,42 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'portfolio-theme';
 
-function getInitialTheme(): { theme: Theme; userPicked: boolean } {
-  if (typeof window === 'undefined') return { theme: 'dark', userPicked: false };
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) return { theme: saved as Theme, userPicked: true };
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  return { theme: prefersLight ? 'light' : 'dark', userPicked: false };
+function readSavedTheme(): Theme | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem(STORAGE_KEY) as Theme | null;
+  } catch {
+    return null;
+  }
+}
+
+function getInitialTheme(): Theme {
+  const saved = readSavedTheme();
+  if (saved) return saved;
+  if (typeof window === 'undefined') return 'dark';
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const initial = useRef(getInitialTheme()).current;
-  const [theme, setThemeState] = useState<Theme>(initial.theme);
-  // Tracks whether the user has explicitly picked a theme this session.
-  const userPickedRef = useRef<boolean>(initial.userPicked);
+  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
+
+  // Lazy-init ref: tracks whether the user has explicitly picked a theme.
+  const userPickedRef = useRef<boolean | null>(null);
+  if (userPickedRef.current === null) {
+    userPickedRef.current = readSavedTheme() !== null;
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     if (userPickedRef.current) {
-      localStorage.setItem(STORAGE_KEY, theme);
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch {
+        // Storage disabled (e.g. Safari private mode pre-iOS17) — ignore.
+      }
     }
   }, [theme]);
 
-  // Track OS color-scheme changes as long as the user hasn't explicitly chosen.
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const mq = window.matchMedia('(prefers-color-scheme: light)');
@@ -44,16 +75,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  const setTheme = (newTheme: Theme) => {
+  const setTheme = useCallback((newTheme: Theme) => {
     userPickedRef.current = true;
     setThemeState(newTheme);
-  };
+  }, []);
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {
@@ -63,4 +92,3 @@ export function useTheme() {
   }
   return context;
 }
-

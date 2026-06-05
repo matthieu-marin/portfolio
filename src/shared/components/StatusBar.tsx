@@ -30,7 +30,7 @@ const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
   { keys: '⌘K', label: { fr: 'Palette de commandes', en: 'Command palette' } },
   { keys: '⌘B', label: { fr: "Basculer l'explorateur", en: 'Toggle explorer' } },
   { keys: '⌘`', label: { fr: 'Basculer le terminal', en: 'Toggle terminal' } },
-  { keys: '⌘W', label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
+  { keys: '⌘⇧W', label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
   { keys: '⌘1…6', label: { fr: 'Aller à l’onglet n', en: 'Go to tab n' } },
 ];
 
@@ -49,7 +49,7 @@ export function StatusBar({
   openTabsCount = 0,
 }: StatusBarProps) {
   const { theme, setTheme } = useTheme();
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const { hasEdits, resetEdits } = useEditContext();
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
@@ -68,16 +68,9 @@ export function StatusBar({
     { id: 'nord' as const, name: 'Nord', icon: Snowflake },
   ];
 
-  const menuBackgrounds: Record<string, string> = {
-    light: '#ffffff',
-    dark: '#1e1e1e',
-    steampunk: '#2d1f14',
-    pixel: '#0a2a0a',
-    cyberpunk: '#050508',
-    synthwave: '#1f0841',
-    galaxy: '#081220',
-    nord: '#282c36',
-  };
+  // Popover background follows the theme via CSS variable rather than
+  // a per-theme hardcoded hex, so adding a new theme works automatically.
+  const menuBackground = 'var(--titlebar)';
 
   const currentTheme = themes.find((t) => t.id === theme);
   const CurrentIcon = currentTheme?.icon || Moon;
@@ -146,18 +139,18 @@ export function StatusBar({
           <button
             onClick={() => setIsShortcutsOpen((v) => !v)}
             className="hidden md:flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover"
-            title={language === 'fr' ? 'Raccourcis clavier' : 'Keyboard shortcuts'}
-            aria-label="Keyboard shortcuts"
+            title={t('statusBar.shortcutsTitle')}
+            aria-label={t('statusBar.shortcutsTitle')}
           >
             <Keyboard className="w-3 h-3" />
           </button>
           {isShortcutsOpen && (
             <div
               className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[240px] z-50 font-mono"
-              style={{ backgroundColor: menuBackgrounds[theme] }}
+              style={{ backgroundColor: menuBackground }}
             >
               <div className="px-3 py-2 border-b border-border text-[11px] uppercase tracking-wide opacity-70">
-                {language === 'fr' ? 'Raccourcis' : 'Shortcuts'}
+                {t('statusBar.shortcuts')}
               </div>
               {SHORTCUTS.map((s) => (
                 <div key={s.keys} className="flex items-center justify-between px-3 py-1.5 text-xs">
@@ -189,7 +182,7 @@ export function StatusBar({
           {isThemeMenuOpen && (
             <div
               className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[120px] z-50"
-              style={{ backgroundColor: menuBackgrounds[theme] }}
+              style={{ backgroundColor: menuBackground }}
             >
               {themes.map((t) => {
                 const Icon = t.icon;

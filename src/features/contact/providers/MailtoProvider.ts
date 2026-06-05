@@ -17,7 +17,18 @@ export const MailtoProvider: ContactProvider = {
     const body = encodeURIComponent(
       `${submission.message}\n\n— ${submission.name} (${submission.email})`
     );
-    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
-    return { ok: true, via: 'mailto' };
+    // No reliable way to detect whether a mail client is registered. We
+    // attempt the navigation and assume the OS will surface a fallback if
+    // none responds. Caller should keep the form filled (we don't reset it).
+    try {
+      window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+      return { ok: true, via: 'mailto' };
+    } catch (err) {
+      return {
+        ok: false,
+        via: 'mailto',
+        error: err instanceof Error ? err.message : 'mailto navigation failed',
+      };
+    }
   },
 };

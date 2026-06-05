@@ -1,16 +1,11 @@
 import { X } from 'lucide-react';
-
-interface Tab {
-  id: string;
-  name: string;
-  path: string;
-}
+import type { Page, Tab } from '../../app/types';
 
 interface TabBarProps {
   tabs: Tab[];
-  activeTab: string;
-  onTabClick: (id: any) => void;
-  onTabClose: (id: any) => void;
+  activeTab: Page;
+  onTabClick: (id: Page) => void;
+  onTabClose: (id: Page) => void;
 }
 
 export function TabBar({ tabs, activeTab, onTabClick, onTabClose }: TabBarProps) {

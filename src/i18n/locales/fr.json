@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "title": "Matthieu Marin — Portfolio",
+    "description": "Portfolio de Matthieu Marin — Développeur en alternance chez Renault Digital, Master Cloud Computing & Mobility (UPJV / INSSET). Java, Spring Boot, JavaScript, React, Vue.js.",
+    "htmlLang": "fr"
+  },
   "nav": {
     "home": "Accueil",
     "about": "À propos",
@@ -29,6 +34,31 @@
     "backend": "Backend",
     "tools": "Outils"
   },
+  "commandPalette": {
+    "title": "Palette de commandes",
+    "description": "Tape une commande, change de thème, ouvre une page…",
+    "placeholder": "Tape une commande…",
+    "noResults": "Aucun résultat.",
+    "group": {
+      "goTo": "Aller à",
+      "theme": "Thème",
+      "language": "Langue",
+      "view": "Affichage",
+      "actions": "Actions"
+    },
+    "active": "actif",
+    "toggleExplorer": "Basculer l'explorateur",
+    "toggleTerminal": "Basculer le terminal",
+    "downloadCV": "Télécharger le CV",
+    "openLinkedin": "Ouvrir LinkedIn",
+    "copyEmail": "Copier l'email",
+    "emailCopied": "Email copié",
+    "copyFailed": "Échec de la copie"
+  },
+  "statusBar": {
+    "shortcuts": "Raccourcis",
+    "shortcutsTitle": "Raccourcis clavier"
+  },
   "contact": {
     "title": "Contactez-moi",
     "description": "N'hésitez pas à me contacter pour discuter d'opportunités ou de collaborations",
@@ -41,6 +71,11 @@
       "name": "Votre nom",
       "email": "votre@email.com",
       "message": "Votre message..."
+    },
+    "toast": {
+      "sent": "Message envoyé !",
+      "sentDescription": "Je te recontacte dès que possible.",
+      "failed": "L'envoi a échoué"
     }
   },
   "experience": {

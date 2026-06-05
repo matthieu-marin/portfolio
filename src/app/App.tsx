@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ThemeProvider, useTheme } from '../shared/contexts/ThemeContext';
 import { NavigationProvider } from '../shared/contexts/NavigationContext';
 import { EditProvider } from '../shared/contexts/EditContext';
@@ -26,14 +27,7 @@ import { Contact } from '../features/pages/Contact';
 import { Experience } from '../features/pages/Experience';
 import { PanelLeftOpen, PanelLeftClose, Command as CommandIcon } from 'lucide-react';
 import { Toaster } from 'sonner';
-
-type Page = 'home' | 'about' | 'projects' | 'skills' | 'contact' | 'experience';
-
-interface Tab {
-  id: Page;
-  name: string;
-  path: string;
-}
+import type { Page, Tab } from './types';
 
 function PortfolioContent() {
   const [openTabs, setOpenTabs] = useState<Tab[]>([
@@ -46,13 +40,26 @@ function PortfolioContent() {
   const [isExplorerVisible, setIsExplorerVisible] = useState(true);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { theme } = useTheme();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const lang = i18n.language === 'en' ? 'en' : 'fr';
+    document.documentElement.setAttribute('lang', lang);
+    document.title = t('meta.title');
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute('content', t('meta.description'));
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', t('meta.description'));
+  }, [t, i18n.language]);
 
   const MIN_TERMINAL_HEIGHT = 100;
   const MAX_TERMINAL_HEIGHT = 600;
 
   useEffect(() => {
+    // Aligned with useIsMobile (Tailwind md breakpoint) — see ui/use-mobile.ts.
+    const MOBILE_BREAKPOINT = 768;
     const handleResize = () => {
-      const isMobile = window.innerWidth < 640;
+      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
       setIsExplorerVisible(!isMobile);
     };
 
@@ -87,26 +94,34 @@ function PortfolioContent() {
   }, [openFile]);
 
   useEffect(() => {
+    if (!isResizingTerminal) return;
+
+    let rafId: number | null = null;
+    let pendingClientY = 0;
+
+    const apply = () => {
+      rafId = null;
+      const newHeight = window.innerHeight - pendingClientY;
+      const clamped = Math.max(
+        MIN_TERMINAL_HEIGHT,
+        Math.min(MAX_TERMINAL_HEIGHT, newHeight)
+      );
+      setTerminalHeight(clamped);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isResizingTerminal) return;
-      const newHeight = window.innerHeight - e.clientY;
-      if (newHeight >= MIN_TERMINAL_HEIGHT && newHeight <= MAX_TERMINAL_HEIGHT) {
-        setTerminalHeight(newHeight);
-      } else if (newHeight > MAX_TERMINAL_HEIGHT) {
-        setTerminalHeight(MAX_TERMINAL_HEIGHT);
-      } else if (newHeight < MIN_TERMINAL_HEIGHT) {
-        setTerminalHeight(MIN_TERMINAL_HEIGHT);
-      }
+      pendingClientY = e.clientY;
+      if (rafId === null) rafId = requestAnimationFrame(apply);
     };
     const handleMouseUp = () => setIsResizingTerminal(false);
 
-    if (isResizingTerminal) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.cursor = 'row-resize';
-      document.body.style.userSelect = 'none';
-    }
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       document.body.style.cursor = '';
@@ -117,9 +132,12 @@ function PortfolioContent() {
   const closeTab = useCallback(
     (id: Page) => {
       setOpenTabs((prev) => {
+        const closedIdx = prev.findIndex((tab) => tab.id === id);
         const newTabs = prev.filter((tab) => tab.id !== id);
         if (activeTab === id && newTabs.length > 0) {
-          setActiveTab(newTabs[newTabs.length - 1].id);
+          // Switch to the neighbour (prefer the tab on the left).
+          const nextIdx = Math.max(0, closedIdx - 1);
+          setActiveTab(newTabs[nextIdx].id);
         }
         return newTabs;
       });

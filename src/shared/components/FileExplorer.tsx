@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { ChevronRight, ChevronDown, Folder, FileCode, FolderOpen } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
 import { motion, AnimatePresence } from 'motion/react';
+import type { Page } from '../../app/types';
 
 interface FileExplorerProps {
-  onFileSelect: (id: any, name: string, path: string) => void;
+  onFileSelect: (id: Page, name: string, path: string) => void;
   onVisibilityChange?: (visible: boolean) => void;
 }
 
@@ -19,15 +20,17 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
   const DEFAULT_WIDTH = 256;
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isResizing) return;
+    if (!isResizing) return;
 
-      const newWidth = e.clientX;
+    let rafId: number | null = null;
+    let pendingClientX = 0;
+
+    const apply = () => {
+      rafId = null;
+      const newWidth = pendingClientX;
       if (newWidth < 50 && newWidth > 0) {
         setWidth(0);
-        if (onVisibilityChange) {
-          onVisibilityChange(false);
-        }
+        onVisibilityChange?.(false);
       } else if (newWidth >= 50 && newWidth <= MAX_WIDTH) {
         setWidth(newWidth);
       } else if (newWidth > MAX_WIDTH) {
@@ -35,18 +38,19 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
       }
     };
 
-    const handleMouseUp = () => {
-      setIsResizing(false);
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingClientX = e.clientX;
+      if (rafId === null) rafId = requestAnimationFrame(apply);
     };
+    const handleMouseUp = () => setIsResizing(false);
 
-    if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.cursor = 'col-resize';
-      document.body.style.userSelect = 'none';
-    }
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
 
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       document.body.style.cursor = '';
@@ -80,7 +84,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
     );
   };
 
-  const files = [
+  const files: { id: Page; name: string; path: string; label: string }[] = [
     { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx', label: t('nav.home') },
     { id: 'about', name: 'About.tsx', path: 'src/pages/About.tsx', label: t('nav.about') },
     { id: 'experience', name: 'Experience.tsx', path: 'src/pages/Experience.tsx', label: t('nav.experience') },
