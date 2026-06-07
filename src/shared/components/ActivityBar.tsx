@@ -1,4 +1,4 @@
-import { Files, GitBranch, Puzzle } from 'lucide-react';
+import { Files, Puzzle } from 'lucide-react';
 import { cn } from './ui/utils';
 import type { PanelId } from '../../app/types';
 
@@ -8,9 +8,8 @@ interface ActivityBarProps {
 }
 
 const PANELS: { id: PanelId; icon: React.ElementType; label: string }[] = [
-  { id: 'explorer',   icon: Files,     label: 'Explorer (⌘B)' },
-  { id: 'git',        icon: GitBranch, label: 'Source Control' },
-  { id: 'extensions', icon: Puzzle,    label: 'Extensions' },
+  { id: 'explorer',   icon: Files,  label: 'Explorer (⌘B)' },
+  { id: 'extensions', icon: Puzzle, label: 'Extensions' },
 ];
 
 export function ActivityBar({ activePanel, onPanelSelect }: ActivityBarProps) {

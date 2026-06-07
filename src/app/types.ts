@@ -4,9 +4,10 @@ export type Page =
   | 'projects'
   | 'skills'
   | 'contact'
-  | 'experience';
+  | 'experience'
+  | 'chronology';
 
-export type PanelId = 'explorer' | 'git' | 'extensions';
+export type PanelId = 'explorer' | 'extensions';
 
 export interface Tab {
   id: Page;

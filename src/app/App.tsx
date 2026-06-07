@@ -26,8 +26,8 @@ import { Skills } from '../features/pages/Skills';
 import { Contact } from '../features/pages/Contact';
 import { Experience } from '../features/pages/Experience';
 import { ActivityBar } from '../shared/components/ActivityBar';
-import { GitPanel } from '../shared/components/GitPanel';
 import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
+import { Chronology } from '../features/pages/Chronology';
 import { PanelLeftOpen, PanelLeftClose, Command as CommandIcon } from 'lucide-react';
 import { Toaster } from 'sonner';
 import type { Page, Tab, PanelId } from './types';
@@ -96,15 +96,19 @@ function PortfolioContent() {
       openFile('experience', 'Experience.tsx', 'src/pages/Experience.tsx');
     const handleNavigateToProject = () =>
       openFile('projects', 'Projects.tsx', 'src/pages/Projects.tsx');
+    const handleNavigateToAbout = () =>
+      openFile('about', 'About.tsx', 'src/pages/About.tsx');
 
     window.addEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
     window.addEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
     window.addEventListener('navigate-to-project', handleNavigateToProject as EventListener);
+    window.addEventListener('navigate-to-about', handleNavigateToAbout as EventListener);
 
     return () => {
       window.removeEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
       window.removeEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
       window.removeEventListener('navigate-to-project', handleNavigateToProject as EventListener);
+      window.removeEventListener('navigate-to-about', handleNavigateToAbout as EventListener);
     };
   }, [openFile]);
 
@@ -194,6 +198,8 @@ function PortfolioContent() {
         return <Contact />;
       case 'experience':
         return <Experience />;
+      case 'chronology':
+        return <Chronology />;
       default:
         return <Home />;
     }
@@ -247,7 +253,6 @@ function PortfolioContent() {
               onVisibilityChange={(v) => !v && setActivePanel(null)}
             />
           )}
-          {activePanel === 'git' && <GitPanel />}
           {activePanel === 'extensions' && <ExtensionsPanel />}
         </div>
 
@@ -290,6 +295,7 @@ function PortfolioContent() {
         onTerminalToggle={() => setIsTerminalVisible(!isTerminalVisible)}
         isTerminalVisible={isTerminalVisible}
         openTabsCount={openTabs.length}
+        onOpenChronology={() => openFile('chronology', 'Chronologie.tsx', 'src/pages/Chronologie.tsx')}
       />
 
       <CommandPalette

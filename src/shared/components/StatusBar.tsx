@@ -24,6 +24,7 @@ interface StatusBarProps {
   onTerminalToggle: () => void;
   isTerminalVisible: boolean;
   openTabsCount?: number;
+  onOpenChronology?: () => void;
 }
 
 const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
@@ -47,6 +48,7 @@ export function StatusBar({
   onTerminalToggle,
   isTerminalVisible,
   openTabsCount = 0,
+  onOpenChronology,
 }: StatusBarProps) {
   const { theme, setTheme } = useTheme();
   const { t, language } = useLanguage();
@@ -101,10 +103,14 @@ export function StatusBar({
   return (
     <div className="h-6 bg-statusbar text-statusbar-text flex items-center justify-between px-3 md:px-2 text-xs border-t border-border">
       <div className="flex items-center gap-3 md:gap-4">
-        <div className="flex items-center gap-1">
+        <button
+          onClick={onOpenChronology}
+          title="Chronologie du parcours"
+          className="flex items-center gap-1 px-1 py-0.5 rounded hover:bg-hover transition-colors"
+        >
           <GitBranch className="w-3 h-3" />
           <span>main</span>
-        </div>
+        </button>
         <div className="hidden md:flex items-center gap-1">
           <AlertCircle className="w-3 h-3" />
           <span>0</span>
