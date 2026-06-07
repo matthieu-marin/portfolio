@@ -25,9 +25,12 @@ import { Projects } from '../features/pages/Projects';
 import { Skills } from '../features/pages/Skills';
 import { Contact } from '../features/pages/Contact';
 import { Experience } from '../features/pages/Experience';
+import { ActivityBar } from '../shared/components/ActivityBar';
+import { GitPanel } from '../shared/components/GitPanel';
+import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
 import { PanelLeftOpen, PanelLeftClose, Command as CommandIcon } from 'lucide-react';
 import { Toaster } from 'sonner';
-import type { Page, Tab } from './types';
+import type { Page, Tab, PanelId } from './types';
 
 function PortfolioContent() {
   const [openTabs, setOpenTabs] = useState<Tab[]>([
@@ -37,7 +40,8 @@ function PortfolioContent() {
   const [isTerminalVisible, setIsTerminalVisible] = useState(false);
   const [terminalHeight, setTerminalHeight] = useState(256);
   const [isResizingTerminal, setIsResizingTerminal] = useState(false);
-  const [isExplorerVisible, setIsExplorerVisible] = useState(true);
+  const [activePanel, setActivePanel] = useState<PanelId | null>('explorer');
+  const [isMobileExplorerVisible, setIsMobileExplorerVisible] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { theme } = useTheme();
   const { t, i18n } = useTranslation();
@@ -56,17 +60,28 @@ function PortfolioContent() {
   const MAX_TERMINAL_HEIGHT = 600;
 
   useEffect(() => {
-    // Aligned with useIsMobile (Tailwind md breakpoint) — see ui/use-mobile.ts.
+    // On mobile, hide explorer by default; desktop uses the activity bar.
     const MOBILE_BREAKPOINT = 768;
     const handleResize = () => {
       const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
-      setIsExplorerVisible(!isMobile);
+      setIsMobileExplorerVisible(!isMobile);
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const togglePanel = useCallback((id: PanelId) => {
+    setActivePanel((prev) => (prev === id ? null : id));
+  }, []);
+
+  const toggleExplorer = useCallback(() => {
+    if (window.innerWidth >= 768) {
+      togglePanel('explorer');
+    } else {
+      setIsMobileExplorerVisible((v) => !v);
+    }
+  }, [togglePanel]);
 
   const openFile = useCallback((id: Page, name: string, path: string) => {
     setOpenTabs((prev) =>
@@ -159,7 +174,7 @@ function PortfolioContent() {
 
   useKeyboardShortcuts({
     onCommandPalette: () => setIsCommandOpen(true),
-    onToggleExplorer: () => setIsExplorerVisible((v) => !v),
+    onToggleExplorer: toggleExplorer,
     onToggleTerminal: () => setIsTerminalVisible((v) => !v),
     onCloseTab: closeActiveTab,
     onSwitchTab: switchTabByIndex,
@@ -195,12 +210,12 @@ function PortfolioContent() {
       <div className="h-12 bg-titlebar border-b border-border flex items-center justify-between px-5 md:px-4">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => setIsExplorerVisible(!isExplorerVisible)}
+            onClick={toggleExplorer}
             className="p-1 hover:bg-accent rounded transition-colors"
-            aria-label={isExplorerVisible ? 'Hide explorer' : 'Show explorer'}
-            title={isExplorerVisible ? 'Hide explorer (⌘B)' : 'Show explorer (⌘B)'}
+            aria-label="Toggle explorer"
+            title="Toggle explorer (⌘B)"
           >
-            {isExplorerVisible ? (
+            {(activePanel !== null || isMobileExplorerVisible) ? (
               <PanelLeftClose className="w-5 h-5" />
             ) : (
               <PanelLeftOpen className="w-5 h-5" />
@@ -223,9 +238,29 @@ function PortfolioContent() {
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden relative">
-        {isExplorerVisible && (
-          <FileExplorer onFileSelect={openFile} onVisibilityChange={setIsExplorerVisible} />
+        {/* Desktop: Activity Bar + panel actif */}
+        <div className="hidden md:flex h-full">
+          <ActivityBar activePanel={activePanel} onPanelSelect={togglePanel} />
+          {activePanel === 'explorer' && (
+            <FileExplorer
+              onFileSelect={openFile}
+              onVisibilityChange={(v) => !v && setActivePanel(null)}
+            />
+          )}
+          {activePanel === 'git' && <GitPanel />}
+          {activePanel === 'extensions' && <ExtensionsPanel />}
+        </div>
+
+        {/* Mobile: Explorer classique contrôlé par le hamburger */}
+        {isMobileExplorerVisible && (
+          <div className="md:hidden">
+            <FileExplorer
+              onFileSelect={openFile}
+              onVisibilityChange={setIsMobileExplorerVisible}
+            />
+          </div>
         )}
+
         <div className="flex-1 flex flex-col min-w-0">
           <TabBar
             tabs={openTabs}
@@ -262,7 +297,7 @@ function PortfolioContent() {
         onOpenChange={setIsCommandOpen}
         onOpenFile={openFile}
         onToggleTerminal={() => setIsTerminalVisible((v) => !v)}
-        onToggleExplorer={() => setIsExplorerVisible((v) => !v)}
+        onToggleExplorer={toggleExplorer}
       />
 
       <Toaster

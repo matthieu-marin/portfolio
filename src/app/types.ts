@@ -6,6 +6,8 @@ export type Page =
   | 'contact'
   | 'experience';
 
+export type PanelId = 'explorer' | 'git' | 'extensions';
+
 export interface Tab {
   id: Page;
   name: string;
