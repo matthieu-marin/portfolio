@@ -1,5 +1,6 @@
 import { GitBranch } from 'lucide-react';
 import { cn } from '../../shared/components/ui/utils';
+import { MOD, SEP } from '../../shared/utils/platform';
 import {
   PageShell,
   CodeCard,
@@ -149,7 +150,7 @@ export function Chronology() {
               <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: CW }} />
               <span className="opacity-60">alternance</span>
             </span>
-            <span className="opacity-30 ml-auto">⌃ Ctrl+clic pour naviguer</span>
+            <span className="opacity-30 ml-auto">{MOD}{SEP}clic pour naviguer</span>
           </div>
 
           <div className="flex overflow-x-auto">
@@ -227,7 +228,7 @@ export function Chronology() {
                   )}
                   style={{ left: 16, top: c.y - 17 }}
                   onClick={c.navEvent ? handleCommitClick(c) : undefined}
-                  title={c.navEvent ? '⌃ Ctrl+clic pour naviguer' : undefined}
+                  title={c.navEvent ? `${MOD}${SEP}clic pour naviguer` : undefined}
                 >
                   <div className="text-xs leading-snug">
                     <span style={{ color: c.color }} className="font-medium">
@@ -244,7 +245,7 @@ export function Chronology() {
                   </div>
                   {c.navEvent && (
                     <div className="text-[9px] text-muted-foreground/25 opacity-0 group-hover:opacity-100 transition-opacity">
-                      ⌃ Ctrl+clic → {c.navLabel}
+                      {MOD}{SEP}clic → {c.navLabel}
                     </div>
                   )}
                 </div>

@@ -21,16 +21,16 @@ import { useEffect, useRef } from 'react';
 import { SkillDocumentation } from '../../shared/components/SkillDocumentation';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
 import { EditableText } from '../../shared/components/EditableText';
+import { TechIcon } from '../../shared/components/TechIcon';
+import { getEntityIcon } from '../../shared/data/entityIcons';
+import { cn } from '../../shared/components/ui/utils';
 import {
   PageShell,
   CodeCard,
   ClassHeader,
   ClassBody,
   ClassClose,
-  CodeArrayProperty,
   CodeArrayItem,
-  SkillLevel,
-  type SkillLevelValue,
   ACCENT_CLASSES,
   type AccentColor,
 } from '../../shared/components/layout';
@@ -48,6 +48,12 @@ type Skill = {
     displayName: string;
     description: string;
   }>;
+};
+
+const LEVEL_STYLES: Record<Skill['level'], { dot: string; label: string }> = {
+  Advanced: { dot: 'bg-green-400', label: 'Advanced' },
+  Intermediate: { dot: 'bg-amber-400', label: 'Intermediate' },
+  Beginner: { dot: 'bg-blue-400', label: 'Beginner' },
 };
 
 type SkillInterface = {
@@ -144,6 +150,21 @@ export function Skills() {
 
   return (
     <PageShell commentTitle={t('skills.title')} commentEditKey="skills.comment">
+      <div className="font-mono text-xs md:text-sm text-syntax-comment flex flex-wrap items-center gap-x-4 gap-y-1 mb-2">
+        <span>{'// '}</span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-green-400" />
+          Advanced
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-amber-400" />
+          Intermediate
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-blue-400" />
+          Beginner
+        </span>
+      </div>
       <div className="space-y-6 md:space-y-8">
         {skillInterfaces.map((skillInterface, interfaceIndex) => {
           const accent = ACCENT_CLASSES[skillInterface.accentColor];
@@ -162,7 +183,6 @@ export function Skills() {
               <ClassBody className="space-y-4">
                 {skillInterface.skills.map((skill, skillIndex) => {
                   const isTargeted = skill.id === targetSkillId;
-                  const SkillIcon = skill.icon;
 
                   return (
                     <motion.div
@@ -179,59 +199,69 @@ export function Skills() {
                         isTargeted ? 'bg-accent/20 ring-2 ring-accent' : ''
                       }`}
                     >
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <SkillIcon className={`w-4 h-4 md:w-5 md:h-5 ${accent.text}`} />
-                        <span className="text-syntax-keyword">class</span>{' '}
-                        <span className={`text-syntax-class ${accent.text}`}>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 min-w-0">
+                        {/* Pastille de niveau */}
+                        <span
+                          className={cn(
+                            'w-2 h-2 rounded-full flex-shrink-0',
+                            LEVEL_STYLES[skill.level].dot
+                          )}
+                        />
+                        {/* Logo de la techno */}
+                        <TechIcon
+                          name={skill.name}
+                          fallback={skill.icon}
+                          className={cn('w-4 h-4 md:w-5 md:h-5 flex-shrink-0', accent.text)}
+                        />
+                        {/* Nom de la techno = clé de propriété (éditable) */}
+                        <span className="text-syntax-property">
                           <EditableText
                             value={skill.name}
                             editKey={`skills.${skillInterface.id}.${skill.id}.name`}
                           />
-                        </span>{' '}
-                        <span className="text-syntax-punctuation">{'{'}</span>
-                      </div>
-                      <div className="ml-4 md:ml-6 space-y-2">
-                        <SkillLevel level={skill.level as SkillLevelValue} />
-                        <CodeArrayProperty name="acquiredFrom" variant="inline">
-                          {skill.acquiredFrom.map((source, idx) => (
-                            <ItemTooltip
-                              key={idx}
-                              itemName={source.name}
-                              description={source.description}
-                              details={`Type: ${source.type}\nName: ${source.displayName}`}
-                              type="class"
+                        </span>
+                        <span className="text-syntax-punctuation">:</span>
+                        {/* Sources (acquiredFrom) en pills inline, navigation conservée */}
+                        {skill.acquiredFrom.map((source, idx) => (
+                          <ItemTooltip
+                            key={idx}
+                            itemName={source.name}
+                            description={source.description}
+                            details={`Type: ${source.type}\nName: ${source.displayName}`}
+                            type="class"
+                            onClick={() => {
+                              if (source.type === 'project') {
+                                setTargetProjectId(source.id);
+                                window.dispatchEvent(new Event('navigate-to-project'));
+                              } else {
+                                setTargetExperienceId(source.id);
+                                window.dispatchEvent(new Event('navigate-to-experience'));
+                              }
+                            }}
+                          >
+                            <CodeArrayItem
+                              variant="pill"
+                              icon={getEntityIcon(source.id)}
                               onClick={() => {
                                 if (source.type === 'project') {
                                   setTargetProjectId(source.id);
                                   window.dispatchEvent(new Event('navigate-to-project'));
                                 } else {
                                   setTargetExperienceId(source.id);
-                                  window.dispatchEvent(new Event('navigate-to-experience'));
+                                  window.dispatchEvent(
+                                    new Event('navigate-to-experience')
+                                  );
                                 }
                               }}
                             >
-                              <CodeArrayItem
-                                variant="pill"
-                                onClick={() => {
-                                  if (source.type === 'project') {
-                                    setTargetProjectId(source.id);
-                                    window.dispatchEvent(new Event('navigate-to-project'));
-                                  } else {
-                                    setTargetExperienceId(source.id);
-                                    window.dispatchEvent(
-                                      new Event('navigate-to-experience')
-                                    );
-                                  }
-                                }}
-                              >
-                                {source.name}
-                              </CodeArrayItem>
-                            </ItemTooltip>
-                          ))}
-                        </CodeArrayProperty>
-                      </div>
-                      <div className="font-mono mt-1">
-                        <span className="text-syntax-punctuation">{'}'}</span>
+                              {source.name}
+                            </CodeArrayItem>
+                          </ItemTooltip>
+                        ))}
+                        {/* Commentaire de niveau */}
+                        <span className="text-syntax-comment whitespace-nowrap">
+                          {`// ${LEVEL_STYLES[skill.level].label}`}
+                        </span>
                       </div>
                     </motion.div>
                   );

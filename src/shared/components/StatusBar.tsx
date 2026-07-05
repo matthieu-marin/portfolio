@@ -19,6 +19,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../../i18n/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { useEditContext } from '../contexts/EditContext';
+import { MOD, SHIFT, SEP } from '../utils/platform';
 
 interface StatusBarProps {
   onTerminalToggle: () => void;
@@ -28,11 +29,10 @@ interface StatusBarProps {
 }
 
 const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
-  { keys: '⌘K', label: { fr: 'Palette de commandes', en: 'Command palette' } },
-  { keys: '⌘B', label: { fr: "Basculer l'explorateur", en: 'Toggle explorer' } },
-  { keys: '⌘`', label: { fr: 'Basculer le terminal', en: 'Toggle terminal' } },
-  { keys: '⌘⇧W', label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
-  { keys: '⌘1…6', label: { fr: 'Aller à l’onglet n', en: 'Go to tab n' } },
+  { keys: `${MOD}${SEP}B`, label: { fr: "Basculer l'explorateur", en: 'Toggle explorer' } },
+  { keys: `${MOD}${SEP}\``, label: { fr: 'Basculer le terminal', en: 'Toggle terminal' } },
+  { keys: `${MOD}${SEP}${SHIFT}${SEP}W`, label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
+  { keys: `${MOD}${SEP}1…6`, label: { fr: 'Aller à l’onglet n', en: 'Go to tab n' } },
 ];
 
 function useNow(intervalMs = 60_000) {

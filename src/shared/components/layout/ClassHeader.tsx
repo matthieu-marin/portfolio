@@ -18,10 +18,16 @@ export function ClassHeader({ icon: Icon, title, titleEditKey, rightSlot }: Clas
     <div className="font-mono space-y-2 text-sm md:text-base mb-4">
       <div className="flex items-center gap-3">
         <Icon className={cn('w-5 h-5 md:w-6 md:h-6 flex-shrink-0', accent.text)} />
-        <div className="flex items-center gap-2 flex-1 flex-wrap min-w-0">
+        {/*
+          Flux de texte inline (pas de flex-wrap) -> wrap coherent cross-browser.
+          overflow-wrap:anywhere autorise la coupure d'un nom de classe tres long
+          sur petit ecran. L'espace insecable ( ) entre le nom et "{" garde
+          l'accolade collee au dernier mot : elle ne tombe jamais seule a la ligne.
+        */}
+        <div className="flex-1 min-w-0 leading-relaxed [overflow-wrap:anywhere]">
           <span className="text-syntax-keyword">class</span>{' '}
           <span
-            className={cn('text-syntax-class break-words', accent.text)}
+            className={cn('text-syntax-class', accent.text)}
             style={{ fontSize: '1.1em' }}
           >
             {titleEditKey ? (
@@ -29,7 +35,8 @@ export function ClassHeader({ icon: Icon, title, titleEditKey, rightSlot }: Clas
             ) : (
               title
             )}
-          </span>{' '}
+          </span>
+          {' '}
           <span className="text-syntax-punctuation">{'{'}</span>
         </div>
         {rightSlot && <div className="flex-shrink-0">{rightSlot}</div>}

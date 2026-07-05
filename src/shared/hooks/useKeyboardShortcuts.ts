@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 export interface ShortcutHandlers {
-  onCommandPalette?: () => void;
   onToggleExplorer?: () => void;
   onToggleTerminal?: () => void;
   onCloseTab?: () => void;
@@ -27,14 +26,7 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
       if (!isMod) return;
       const h = handlersRef.current;
 
-      // Cmd+K → command palette. Even when typing.
-      if (e.key === 'k' || e.key === 'K') {
-        e.preventDefault();
-        h.onCommandPalette?.();
-        return;
-      }
-
-      // Other shortcuts: don't fire while typing
+      // Shortcuts don't fire while typing in an input/textarea.
       if (isEditableTarget(e.target)) return;
 
       // Cmd+B → toggle explorer

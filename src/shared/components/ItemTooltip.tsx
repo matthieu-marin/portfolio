@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { createPortal } from 'react-dom';
+import { MOD } from '../utils/platform';
 
 interface ItemTooltipProps {
   itemName: string;
@@ -123,7 +124,7 @@ export function ItemTooltip({ itemName, description, details, type, children, on
           className={`cursor-pointer transition-all ${
             isCtrlPressed ? 'underline decoration-accent decoration-2 underline-offset-4' : ''
           }`}
-          title={isCtrlPressed ? `Ctrl+Click to view ${itemName} details` : ''}
+          title={isCtrlPressed ? `${MOD}+Click to view ${itemName} details` : ''}
         >
           {children}
         </span>
@@ -174,7 +175,7 @@ export function ItemTooltip({ itemName, description, details, type, children, on
                 </div>
               </div>
               <div className="text-syntax-comment text-[10px] pt-2 border-t border-accent/50 flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-sidebar rounded text-[9px] border border-accent text-accent" style={{ backgroundColor: 'var(--sidebar)' }}>Ctrl</kbd>
+                <kbd className="px-1.5 py-0.5 bg-sidebar rounded text-[9px] border border-accent text-accent" style={{ backgroundColor: 'var(--sidebar)' }}>{MOD}</kbd>
                 <span>+ Click for details</span>
               </div>
             </div>

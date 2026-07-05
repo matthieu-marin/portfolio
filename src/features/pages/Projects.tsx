@@ -13,6 +13,7 @@ import { useEffect, useRef } from 'react';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
 import { ImagePreviewTooltip } from '../../shared/components/ImagePreviewTooltip';
 import { EditableText } from '../../shared/components/EditableText';
+import { TechIcon } from '../../shared/components/TechIcon';
 import {
   PageShell,
   CodeCard,
@@ -199,14 +200,7 @@ export function Projects() {
                       <CodeArrayItem
                         key={idx}
                         variant="pill"
-                        onClick={
-                          tech.skillId
-                            ? () => {
-                                setTargetSkillId(tech.skillId!);
-                                window.dispatchEvent(new Event('navigate-to-skill'));
-                              }
-                            : undefined
-                        }
+                        leading={<TechIcon name={tech.name} className="w-3.5 h-3.5" />}
                       >
                         <EditableText
                           value={tech.name}

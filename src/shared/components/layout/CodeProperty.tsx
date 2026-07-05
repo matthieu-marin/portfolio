@@ -100,6 +100,8 @@ export function CodeArrayProperty({
 
 interface CodeArrayItemProps {
   icon?: LucideIcon;
+  /** Arbitrary leading node (e.g. a brand logo) rendered before the label. */
+  leading?: React.ReactNode;
   children: React.ReactNode;
   isLast?: boolean;
   variant?: 'string' | 'instance' | 'pill';
@@ -108,6 +110,7 @@ interface CodeArrayItemProps {
 
 export function CodeArrayItem({
   icon: Icon,
+  leading,
   children,
   isLast = false,
   variant = 'string',
@@ -129,6 +132,7 @@ export function CodeArrayItem({
           onClick && 'cursor-pointer'
         )}
       >
+        {leading}
         {Icon && <Icon className="w-3 h-3 md:w-3.5 md:h-3.5" />}
         <span>{children}</span>
       </button>

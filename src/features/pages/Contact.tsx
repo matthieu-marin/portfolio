@@ -224,10 +224,6 @@ export function Contact() {
           <ClassClose />
         </CodeCard>
       </div>
-      <div className="font-mono text-syntax-comment text-xs md:text-sm pt-4 space-y-1">
-        <div>{'// Feel free to contact me to discuss your projects!'}</div>
-        <div>{'// I will be happy to talk with you 🚀'}</div>
-      </div>
     </PageShell>
   );
 }

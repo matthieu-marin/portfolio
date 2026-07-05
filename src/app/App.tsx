@@ -9,7 +9,6 @@ import { StatusBar } from '../shared/components/StatusBar';
 import { OutputPanel } from '../features/output-panel';
 import { LanguageSwitcher } from '../shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
-import { CommandPalette } from '../shared/components/CommandPalette';
 import { useKeyboardShortcuts } from '../shared/hooks/useKeyboardShortcuts';
 import {
   SteampunkGears,
@@ -28,7 +27,8 @@ import { Experience } from '../features/pages/Experience';
 import { ActivityBar } from '../shared/components/ActivityBar';
 import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
 import { Chronology } from '../features/pages/Chronology';
-import { PanelLeftOpen, PanelLeftClose, Command as CommandIcon } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { MOD, SEP } from '../shared/utils/platform';
 import { Toaster } from 'sonner';
 import type { Page, Tab, PanelId } from './types';
 
@@ -42,7 +42,6 @@ function PortfolioContent() {
   const [isResizingTerminal, setIsResizingTerminal] = useState(false);
   const [activePanel, setActivePanel] = useState<PanelId | null>('explorer');
   const [isMobileExplorerVisible, setIsMobileExplorerVisible] = useState(false);
-  const [isCommandOpen, setIsCommandOpen] = useState(false);
   const { theme } = useTheme();
   const { t, i18n } = useTranslation();
 
@@ -177,7 +176,6 @@ function PortfolioContent() {
   );
 
   useKeyboardShortcuts({
-    onCommandPalette: () => setIsCommandOpen(true),
     onToggleExplorer: toggleExplorer,
     onToggleTerminal: () => setIsTerminalVisible((v) => !v),
     onCloseTab: closeActiveTab,
@@ -219,7 +217,7 @@ function PortfolioContent() {
             onClick={toggleExplorer}
             className="p-1 hover:bg-accent rounded transition-colors"
             aria-label="Toggle explorer"
-            title="Toggle explorer (⌘B)"
+            title={`Toggle explorer (${MOD}${SEP}B)`}
           >
             {(activePanel !== null || isMobileExplorerVisible) ? (
               <PanelLeftClose className="w-5 h-5" />
@@ -230,15 +228,6 @@ function PortfolioContent() {
           <span className="font-mono text-sm md:text-base">Portfolio IDE</span>
         </div>
         <div className="flex items-center gap-2 md:gap-4">
-          <button
-            onClick={() => setIsCommandOpen(true)}
-            className="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded border border-border bg-background/50 hover:bg-hover transition-colors text-xs font-mono"
-            aria-label="Open command palette"
-            title="Command palette (⌘K)"
-          >
-            <CommandIcon className="w-3.5 h-3.5" />
-            <span className="opacity-70">⌘K</span>
-          </button>
           <ThemeSwitcher />
           <LanguageSwitcher />
         </div>
@@ -296,14 +285,6 @@ function PortfolioContent() {
         isTerminalVisible={isTerminalVisible}
         openTabsCount={openTabs.length}
         onOpenChronology={() => openFile('chronology', 'Chronologie.tsx', 'src/pages/Chronologie.tsx')}
-      />
-
-      <CommandPalette
-        open={isCommandOpen}
-        onOpenChange={setIsCommandOpen}
-        onOpenFile={openFile}
-        onToggleTerminal={() => setIsTerminalVisible((v) => !v)}
-        onToggleExplorer={toggleExplorer}
       />
 
       <Toaster

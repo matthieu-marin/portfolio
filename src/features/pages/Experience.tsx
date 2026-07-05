@@ -12,6 +12,7 @@ import { useNavigation } from '../../shared/contexts/NavigationContext';
 import { useEffect, useRef } from 'react';
 import { ItemTooltip } from '../../shared/components/ItemTooltip';
 import { EditableText } from '../../shared/components/EditableText';
+import { TechIcon } from '../../shared/components/TechIcon';
 import {
   PageShell,
   CodeCard,
@@ -23,7 +24,6 @@ import {
   CodeArrayItem,
   type AccentColor,
 } from '../../shared/components/layout';
-import { TimelineEntry, extractYearRange } from './components/TimelineRail';
 
 type Experience = {
   id: string;
@@ -220,15 +220,8 @@ export function Experience() {
           const isTargeted = exp.id === targetExperienceId;
 
           return (
-            <TimelineEntry
-              key={exp.id}
-              year={extractYearRange(exp.period)}
-              accentColor={exp.accentColor}
-              current={exp.current}
-              isFirst={expIndex === 0}
-              isLast={expIndex === experiences.length - 1}
-            >
             <CodeCard
+              key={exp.id}
               ref={(el) => {
                 experienceRefs.current[exp.id] = el;
               }}
@@ -272,14 +265,7 @@ export function Experience() {
                       <CodeArrayItem
                         key={idx}
                         variant="pill"
-                        onClick={
-                          tech.skillId
-                            ? () => {
-                                setTargetSkillId(tech.skillId!);
-                                window.dispatchEvent(new Event('navigate-to-skill'));
-                              }
-                            : undefined
-                        }
+                        leading={<TechIcon name={tech.name} className="w-3.5 h-3.5" />}
                       >
                         <EditableText
                           value={tech.name}
@@ -337,7 +323,6 @@ export function Experience() {
               </ClassBody>
               <ClassClose />
             </CodeCard>
-            </TimelineEntry>
           );
         })}
       </div>
