@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeProvider, useTheme } from '../shared/contexts/ThemeContext';
 import { NavigationProvider } from '../shared/contexts/NavigationContext';
 import { EditProvider } from '../shared/contexts/EditContext';
+import { RendererProvider } from '../shared/contexts/RendererContext';
 import { TabBar } from '../shared/components/TabBar';
 import { FileExplorer } from '../shared/components/FileExplorer';
 import { StatusBar } from '../shared/components/StatusBar';
@@ -302,7 +303,9 @@ export default function App() {
     <ThemeProvider>
       <NavigationProvider>
         <EditProvider>
-          <PortfolioContent />
+          <RendererProvider>
+            <PortfolioContent />
+          </RendererProvider>
         </EditProvider>
       </NavigationProvider>
     </ThemeProvider>
