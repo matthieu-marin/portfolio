@@ -44,3 +44,8 @@ export function EditProvider({ children }: { children: ReactNode }) {
 }
 
 export const useEditContext = () => useContext(EditContext);
+
+export function useEdited(key: string, fallback: string): string {
+  const { edits } = useContext(EditContext);
+  return edits[key] ?? fallback;
+}

@@ -20,72 +20,25 @@ import {
   CodeArrayProperty,
   CodeArrayItem,
 } from '../../shared/components/layout';
+import { profile } from './data/profile';
+
 export function Home() {
   const { language } = useLanguage();
 
-  const profileData = {
-    name: 'Matthieu Marin',
-    role: 'Développeur en alternance — Master Cloud Computing & Mobility',
-    bio: {
-      fr: "Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital, je m'appuie sur quatre expériences en développement web pour construire des applications robustes et bien testées. Mes terrains de jeu : Java/Spring Boot côté backend, JavaScript/React côté frontend, et les outils cloud (Google Cloud, Docker) en infrastructure.",
-      en: 'Master Cloud Computing & Mobility student at UPJV / INSSET and apprentice at Renault Digital, drawing on four web-development experiences to build robust, well-tested applications. Comfort zone: Java/Spring Boot on the back end, JavaScript/React on the front end, and cloud tooling (Google Cloud, Docker) for infrastructure.',
+  const socialLinks = [
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      href: profile.linkedin,
+      color: 'text-blue-400',
     },
-    stats: [
-      { label: { fr: "Années d'expérience pro", en: 'Years of pro experience' }, value: '1+' },
-      { label: { fr: 'Expériences en entreprise', en: 'Professional experiences' }, value: '4' },
-      { label: { fr: 'Technologies pratiquées', en: 'Technologies used' }, value: '10+' },
-    ],
-    socialLinks: [
-      {
-        icon: Linkedin,
-        label: 'LinkedIn',
-        href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
-        color: 'text-blue-400',
-      },
-      {
-        icon: Mail,
-        label: 'Email',
-        href: 'mailto:matthieumarin51@gmail.com',
-        color: 'text-green-400',
-      },
-    ],
-  };
-
-  const expertiseAreas = {
-    fr: [
-      'Développement web full-stack (JavaScript, Java)',
-      'Frameworks modernes : React, Spring Boot',
-      'Cloud Computing & applications mobiles',
-      'Bases de données relationnelles (MySQL, PostgreSQL) et non relationnelles (MongoDB)',
-      'Méthode agile (SCRUM) et gestion de projet',
-    ],
-    en: [
-      'Full-stack web development (JavaScript, Java)',
-      'Modern frameworks: React, Spring Boot',
-      'Cloud Computing & mobile applications',
-      'Relational databases (MySQL, PostgreSQL) and non-relational (MongoDB)',
-      'Agile methodology (SCRUM) and project management',
-    ],
-  };
-
-  const approachPrinciples = {
-    fr: [
-      "Autonomie et prise d'initiative",
-      'Ponctualité et rigueur',
-      'Curiosité et apprentissage continu',
-      'Veille technologique active',
-      'Collaboration en équipe agile',
-      'Partage des connaissances',
-    ],
-    en: [
-      'Autonomy and initiative',
-      'Punctuality and rigor',
-      'Curiosity and continuous learning',
-      'Active technology watch',
-      'Agile team collaboration',
-      'Knowledge sharing',
-    ],
-  };
+    {
+      icon: Mail,
+      label: 'Email',
+      href: `mailto:${profile.email}`,
+      color: 'text-green-400',
+    },
+  ];
 
   return (
     <PageShell commentTitle="Portfolio.tsx" commentEditKey="home.comment">
@@ -100,24 +53,24 @@ export function Home() {
           <CodeProperty
             name="name"
             nameEditKey="home.prop.name"
-            value={profileData.name}
+            value={profile.name}
             valueEditKey="home.profile.name"
           />
           <CodeProperty
             name="role"
             nameEditKey="home.prop.role"
-            value={profileData.role}
-            valueEditKey="home.profile.role"
+            value={profile.role[language]}
+            valueEditKey={`home.profile.role.${language}`}
           />
           <CodeProperty
             name="bio"
             nameEditKey="home.prop.bio"
-            value={profileData.bio[language]}
+            value={profile.bio[language]}
             valueEditKey={`home.profile.bio.${language}`}
             multiline
           />
           <CodeArrayProperty name="stats" variant="inline">
-            {profileData.stats.map((stat, idx) => (
+            {profile.stats.map((stat, idx) => (
               <CodeArrayItem key={idx} icon={Sparkles} variant="pill">
                 <EditableText
                   value={stat.label[language]}
@@ -126,7 +79,7 @@ export function Home() {
                 <span className="ml-1 text-syntax-punctuation">·</span>
                 <span className="ml-1">
                   <EditableText
-                    value={stat.value}
+                    value={`${stat.value}${stat.suffix ?? ''}`}
                     editKey={`home.profile.stats.${idx}.value`}
                   />
                 </span>
@@ -134,7 +87,7 @@ export function Home() {
             ))}
           </CodeArrayProperty>
           <CodeArrayProperty name="connect" variant="inline">
-            {profileData.socialLinks.map((social) => {
+            {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
                 <a
@@ -152,7 +105,7 @@ export function Home() {
               );
             })}
             <a
-              href="/cv-matthieu-marin.pdf"
+              href={profile.cvPath}
               download
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-colors border border-current/20 bg-current/10 hover:bg-current/20 text-xs md:text-sm text-accent"
               aria-label="Download CV"
@@ -174,14 +127,14 @@ export function Home() {
         />
         <ClassBody>
           <CodeArrayProperty name="areas">
-            {expertiseAreas[language].map((area, idx) => (
+            {profile.expertise.map((area, idx) => (
               <CodeArrayItem
                 key={idx}
                 icon={Code2}
-                isLast={idx === expertiseAreas[language].length - 1}
+                isLast={idx === profile.expertise.length - 1}
               >
                 <EditableText
-                  value={area}
+                  value={area[language]}
                   editKey={`home.expertise.areas.${language}.${idx}`}
                 />
               </CodeArrayItem>
@@ -200,10 +153,10 @@ export function Home() {
         />
         <ClassBody>
           <CodeArrayProperty name="principles" variant="inline">
-            {approachPrinciples[language].map((principle, idx) => (
+            {profile.principles.map((principle, idx) => (
               <CodeArrayItem key={idx} icon={Rocket} variant="pill">
                 <EditableText
-                  value={principle}
+                  value={principle[language]}
                   editKey={`home.approach.principles.${language}.${idx}`}
                 />
               </CodeArrayItem>
