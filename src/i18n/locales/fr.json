@@ -32,6 +32,13 @@
       "downloadCv": "Télécharger le CV",
       "linkedin": "LinkedIn",
       "email": "Email"
+    },
+    "experience": {
+      "title": "Expérience Professionnelle",
+      "kind": {
+        "apprenticeship": "Alternance",
+        "internship": "Stage"
+      }
     }
   },
   "about": {

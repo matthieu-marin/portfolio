@@ -32,6 +32,13 @@
       "downloadCv": "Download CV",
       "linkedin": "LinkedIn",
       "email": "Email"
+    },
+    "experience": {
+      "title": "Professional Experience",
+      "kind": {
+        "apprenticeship": "Apprenticeship",
+        "internship": "Internship"
+      }
     }
   },
   "about": {

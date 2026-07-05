@@ -50,7 +50,23 @@ export function Section({ icon: Icon, title, children, index = 0, className }: S
   );
 }
 
-export function Chip({ children }: { children: ReactNode }) {
+interface ChipProps {
+  children: ReactNode;
+  onClick?: () => void;
+}
+
+export function Chip({ children, onClick }: ChipProps) {
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm hover:bg-accent/20 transition-colors cursor-pointer"
+      >
+        {children}
+      </button>
+    );
+  }
   return (
     <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">
       {children}
