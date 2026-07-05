@@ -73,6 +73,16 @@ const EXTRA_TECHNOLOGIES: Record<string, string[]> = {
   faubourg: ['IoT', 'Grafana'],
 };
 
+// Display order for technology pills per experience. Ensures the original
+// rendered order is preserved when merging skill-linked techs with extra techs.
+// Entries not listed are appended at the end in the order they appear.
+const TECH_DISPLAY_ORDER: Record<string, string[]> = {
+  renault: ['Java', 'SpringBoot', 'GoogleCloud', 'Docker', 'GitLab', 'Dynatrace', 'AgileScrum'],
+  faubourg: ['NodeJS', 'VueJS', 'IoT', 'Grafana'],
+  chatterie2: ['PHP', 'WordPress'],
+  chatterie1: ['PHP', 'WordPress'],
+};
+
 const EXTRA_TECH_TOOLTIPS: Record<string, Record<string, { description: string; details: string }>> = {
   renault: {
     GoogleCloud: { description: 'Plateforme cloud Google', details: 'Utilisé pour : Kubernetes Engine, Pub/Sub, Cloud Functions' },
@@ -135,14 +145,29 @@ export function Experience() {
           const achievements = ACHIEVEMENTS[exp.id] ?? { fr: [], en: [] };
 
           // Technologies shown = skill-linked techs (from data layer) + extra
-          // display-only techs, in the original card order.
-          const techNames: Array<{ name: string; skillId: string | null }> = [
+          // display-only techs, sorted by the display order map to preserve original order.
+          const allTechs: Array<{ name: string; skillId: string | null }> = [
             ...exp.technologies.map((skillId) => {
               const name = Object.entries(skillIds).find(([, id]) => id === skillId)?.[0] ?? skillId;
               return { name, skillId };
             }),
             ...extraTech.map((name) => ({ name, skillId: null })),
           ];
+
+          // Sort by display order if available, otherwise append unknown techs at the end
+          const displayOrder = TECH_DISPLAY_ORDER[exp.id] ?? [];
+          const techNames = allTechs.sort((a, b) => {
+            const aIdx = displayOrder.indexOf(a.name);
+            const bIdx = displayOrder.indexOf(b.name);
+            // Both in order map: sort by order map
+            if (aIdx >= 0 && bIdx >= 0) return aIdx - bIdx;
+            // Only a in order map: a comes first
+            if (aIdx >= 0) return -1;
+            // Only b in order map: b comes first
+            if (bIdx >= 0) return 1;
+            // Neither in order map: keep original order
+            return 0;
+          });
 
           return (
             <CodeCard
