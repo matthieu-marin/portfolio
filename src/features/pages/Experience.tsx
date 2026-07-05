@@ -24,185 +24,94 @@ import {
   CodeArrayItem,
   type AccentColor,
 } from '../../shared/components/layout';
+import { experiences } from './data';
 
-type Experience = {
-  id: string;
-  company: string;
-  position: string;
-  icon: typeof Code2;
-  accentColor: AccentColor;
-  period: string;
-  location: string;
-  description: { fr: string; en: string };
-  current: boolean;
-  technologies: Array<{
-    name: string;
-    skillId: string | null;
-    description: string;
-    details: string;
-  }>;
-  responsibilities: { fr: string[]; en: string[] };
-  achievements: { fr: string[]; en: string[] };
+// UI-only metadata (icon, accent color) keyed by experience id — the data
+// layer (`data/experiences.ts`) holds only content, not presentation.
+const EXPERIENCE_UI: Record<string, { icon: typeof Code2; accentColor: AccentColor }> = {
+  renault: { icon: Code2, accentColor: 'purple' },
+  faubourg: { icon: Rocket, accentColor: 'blue' },
+  chatterie2: { icon: Building2, accentColor: 'green' },
+  chatterie1: { icon: Building2, accentColor: 'orange' },
 };
+
+// Tooltip copy per technology name, keyed by experience id then tech name.
+// Not part of ExperienceEntry — display-only detail shown on hover.
+const TECH_TOOLTIPS: Record<string, Record<string, { description: string; details: string }>> = {
+  renault: {
+    Java: { description: 'Langage de programmation orienté objet', details: "Utilisé pour : développement backend, applications d'entreprise" },
+    SpringBoot: { description: 'Framework Java pour applications web', details: 'Utilisé pour : APIs REST, microservices, architecture backend' },
+    AgileScrum: { description: 'Méthode de gestion de projet agile', details: 'Utilisé pour : sprints, rétrospectives, planification' },
+  },
+  faubourg: {
+    NodeJS: { description: 'JavaScript runtime for scalable server applications', details: 'Utilisé pour : backend du projet IoT' },
+    VueJS: { description: 'Framework JavaScript progressif', details: 'Utilisé pour : interface web de la plateforme' },
+  },
+  chatterie2: {
+    PHP: { description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site' },
+    WordPress: { description: 'CMS open source', details: 'Utilisé pour : création et gestion du site vitrine' },
+  },
+  chatterie1: {
+    PHP: { description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site' },
+    WordPress: { description: 'CMS open source', details: 'Utilisé pour : création du site vitrine' },
+  },
+};
+
+// skillId lookup for each technology name, keyed by experience id — mirrors
+// data/skills.ts ids so pills can navigate to the Skills page.
+const TECH_SKILL_IDS: Record<string, Record<string, string>> = {
+  renault: { Java: 'java', SpringBoot: 'springboot', AgileScrum: 'agile' },
+  faubourg: { NodeJS: 'nodejs', VueJS: 'vuejs' },
+  chatterie2: { PHP: 'php', WordPress: 'wordpress' },
+  chatterie1: { PHP: 'php', WordPress: 'wordpress' },
+};
+
+// Extra technologies displayed on the card but without a dedicated Skills
+// entry (no skillId, so no tooltip navigation) — display-only.
+const EXTRA_TECHNOLOGIES: Record<string, string[]> = {
+  renault: ['GoogleCloud', 'Docker', 'GitLab', 'Dynatrace'],
+  faubourg: ['IoT', 'Grafana'],
+};
+
+const EXTRA_TECH_TOOLTIPS: Record<string, Record<string, { description: string; details: string }>> = {
+  renault: {
+    GoogleCloud: { description: 'Plateforme cloud Google', details: 'Utilisé pour : Kubernetes Engine, Pub/Sub, Cloud Functions' },
+    Docker: { description: "Conteneurisation d'applications", details: 'Utilisé pour : containerisation des services' },
+    GitLab: { description: 'Plateforme DevOps CI/CD', details: 'Utilisé pour : pipelines CI/CD, gestion du code source' },
+    Dynatrace: { description: 'Outil de monitoring applicatif', details: 'Utilisé pour : observabilité et monitoring des applications' },
+  },
+  faubourg: {
+    IoT: { description: 'Internet des Objets', details: 'Utilisé pour : gestion de données capteurs' },
+    Grafana: { description: 'Outil de visualisation et monitoring', details: 'Utilisé pour : tableaux de bord et monitoring de la plateforme' },
+  },
+};
+
+// Achievements per experience id — display-only, not part of ExperienceEntry.
+const ACHIEVEMENTS: Record<string, { fr: string[]; en: string[] }> = {
+  renault: {
+    fr: ["En cours — alternance jusqu'à juin 2026"],
+    en: ['Ongoing — apprenticeship until June 2026'],
+  },
+  faubourg: {
+    fr: ['Livraison de la plateforme web IoT en 4 mois'],
+    en: ['Delivery of the IoT web platform in 4 months'],
+  },
+  chatterie2: {
+    fr: ['Site web vitrine finalisé et livré'],
+    en: ['Showcase website finalized and delivered'],
+  },
+  chatterie1: {
+    fr: ['Base du site web vitrine développée'],
+    en: ['Showcase website base developed'],
+  },
+};
+
+const CURRENT_IDS = new Set(['renault']);
 
 export function Experience() {
   const { t, language } = useLanguage();
   const { targetExperienceId, setTargetSkillId } = useNavigation();
   const experienceRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  const experiences: Experience[] = [
-    {
-      id: 'renault',
-      company: 'RenaultDigital',
-      position: 'Développeur (Alternance)',
-      icon: Code2,
-      accentColor: 'purple',
-      period: "sept. 2024 – aujourd'hui",
-      location: 'Saint-Quentin, Hauts-de-France · Hybride',
-      description: {
-        fr: "Développement en contrat d'alternance dans le cadre du Master Cloud Computing & Mobility",
-        en: 'Development as part of apprenticeship contract within the Master Cloud Computing & Mobility program',
-      },
-      current: true,
-      technologies: [
-        { name: 'Java', skillId: 'java', description: 'Langage de programmation orienté objet', details: 'Utilisé pour : développement backend, applications d\'entreprise' },
-        { name: 'SpringBoot', skillId: 'springboot', description: 'Framework Java pour applications web', details: 'Utilisé pour : APIs REST, microservices, architecture backend' },
-        { name: 'GoogleCloud', skillId: null, description: 'Plateforme cloud Google', details: 'Utilisé pour : Kubernetes Engine, Pub/Sub, Cloud Functions' },
-        { name: 'Docker', skillId: null, description: 'Conteneurisation d\'applications', details: 'Utilisé pour : containerisation des services' },
-        { name: 'GitLab', skillId: null, description: 'Plateforme DevOps CI/CD', details: 'Utilisé pour : pipelines CI/CD, gestion du code source' },
-        { name: 'Dynatrace', skillId: null, description: 'Outil de monitoring applicatif', details: 'Utilisé pour : observabilité et monitoring des applications' },
-        { name: 'AgileScrum', skillId: 'agile', description: 'Méthode de gestion de projet agile', details: 'Utilisé pour : sprints, rétrospectives, planification' },
-      ],
-      responsibilities: {
-        fr: [
-          "Développement d'applications en Java / Spring Boot",
-          'Utilisation de Google Cloud (Kubernetes Engine, Pub/Sub, Cloud Functions)',
-          'Conteneurisation avec Docker',
-          'Pratiques DevOps sur GitLab (pipelines CI/CD)',
-          'Monitoring applicatif avec Dynatrace',
-          'Participation aux cérémonies agile (SCRUM)',
-        ],
-        en: [
-          'Application development in Java / Spring Boot',
-          'Google Cloud usage (Kubernetes Engine, Pub/Sub, Cloud Functions)',
-          'Containerization with Docker',
-          'DevOps practices on GitLab (CI/CD pipelines)',
-          'Application monitoring with Dynatrace',
-          'Participation in agile ceremonies (SCRUM)',
-        ],
-      },
-      achievements: {
-        fr: ["En cours — alternance jusqu'à juin 2026"],
-        en: ['Ongoing — apprenticeship until June 2026'],
-      },
-    },
-    {
-      id: 'faubourg',
-      company: 'FabourgNumerique',
-      position: 'Stagiaire Développement Web',
-      icon: Rocket,
-      accentColor: 'blue',
-      period: 'mai 2024 – août 2024 · 4 mois',
-      location: 'Saint-Quentin, Hauts-de-France · Hybride',
-      description: {
-        fr: 'Projet Territoire Connecté et Durable — plateforme web IoT en collaboration avec La Somme Numérique',
-        en: 'Connected and Sustainable Territory project — IoT web platform in collaboration with La Somme Numérique',
-      },
-      current: false,
-      technologies: [
-        { name: 'NodeJS', skillId: 'nodejs', description: 'JavaScript runtime for scalable server applications', details: 'Utilisé pour : backend du projet IoT' },
-        { name: 'VueJS', skillId: 'vuejs', description: 'Framework JavaScript progressif', details: 'Utilisé pour : interface web de la plateforme' },
-        { name: 'IoT', skillId: null, description: 'Internet des Objets', details: 'Utilisé pour : gestion de données capteurs' },
-        { name: 'Grafana', skillId: null, description: 'Outil de visualisation et monitoring', details: 'Utilisé pour : tableaux de bord et monitoring de la plateforme' },
-      ],
-      responsibilities: {
-        fr: [
-          'Développement de la plateforme web pour la gestion de données IoT',
-          'Travail sur le projet Territoire Connecté et Durable',
-          'Mise en place du monitoring avec Grafana',
-          'Collaboration avec La Somme Numérique',
-        ],
-        en: [
-          'Development of the web platform for IoT data management',
-          'Work on the Connected and Sustainable Territory project',
-          'Setting up monitoring with Grafana',
-          'Collaboration with La Somme Numérique',
-        ],
-      },
-      achievements: {
-        fr: ['Livraison de la plateforme web IoT en 4 mois'],
-        en: ['Delivery of the IoT web platform in 4 months'],
-      },
-    },
-    {
-      id: 'chatterie2',
-      company: 'ChatterieTerreBrasco',
-      position: 'Stagiaire Développement Web',
-      icon: Building2,
-      accentColor: 'green',
-      period: 'février 2023',
-      location: 'France',
-      description: {
-        fr: 'Finalisation du site web vitrine précédemment débuté lors du stage précédent',
-        en: 'Finalization of the showcase website previously started during the previous internship',
-      },
-      current: false,
-      technologies: [
-        { name: 'PHP', skillId: 'php', description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site' },
-        { name: 'WordPress', skillId: 'wordpress', description: 'CMS open source', details: 'Utilisé pour : création et gestion du site vitrine' },
-      ],
-      responsibilities: {
-        // TODO: miss info for chatterie2.responsibilities
-        fr: [
-          "Finalisation du site web vitrine de l'association",
-          'Développement PHP et intégration WordPress',
-        ],
-        en: [
-          "Finalization of the association's showcase website",
-          'PHP development and WordPress integration',
-        ],
-      },
-      achievements: {
-        // TODO: miss info for chatterie2.achievements
-        fr: ['Site web vitrine finalisé et livré'],
-        en: ['Showcase website finalized and delivered'],
-      },
-    },
-    {
-      id: 'chatterie1',
-      company: 'ChatterieTerreBrasco',
-      position: 'Stagiaire Développement Web',
-      icon: Building2,
-      accentColor: 'orange',
-      period: 'mai 2022',
-      location: 'France',
-      description: {
-        fr: "Commencement du développement d'une application web vitrine pour l'association",
-        en: 'Start of development of a showcase web application for the association',
-      },
-      current: false,
-      technologies: [
-        { name: 'PHP', skillId: 'php', description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site' },
-        { name: 'WordPress', skillId: 'wordpress', description: 'CMS open source', details: 'Utilisé pour : création du site vitrine' },
-      ],
-      responsibilities: {
-        // TODO: miss info for chatterie1.responsibilities
-        fr: [
-          'Démarrage du développement du site web vitrine',
-          "Mise en place de l'environnement WordPress",
-        ],
-        en: [
-          'Start of showcase website development',
-          'WordPress environment setup',
-        ],
-      },
-      achievements: {
-        // TODO: miss info for chatterie1.achievements
-        fr: ['Base du site web vitrine développée'],
-        en: ['Showcase website base developed'],
-      },
-    },
-  ];
 
   useEffect(() => {
     if (targetExperienceId) {
@@ -218,6 +127,22 @@ export function Experience() {
       <div className="space-y-3 md:space-y-4">
         {experiences.map((exp, expIndex) => {
           const isTargeted = exp.id === targetExperienceId;
+          const ui = EXPERIENCE_UI[exp.id];
+          const skillIds = TECH_SKILL_IDS[exp.id] ?? {};
+          const tooltips = TECH_TOOLTIPS[exp.id] ?? {};
+          const extraTech = EXTRA_TECHNOLOGIES[exp.id] ?? [];
+          const extraTooltips = EXTRA_TECH_TOOLTIPS[exp.id] ?? {};
+          const achievements = ACHIEVEMENTS[exp.id] ?? { fr: [], en: [] };
+
+          // Technologies shown = skill-linked techs (from data layer) + extra
+          // display-only techs, in the original card order.
+          const techNames: Array<{ name: string; skillId: string | null }> = [
+            ...exp.technologies.map((skillId) => {
+              const name = Object.entries(skillIds).find(([, id]) => id === skillId)?.[0] ?? skillId;
+              return { name, skillId };
+            }),
+            ...extraTech.map((name) => ({ name, skillId: null })),
+          ];
 
           return (
             <CodeCard
@@ -225,16 +150,16 @@ export function Experience() {
               ref={(el) => {
                 experienceRefs.current[exp.id] = el;
               }}
-              accentColor={exp.accentColor}
+              accentColor={ui.accentColor}
               delay={0.1 + expIndex * 0.1}
               highlighted={isTargeted}
             >
               <ClassHeader
-                icon={exp.icon}
+                icon={ui.icon}
                 title={exp.company}
                 titleEditKey={`experience.${expIndex}.company`}
                 rightSlot={
-                  exp.current ? (
+                  CURRENT_IDS.has(exp.id) ? (
                     <span className="px-3 py-1 bg-accent/20 text-accent text-xs rounded-full border border-accent/30 font-mono">
                       {t('experience.current')}
                     </span>
@@ -244,12 +169,12 @@ export function Experience() {
               <ClassBody>
                 <CodeProperty
                   name="position"
-                  value={exp.position}
+                  value={exp.role[language]}
                   valueEditKey={`experience.${expIndex}.position`}
                 />
                 <CodeProperty
                   name="period"
-                  value={exp.period}
+                  value={exp.period[language]}
                   valueEditKey={`experience.${expIndex}.period`}
                   icon={Calendar}
                 />
@@ -260,7 +185,7 @@ export function Experience() {
                   icon={MapPin}
                 />
                 <CodeArrayProperty name="technologies" variant="inline">
-                  {exp.technologies.map((tech, idx) => {
+                  {techNames.map((tech, idx) => {
                     const inner = (
                       <CodeArrayItem
                         key={idx}
@@ -273,12 +198,13 @@ export function Experience() {
                         />
                       </CodeArrayItem>
                     );
-                    return tech.skillId ? (
+                    const tooltip = tooltips[tech.name] ?? extraTooltips[tech.name];
+                    return tech.skillId && tooltip ? (
                       <ItemTooltip
                         key={idx}
                         itemName={tech.name}
-                        description={tech.description}
-                        details={tech.details}
+                        description={tooltip.description}
+                        details={tooltip.details}
                         type="class"
                         onClick={() => {
                           setTargetSkillId(tech.skillId!);
@@ -293,25 +219,25 @@ export function Experience() {
                   })}
                 </CodeArrayProperty>
                 <CodeArrayProperty name="responsibilities">
-                  {exp.responsibilities[language].map((resp, idx) => (
+                  {exp.highlights.map((resp, idx) => (
                     <CodeArrayItem
                       key={idx}
                       icon={Target}
-                      isLast={idx === exp.responsibilities[language].length - 1}
+                      isLast={idx === exp.highlights.length - 1}
                     >
                       <EditableText
-                        value={resp}
+                        value={resp[language]}
                         editKey={`experience.${expIndex}.resp.${language}.${idx}`}
                       />
                     </CodeArrayItem>
                   ))}
                 </CodeArrayProperty>
                 <CodeArrayProperty name="achievements">
-                  {exp.achievements[language].map((achievement, idx) => (
+                  {achievements[language].map((achievement, idx) => (
                     <CodeArrayItem
                       key={idx}
                       icon={Award}
-                      isLast={idx === exp.achievements[language].length - 1}
+                      isLast={idx === achievements[language].length - 1}
                     >
                       <EditableText
                         value={achievement}

@@ -21,6 +21,21 @@ import {
 } from '../../shared/components/layout';
 import { getContactProvider } from '../contact';
 import { toast } from 'sonner';
+import { contact } from './data';
+
+// UI-only metadata (icon per contact property) — ContactData holds only
+// content, not presentation.
+const CONTACT_ICONS: Record<string, typeof Mail> = {
+  email: Mail,
+  phone: Phone,
+  location: MapPin,
+};
+
+// Social link presentation (icon, color) keyed by label — ContactData.socials
+// only holds { label, url }.
+const SOCIAL_UI: Record<string, { icon: typeof Linkedin; color: string }> = {
+  LinkedIn: { icon: Linkedin, color: 'text-blue-400' },
+};
 
 export function Contact() {
   const { t, language } = useLanguage();
@@ -58,36 +73,33 @@ export function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const contactInfo = [
+  const contactInfoRows = [
     {
-      icon: Mail,
+      icon: CONTACT_ICONS.email,
       property: 'email',
-      value: 'matthieumarin51@gmail.com',
-      href: 'mailto:matthieumarin51@gmail.com',
+      value: contact.email,
+      href: `mailto:${contact.email}`,
     },
     {
-      icon: Phone,
+      icon: CONTACT_ICONS.phone,
       property: 'phone',
-      value: '07.83.33.47.50',
+      value: contact.phone,
       href: 'tel:+33783334750',
     },
     {
-      icon: MapPin,
+      icon: CONTACT_ICONS.location,
       property: 'location',
-      value: 'Saint-Quentin, Hauts-de-France, France',
+      value: contact.location[language],
       href: undefined,
     },
   ];
 
-  const social = [
-    // TODO github URL: à compléter quand l'utilisateur fournira son URL GitHub.
-    {
-      icon: Linkedin,
-      label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
-      color: 'text-blue-400',
-    },
-  ];
+  const social = contact.socials.map((s) => ({
+    icon: SOCIAL_UI[s.label]?.icon ?? Linkedin,
+    label: s.label,
+    href: s.url,
+    color: SOCIAL_UI[s.label]?.color ?? 'text-blue-400',
+  }));
 
   return (
     <PageShell commentTitle={t('contact.title')} commentEditKey="contact.comment">
@@ -99,7 +111,7 @@ export function Contact() {
             titleEditKey="contact.class.contactInfo"
           />
           <ClassBody>
-            {contactInfo.map((info) => (
+            {contactInfoRows.map((info) => (
               <CodeProperty
                 key={info.property}
                 name={info.property}

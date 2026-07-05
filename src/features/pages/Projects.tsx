@@ -25,99 +25,61 @@ import {
   CodeArrayItem,
   type AccentColor,
 } from '../../shared/components/layout';
+import { projects } from './data';
 
-type Project = {
-  id: string;
-  title: string;
-  icon: typeof Code2;
-  accentColor: AccentColor;
-  description: string;
-  repository?: string;
-  technologies: Array<{
-    name: string;
-    skillId: string | null;
-    description: string;
-    details: string;
-  }>;
-  features: string[];
-  previews: Array<{ label: string; imageUrl: string }>;
-  status: string;
-  github?: string;
-  demo?: string;
+// UI-only metadata (icon, accent color) keyed by project id — the data layer
+// (`data/projects.ts`) holds only content, not presentation.
+const PROJECT_UI: Record<string, { icon: typeof Code2; accentColor: AccentColor }> = {
+  portfolio: { icon: Code2, accentColor: 'purple' },
+  'iot-territoire': { icon: Radio, accentColor: 'blue' },
+  'chatterie-vitrine': { icon: Cat, accentColor: 'orange' },
 };
 
+// Tooltip copy per technology name, keyed by project id then tech name.
+// Not part of ProjectEntry — display-only detail shown on hover.
+const TECH_TOOLTIPS: Record<string, Record<string, { description: string; details: string }>> = {
+  portfolio: {
+    React: { description: 'Bibliothèque UI moderne pour interfaces interactives', details: "Utilisé pour : architecture composants, hooks, gestion d'état" },
+  },
+  'iot-territoire': {
+    NodeJS: { description: 'Runtime JavaScript serveur', details: 'Utilisé pour : ingestion des données capteurs, API REST' },
+    VueJS: { description: 'Framework JavaScript progressif', details: 'Utilisé pour : interface de visualisation des données IoT' },
+    MongoDB: { description: 'Base NoSQL orientée documents', details: 'Utilisé pour : stockage flexible des relevés capteurs' },
+  },
+  'chatterie-vitrine': {
+    PHP: { description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site et templates' },
+    WordPress: { description: 'CMS open-source', details: 'Utilisé pour : gestion de contenu et structure du site vitrine' },
+  },
+};
+
+// skillId lookup for each technology name, keyed by project id — mirrors
+// data/skills.ts ids so pills can navigate to the Skills page.
+const TECH_SKILL_IDS: Record<string, Record<string, string>> = {
+  portfolio: { React: 'react' },
+  'iot-territoire': { NodeJS: 'nodejs', VueJS: 'vuejs', MongoDB: 'mongodb' },
+  'chatterie-vitrine': { PHP: 'php', WordPress: 'wordpress' },
+};
+
+// Extra technologies displayed on the card but without a dedicated Skills
+// entry (no skillId, so no tooltip navigation) — display-only.
+const EXTRA_TECHNOLOGIES: Record<string, string[]> = {
+  portfolio: ['TypeScript', 'TailwindCSS', 'Motion'],
+};
+
+const EXTRA_TECH_TOOLTIPS: Record<string, Record<string, { description: string; details: string }>> = {
+  portfolio: {
+    TypeScript: { description: 'Superset typé de JavaScript', details: 'Utilisé pour : sûreté de type, autocomplétion IDE, refactor sereins' },
+    TailwindCSS: { description: 'Framework CSS utility-first', details: 'Utilisé pour : styling, système de thèmes, responsive' },
+    Motion: { description: "Bibliothèque d'animation pour React", details: 'Utilisé pour : transitions de pages, effets au survol' },
+  },
+};
+
+const PREVIEWS: Record<string, Array<{ label: string; imageUrl: string }>> = {};
+
 export function Projects() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { targetProjectId, setTargetSkillId } = useNavigation();
   const projectRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  // Projets réels dérivés de info.md (1 portfolio + 2 stages).
-  // TODO github URL: à compléter quand l'utilisateur fournira son URL GitHub.
-  const projects: Project[] = [
-    {
-      id: 'portfolio',
-      title: 'PortfolioIDE',
-      icon: Code2,
-      accentColor: 'purple',
-      description:
-        'Portfolio interactif inspiré de VS Code avec terminal intégré et thèmes personnalisés',
-      technologies: [
-        { name: 'React', skillId: 'react', description: 'Bibliothèque UI moderne pour interfaces interactives', details: "Utilisé pour : architecture composants, hooks, gestion d'état" },
-        { name: 'TypeScript', skillId: null, description: 'Superset typé de JavaScript', details: 'Utilisé pour : sûreté de type, autocomplétion IDE, refactor sereins' },
-        { name: 'TailwindCSS', skillId: null, description: 'Framework CSS utility-first', details: 'Utilisé pour : styling, système de thèmes, responsive' },
-        { name: 'Motion', skillId: null, description: "Bibliothèque d'animation pour React", details: 'Utilisé pour : transitions de pages, effets au survol' },
-      ],
-      features: [
-        'Système multi-thèmes (Dark, Light, Steampunk, Cyberpunk, Synthwave, Galaxy, Nord, Pixel)',
-        'Terminal interactif avec commandes Unix simulées',
-        'Navigation par explorateur de fichiers',
-        'Bilingue (FR/EN) et responsive mobile',
-      ],
-      previews: [],
-      status: 'Production',
-    },
-    {
-      id: 'iot-territoire',
-      title: 'TerritoireConnecteDurable',
-      icon: Radio,
-      accentColor: 'blue',
-      description:
-        'Plateforme web IoT pour la gestion de données capteurs, développée chez Faubourg Numérique en collaboration avec La Somme Numérique',
-      technologies: [
-        { name: 'NodeJS', skillId: 'nodejs', description: 'Runtime JavaScript serveur', details: 'Utilisé pour : ingestion des données capteurs, API REST' },
-        { name: 'VueJS', skillId: 'vuejs', description: 'Framework JavaScript progressif', details: 'Utilisé pour : interface de visualisation des données IoT' },
-        { name: 'MongoDB', skillId: 'mongodb', description: 'Base NoSQL orientée documents', details: 'Utilisé pour : stockage flexible des relevés capteurs' },
-      ],
-      features: [
-        'Ingestion de données IoT (capteurs Internet des Objets)',
-        'Interface de visualisation des relevés',
-        'Collaboration avec La Somme Numérique',
-        "Livré dans le cadre d'un stage de 4 mois",
-      ],
-      previews: [],
-      status: 'Livré',
-    },
-    {
-      id: 'chatterie-vitrine',
-      title: 'ChatterieTerreBrascoSite',
-      icon: Cat,
-      accentColor: 'orange',
-      description:
-        "Site vitrine de l'association Chatterie de la Terre de Brasco, démarré en 2022 et finalisé lors du second stage en 2023",
-      technologies: [
-        { name: 'PHP', skillId: 'php', description: 'Langage de script côté serveur', details: 'Utilisé pour : développement backend du site et templates' },
-        { name: 'WordPress', skillId: 'wordpress', description: 'CMS open-source', details: 'Utilisé pour : gestion de contenu et structure du site vitrine' },
-      ],
-      features: [
-        "Site vitrine pour l'association",
-        'Gestion de contenu via WordPress',
-        'Premier stage : conception et démarrage du site',
-        'Second stage : finalisation et livraison',
-      ],
-      previews: [],
-      status: 'Livré',
-    },
-  ];
 
   useEffect(() => {
     if (targetProjectId) {
@@ -132,9 +94,23 @@ export function Projects() {
     <PageShell commentTitle={t('projects.title')} commentEditKey="projects.comment">
       <div className="space-y-6 md:space-y-8">
         {projects.map((project, projectIndex) => {
-          const Icon = project.icon;
+          const ui = PROJECT_UI[project.id];
+          const Icon = ui.icon;
           const isTargeted = project.id === targetProjectId;
-          const hasPreviews = project.previews.length > 0;
+          const previews = PREVIEWS[project.id] ?? [];
+          const hasPreviews = previews.length > 0;
+          const skillIds = TECH_SKILL_IDS[project.id] ?? {};
+          const tooltips = TECH_TOOLTIPS[project.id] ?? {};
+          const extraTech = EXTRA_TECHNOLOGIES[project.id] ?? [];
+          const extraTooltips = EXTRA_TECH_TOOLTIPS[project.id] ?? {};
+
+          const techNames: Array<{ name: string; skillId: string | null }> = [
+            ...project.technologies.map((skillId) => {
+              const name = Object.entries(skillIds).find(([, id]) => id === skillId)?.[0] ?? skillId;
+              return { name, skillId };
+            }),
+            ...extraTech.map((name) => ({ name, skillId: null })),
+          ];
 
           return (
             <CodeCard
@@ -142,7 +118,7 @@ export function Projects() {
               ref={(el) => {
                 projectRefs.current[project.id] = el;
               }}
-              accentColor={project.accentColor}
+              accentColor={ui.accentColor}
               delay={0.1 + projectIndex * 0.1}
               highlighted={isTargeted}
             >
@@ -151,11 +127,11 @@ export function Projects() {
                 title={project.title}
                 titleEditKey={`projects.${projectIndex}.title`}
                 rightSlot={
-                  (project.github || project.demo) && (
+                  (project.repository || project.demo) && (
                     <div className="flex gap-2">
-                      {project.github && (
+                      {project.repository && (
                         <a
-                          href={project.github}
+                          href={project.repository}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-1.5 md:p-2 hover:bg-background rounded transition-colors"
@@ -184,7 +160,7 @@ export function Projects() {
               <ClassBody>
                 <CodeProperty
                   name="status"
-                  value={project.status}
+                  value={project.status[language]}
                   valueEditKey={`projects.${projectIndex}.status`}
                 />
                 {project.repository && (
@@ -195,7 +171,7 @@ export function Projects() {
                   />
                 )}
                 <CodeArrayProperty name="technologies" variant="inline">
-                  {project.technologies.map((tech, idx) => {
+                  {techNames.map((tech, idx) => {
                     const inner = (
                       <CodeArrayItem
                         key={idx}
@@ -208,12 +184,13 @@ export function Projects() {
                         />
                       </CodeArrayItem>
                     );
-                    return tech.skillId ? (
+                    const tooltip = tooltips[tech.name] ?? extraTooltips[tech.name];
+                    return tech.skillId && tooltip ? (
                       <ItemTooltip
                         key={idx}
                         itemName={tech.name}
-                        description={tech.description}
-                        details={tech.details}
+                        description={tooltip.description}
+                        details={tooltip.details}
                         type="class"
                         onClick={() => {
                           setTargetSkillId(tech.skillId!);
@@ -235,7 +212,7 @@ export function Projects() {
                       isLast={idx === project.features.length - 1}
                     >
                       <EditableText
-                        value={feature}
+                        value={feature[language]}
                         editKey={`projects.${projectIndex}.features.${idx}`}
                       />
                     </CodeArrayItem>
@@ -243,7 +220,7 @@ export function Projects() {
                 </CodeArrayProperty>
                 {hasPreviews && (
                   <CodeArrayProperty name="previews">
-                    {project.previews.map((preview, idx) => (
+                    {previews.map((preview, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <ImageIcon className="w-3 h-3 md:w-4 md:h-4 mt-0.5 flex-shrink-0 opacity-60" />
                         <ImagePreviewTooltip
@@ -254,7 +231,7 @@ export function Projects() {
                             "{preview.label}"
                           </span>
                         </ImagePreviewTooltip>
-                        {idx < project.previews.length - 1 && (
+                        {idx < previews.length - 1 && (
                           <span className="text-syntax-punctuation">,</span>
                         )}
                       </div>
