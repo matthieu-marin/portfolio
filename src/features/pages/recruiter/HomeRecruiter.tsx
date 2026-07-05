@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
+import { useState } from 'react';
 import { Code2, Rocket, Linkedin, Mail, Download } from 'lucide-react';
 import { useLanguage } from '../../../i18n/hooks';
 import { useEdited, useEditContext } from '../../../shared/contexts/EditContext';
-import { ImageWithFallback } from '../../../shared/components/ImageWithFallback';
 import { profile } from '../data';
 import { RecruiterShell, Section, Chip, StatCounter } from './primitives';
 
@@ -11,6 +11,37 @@ function ExpertiseChip({ index, language }: { index: number; language: 'fr' | 'e
   const item = profile.expertise[index];
   const value = edits[`profile.expertise.${index}.${language}`] ?? item[language];
   return <Chip>{value}</Chip>;
+}
+
+function Avatar({ src, name }: { src: string; name: string }) {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  // Derive initials from name: split words, take first letters, uppercase
+  const initials = name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('');
+
+  return (
+    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-accent/20 flex items-center justify-center flex-shrink-0">
+      {imgFailed ? (
+        <span
+          className="font-sans font-semibold text-accent text-xl"
+          aria-hidden="true"
+        >
+          {initials}
+        </span>
+      ) : (
+        <img
+          src={src}
+          alt=""
+          onError={() => setImgFailed(true)}
+          className="w-full h-full object-cover rounded-full"
+        />
+      )}
+    </div>
+  );
 }
 
 export function HomeRecruiter() {
@@ -29,13 +60,7 @@ export function HomeRecruiter() {
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left"
       >
-        <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-accent/20 flex items-center justify-center flex-shrink-0">
-          <ImageWithFallback
-            src={profile.avatarImage}
-            alt={name}
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <Avatar src={profile.avatarImage} name={name} />
         <div className="min-w-0">
           <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 justify-center sm:justify-start flex-wrap">
             {name}

@@ -4,8 +4,8 @@
 // coder une entrée en dur ici : tout vient des données.
 // ─────────────────────────────────────────────────────────────
 import { profile } from '../data';
-import { ln, blank, p, kw, ty, str, cmt, prop, fn, pn, ed } from './tokens';
-import type { CodeFileModel, CodeToken } from './tokens';
+import { ln, blank, p, kw, ty, str, cmt, prop, fn, pn, ed, num } from './tokens';
+import type { CodeFileModel } from './tokens';
 
 // Transforme un libellé humain ("Years of pro experience") en clé
 // camelCase ("yearsOfProExperience") pour l'objet `stats`.
@@ -21,8 +21,6 @@ function camel(label: string): string {
     })
     .join('');
 }
-
-const num = (t: string): CodeToken => ({ k: 'number', t });
 
 export function buildProfilTsx(language: 'fr' | 'en'): CodeFileModel {
   return {
