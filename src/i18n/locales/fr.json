@@ -10,7 +10,14 @@
     "projects": "Projets",
     "skills": "Compétences",
     "contact": "Contact",
-    "experience": "Expérience"
+    "experience": "Expérience",
+    "chronology": "Chronologie"
+  },
+  "explorer": {
+    "root": {
+      "human": "Mon Portfolio",
+      "code": "portfolio-dev"
+    }
   },
   "home": {
     "greeting": "Bonjour, je suis",

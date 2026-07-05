@@ -1,19 +1,31 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, ChevronDown, Folder, FileCode, FolderOpen } from 'lucide-react';
+import { ChevronRight, ChevronDown, Folder, FolderOpen } from 'lucide-react';
 import { useLanguage } from '../../i18n/hooks';
+import { useRenderer } from '../contexts/RendererContext';
 import { motion, AnimatePresence } from 'motion/react';
 import type { Page } from '../../app/types';
+import { FILE_REGISTRY } from '../data/fileRegistry';
 
 interface FileExplorerProps {
-  onFileSelect: (id: Page, name: string, path: string) => void;
+  onFileSelect: (id: Page) => void;
   onVisibilityChange?: (visible: boolean) => void;
 }
+
+const EXPLORER_PAGES: Page[] = [
+  'home',
+  'about',
+  'experience',
+  'projects',
+  'skills',
+  'contact',
+];
 
 export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerProps) {
   const [expandedFolders, setExpandedFolders] = useState<string[]>(['portfolio', 'src', 'pages']);
   const [width, setWidth] = useState(256); // 64 * 4 = 256px (w-64)
   const [isResizing, setIsResizing] = useState(false);
   const { t } = useLanguage();
+  const { enabled } = useRenderer();
 
   const MIN_WIDTH = 0;
   const MAX_WIDTH = 600;
@@ -84,14 +96,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
     );
   };
 
-  const files: { id: Page; name: string; path: string; label: string }[] = [
-    { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx', label: t('nav.home') },
-    { id: 'about', name: 'About.tsx', path: 'src/pages/About.tsx', label: t('nav.about') },
-    { id: 'experience', name: 'Experience.tsx', path: 'src/pages/Experience.tsx', label: t('nav.experience') },
-    { id: 'projects', name: 'Projects.tsx', path: 'src/pages/Projects.tsx', label: t('nav.projects') },
-    { id: 'skills', name: 'Skills.tsx', path: 'src/pages/Skills.tsx', label: t('nav.skills') },
-    { id: 'contact', name: 'Contact.tsx', path: 'src/pages/Contact.tsx', label: t('nav.contact') },
-  ];
+  const rootLabel = enabled ? t('explorer.root.human') : t('explorer.root.code');
 
   return (
     <div 
@@ -118,7 +123,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
             ) : (
               <Folder className="w-4 h-4 text-folder" />
             )}
-            <span className="text-sm">portfolio</span>
+            <span className="text-sm">{rootLabel}</span>
           </div>
 
           <AnimatePresence>
@@ -182,20 +187,35 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
                             transition={{ duration: 0.2 }}
                             className="ml-4 overflow-hidden"
                           >
-                            {files.map((file, index) => (
-                              <motion.div
-                                key={file.id}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -10 }}
-                                transition={{ duration: 0.15, delay: index * 0.03 }}
-                                className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer group"
-                                onClick={() => onFileSelect(file.id, file.name, file.path)}
-                              >
-                                <FileCode className="w-4 h-4 text-file-tsx" />
-                                <span className="text-sm truncate">{file.name}</span>
-                              </motion.div>
-                            ))}
+                            {EXPLORER_PAGES.map((id, index) => {
+                              const meta = FILE_REGISTRY[id];
+                              const HumanIcon = meta.humanIcon;
+                              return (
+                                <motion.div
+                                  key={id}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, x: -10 }}
+                                  transition={{ duration: 0.15, delay: index * 0.03 }}
+                                  className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer group"
+                                  onClick={() => onFileSelect(id)}
+                                >
+                                  {enabled ? (
+                                    <>
+                                      <HumanIcon className={`w-4 h-4 ${meta.badgeClass}`} />
+                                      <span className="text-sm truncate">{t(meta.humanLabelKey)}</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span className={`text-[10px] font-mono w-6 shrink-0 ${meta.badgeClass}`}>
+                                        {meta.badge}
+                                      </span>
+                                      <span className="text-sm truncate">{meta.fileName}</span>
+                                    </>
+                                  )}
+                                </motion.div>
+                              );
+                            })}
                           </motion.div>
                         )}
                       </AnimatePresence>

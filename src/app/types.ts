@@ -11,6 +11,4 @@ export type PanelId = 'explorer' | 'extensions';
 
 export interface Tab {
   id: Page;
-  name: string;
-  path: string;
 }

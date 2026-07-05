@@ -34,9 +34,7 @@ import { Toaster } from 'sonner';
 import type { Page, Tab, PanelId } from './types';
 
 function PortfolioContent() {
-  const [openTabs, setOpenTabs] = useState<Tab[]>([
-    { id: 'home', name: 'Home.tsx', path: 'src/pages/Home.tsx' },
-  ]);
+  const [openTabs, setOpenTabs] = useState<Tab[]>([{ id: 'home' }]);
   const [activeTab, setActiveTab] = useState<Page>('home');
   const [isTerminalVisible, setIsTerminalVisible] = useState(false);
   const [terminalHeight, setTerminalHeight] = useState(256);
@@ -83,21 +81,16 @@ function PortfolioContent() {
     }
   }, [togglePanel]);
 
-  const openFile = useCallback((id: Page, name: string, path: string) => {
-    setOpenTabs((prev) =>
-      prev.find((tab) => tab.id === id) ? prev : [...prev, { id, name, path }]
-    );
+  const openFile = useCallback((id: Page) => {
+    setOpenTabs((prev) => (prev.find((tab) => tab.id === id) ? prev : [...prev, { id }]));
     setActiveTab(id);
   }, []);
 
   useEffect(() => {
-    const handleNavigateToSkill = () => openFile('skills', 'Skills.tsx', 'src/pages/Skills.tsx');
-    const handleNavigateToExperience = () =>
-      openFile('experience', 'Experience.tsx', 'src/pages/Experience.tsx');
-    const handleNavigateToProject = () =>
-      openFile('projects', 'Projects.tsx', 'src/pages/Projects.tsx');
-    const handleNavigateToAbout = () =>
-      openFile('about', 'About.tsx', 'src/pages/About.tsx');
+    const handleNavigateToSkill = () => openFile('skills');
+    const handleNavigateToExperience = () => openFile('experience');
+    const handleNavigateToProject = () => openFile('projects');
+    const handleNavigateToAbout = () => openFile('about');
 
     window.addEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
     window.addEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
@@ -258,7 +251,7 @@ function PortfolioContent() {
 
         <div className="flex-1 flex flex-col min-w-0">
           <TabBar
-            tabs={openTabs}
+            tabs={openTabs.map((tab) => tab.id)}
             activeTab={activeTab}
             onTabClick={setActiveTab}
             onTabClose={closeTab}
@@ -285,7 +278,7 @@ function PortfolioContent() {
         onTerminalToggle={() => setIsTerminalVisible(!isTerminalVisible)}
         isTerminalVisible={isTerminalVisible}
         openTabsCount={openTabs.length}
-        onOpenChronology={() => openFile('chronology', 'Chronologie.tsx', 'src/pages/Chronologie.tsx')}
+        onOpenChronology={() => openFile('chronology')}
       />
 
       <Toaster
