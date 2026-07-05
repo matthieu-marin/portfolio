@@ -4,45 +4,18 @@ import { useLanguage } from '../../../i18n/hooks';
 import { useEdited } from '../../../shared/contexts/EditContext';
 import { useNavigation } from '../../../shared/contexts/NavigationContext';
 import { TechIcon } from '../../../shared/components/TechIcon';
-import { experiences } from '../data';
+import { experiences, SKILL_NAME_BY_ID, EXTRA_TECH_NAMES, TECH_DISPLAY_ORDER } from '../data';
 import { RecruiterShell, Section, Chip } from './primitives';
 
-// Extra technologies displayed on the card but without a dedicated Skills
-// entry (no skillId, so no navigation on click) — display-only, mirrors the
-// code-view page's original UI maps (kept out of data/experiences.ts since
-// they are presentation, not content).
-const EXTRA_TECHNOLOGIES: Record<string, string[]> = {
-  renault: ['GoogleCloud', 'Docker', 'GitLab', 'Dynatrace'],
-  faubourg: ['IoT', 'Grafana'],
-};
-
-// skillId lookup for each technology name, keyed by experience id — mirrors
-// data/skills.ts ids so pills can navigate to the Skills page.
-const TECH_SKILL_IDS: Record<string, Record<string, string>> = {
-  renault: { Java: 'java', SpringBoot: 'springboot', AgileScrum: 'agile' },
-  faubourg: { NodeJS: 'nodejs', VueJS: 'vuejs' },
-  chatterie2: { PHP: 'php', WordPress: 'wordpress' },
-  chatterie1: { PHP: 'php', WordPress: 'wordpress' },
-};
-
-// Display order for technology pills per experience. Ensures the original
-// rendered order is preserved when merging skill-linked techs with extra techs.
-const TECH_DISPLAY_ORDER: Record<string, string[]> = {
-  renault: ['Java', 'SpringBoot', 'GoogleCloud', 'Docker', 'GitLab', 'Dynatrace', 'AgileScrum'],
-  faubourg: ['NodeJS', 'VueJS', 'IoT', 'Grafana'],
-  chatterie2: ['PHP', 'WordPress'],
-  chatterie1: ['PHP', 'WordPress'],
-};
+// Tech display names are derived from data/skills.ts via data/techNames.ts —
+// no local name maps here. EXTRA_TECH_NAMES (display-only techs without a
+// Skills entry) and TECH_DISPLAY_ORDER live in the same data module.
 
 function techsForExperience(expId: string, technologies: string[]) {
-  const skillIds = TECH_SKILL_IDS[expId] ?? {};
-  const extraTech = EXTRA_TECHNOLOGIES[expId] ?? [];
+  const extraTech = EXTRA_TECH_NAMES[expId] ?? [];
 
   const allTechs: Array<{ name: string; skillId: string | null }> = [
-    ...technologies.map((skillId) => {
-      const name = Object.entries(skillIds).find(([, id]) => id === skillId)?.[0] ?? skillId;
-      return { name, skillId };
-    }),
+    ...technologies.map((skillId) => ({ name: SKILL_NAME_BY_ID[skillId] ?? skillId, skillId })),
     ...extraTech.map((name) => ({ name, skillId: null })),
   ];
 

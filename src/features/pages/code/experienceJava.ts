@@ -3,21 +3,9 @@
 // fichier Java à partir de `experiences` (data/experiences.ts). Ne
 // jamais coder une entrée en dur ici : tout vient des données.
 // ─────────────────────────────────────────────────────────────
-import { experiences } from '../data';
+import { experiences, SKILL_NAME_BY_ID } from '../data';
 import { ln, blank, p, kw, ty, str, cmt, ann, ed, num, pn } from './tokens';
 import type { CodeFileModel, CodeLine } from './tokens';
-
-// skillId -> nom d'affichage de la techno (mêmes clés que TECH_SKILL_IDS
-// côté ExperienceRecruiter.tsx — le pill cliquable pointe vers le même skill).
-const SKILL_DISPLAY_NAMES: Record<string, string> = {
-  java: 'Java',
-  springboot: 'Spring Boot',
-  agile: 'Agile',
-  nodejs: 'Node.js',
-  vuejs: 'Vue.js',
-  php: 'PHP',
-  wordpress: 'WordPress',
-};
 
 // Année extraite du champ `period.en` de chaque expérience, pour @Since(...).
 function extractYear(periodEn: string): string {
@@ -43,7 +31,8 @@ function identifierListTokens(values: string[]) {
 // Lignes Java pour une expérience : annotations + constante + appel constructeur.
 function experienceBlock(exp: (typeof experiences)[number], language: 'fr' | 'en'): CodeLine[] {
   const constId = constName(exp.id);
-  const techNames = exp.technologies.map((skillId) => SKILL_DISPLAY_NAMES[skillId] ?? skillId);
+  // Nom d'affichage canonique dérivé de data/skills.ts (voir data/techNames.ts).
+  const techNames = exp.technologies.map((skillId) => SKILL_NAME_BY_ID[skillId] ?? skillId);
   const year = extractYear(exp.period.en);
   const shownHighlights = exp.highlights.slice(0, 2);
 
