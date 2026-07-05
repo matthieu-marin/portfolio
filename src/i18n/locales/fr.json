@@ -24,6 +24,16 @@
     "title": "Développeur en alternance — Master Cloud Computing & Mobility",
     "subtitle": "Java, Spring Boot, JavaScript : du backend Renault Digital aux interfaces React/Vue"
   },
+  "recruiter": {
+    "home": {
+      "expertiseTitle": "Expertises",
+      "approachTitle": "Ma façon de travailler",
+      "statsAriaLabel": "Chiffres clés",
+      "downloadCv": "Télécharger le CV",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    }
+  },
   "about": {
     "title": "À propos de moi",
     "description": "Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/WordPress associatifs.",

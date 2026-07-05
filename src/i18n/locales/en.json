@@ -24,6 +24,16 @@
     "title": "Apprentice Developer — Master Cloud Computing & Mobility",
     "subtitle": "Java, Spring Boot, JavaScript: from Renault Digital backends to React/Vue interfaces"
   },
+  "recruiter": {
+    "home": {
+      "expertiseTitle": "Expertise",
+      "approachTitle": "How I Work",
+      "statsAriaLabel": "Key figures",
+      "downloadCv": "Download CV",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    }
+  },
   "about": {
     "title": "About Me",
     "description": "Master Cloud Computing & Mobility student (UPJV / INSSET) and apprentice at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/WordPress internships.",
