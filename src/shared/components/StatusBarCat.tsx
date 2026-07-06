@@ -1,29 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'motion/react';
 
 export function StatusBarCat() {
   const [isWalking, setIsWalking] = useState(false);
+  const timerRef = useRef<number | null>(null);
+
+  const scheduleNextWalk = useCallback((delay: number) => {
+    timerRef.current = window.setTimeout(() => {
+      setIsWalking(true);
+    }, delay);
+  }, []);
 
   useEffect(() => {
     // First appearance at ~20s
-    const firstTimer = setTimeout(() => {
-      setIsWalking(true);
-    }, 20000);
-
-    let currentTimer: NodeJS.Timeout;
-
-    const scheduleNextWalk = () => {
-      const interval = 90000 + Math.random() * 90000; // 90-180s
-      currentTimer = setTimeout(() => {
-        setIsWalking(true);
-      }, interval);
-    };
+    scheduleNextWalk(20000);
 
     return () => {
-      clearTimeout(firstTimer);
-      if (currentTimer) clearTimeout(currentTimer);
+      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
     };
-  }, []);
+  }, [scheduleNextWalk]);
 
   return isWalking ? (
     <motion.span
@@ -33,10 +28,8 @@ export function StatusBarCat() {
       onAnimationComplete={() => {
         setIsWalking(false);
         // Schedule next walk after current one completes
-        const nextInterval = 90000 + Math.random() * 90000;
-        setTimeout(() => {
-          setIsWalking(true);
-        }, nextInterval);
+        const nextInterval = 90000 + Math.random() * 90000; // 90-180s
+        scheduleNextWalk(nextInterval);
       }}
       className="text-xs pointer-events-none absolute inset-y-0 flex items-center"
       aria-hidden="true"

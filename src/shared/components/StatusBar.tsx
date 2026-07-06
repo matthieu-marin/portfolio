@@ -106,8 +106,10 @@ export function StatusBar({
   });
 
   return (
-    <div className="h-6 bg-statusbar text-statusbar-text flex items-center justify-between px-3 md:px-2 text-xs border-t border-border relative overflow-hidden">
-      <StatusBarCat />
+    <div className="h-6 bg-statusbar text-statusbar-text flex items-center justify-between px-3 md:px-2 text-xs border-t border-border relative">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <StatusBarCat />
+      </div>
       <div className="flex items-center gap-3 md:gap-4">
         <button
           onClick={onOpenChronology}

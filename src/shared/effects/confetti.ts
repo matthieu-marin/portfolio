@@ -36,4 +36,7 @@ export function fireConfetti(): void {
     else canvas.remove();
   };
   requestAnimationFrame(tick);
+  window.setTimeout(() => {
+    if (canvas.isConnected) canvas.remove();
+  }, 3000);
 }
