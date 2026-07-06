@@ -1,12 +1,7 @@
 import { GitBranch } from 'lucide-react';
 import { cn } from '../../shared/components/ui/utils';
-import {
-  PageShell,
-  CodeCard,
-  ClassHeader,
-  ClassBody,
-  ClassClose,
-} from '../../shared/components/layout';
+import { useLanguage } from '../../i18n/hooks';
+import { RecruiterShell, Section } from './recruiter/primitives';
 
 // ─── Column x positions ────────────────────────────────────────────
 const MX = 36  // main  (trunk)
@@ -61,7 +56,7 @@ const COMMITS: Commit[] = [
   {
     x: MX, y: Y.head, color: CM, isMain: true,
     title: 'HEAD — open-to-work',
-    sub: 'disponible · recherche CDI',
+    sub: 'disponible',
     period: '2026 →',
   },
   {
@@ -134,6 +129,8 @@ const COMMITS: Commit[] = [
 
 // ─── Component ─────────────────────────────────────────────────────
 export function Chronology() {
+  const { t } = useLanguage();
+
   const handleCommitClick = (commit: Commit) => () => {
     if (commit.navEvent) {
       window.dispatchEvent(new CustomEvent(commit.navEvent))
@@ -141,10 +138,12 @@ export function Chronology() {
   }
 
   return (
-    <PageShell commentTitle="Chronologie.tsx" commentEditKey="chronology.title">
-      <CodeCard accentColor="purple" delay={0.1}>
-        <ClassHeader icon={GitBranch} title="Timeline" titleEditKey="chronology.class" />
-        <ClassBody>
+    <RecruiterShell>
+      <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+        {t('nav.chronology')}
+      </h1>
+      <Section icon={GitBranch} title={t('recruiter.chronology.title')} index={0}>
+        <>
           {/* Légende */}
           <div className="flex items-center gap-6 mb-6 font-mono text-[11px]">
             <span className="flex items-center gap-1.5">
@@ -259,9 +258,8 @@ export function Chronology() {
               ))}
             </div>
           </div>
-        </ClassBody>
-        <ClassClose />
-      </CodeCard>
-    </PageShell>
+        </>
+      </Section>
+    </RecruiterShell>
   )
 }

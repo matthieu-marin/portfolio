@@ -35,6 +35,9 @@
       "email": "Email",
       "openToWork": "Open to work"
     },
+    "chronology": {
+      "title": "Parcours"
+    },
     "experience": {
       "title": "Expérience Professionnelle",
       "kind": {
@@ -94,7 +97,7 @@
     "email": "Email",
     "message": "Message",
     "send": "Envoyer",
-    "availability": "Disponible immédiatement — à la recherche d'un CDI",
+    "availability": "Disponible immédiatement",
     "placeholder": {
       "name": "Votre nom",
       "email": "votre@email.com",

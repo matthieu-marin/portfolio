@@ -1,5 +1,5 @@
-import { Settings } from 'lucide-react';
 import { useRenderer } from '../contexts/RendererContext';
+import { Switch } from './ui/switch';
 
 // Une seule extension : celle qui pilote le rendu du portfolio. Les vraies
 // dépendances (React, Vite…) n'ont rien à faire ici — elles ne se
@@ -36,27 +36,17 @@ export function ExtensionsPanel() {
                 Matthieu Marin · v2.0.1 · ⭐ 4.9 (2.4M installs)
               </p>
             </div>
+            <Switch
+              checked={enabled}
+              onCheckedChange={toggle}
+              title={enabled ? 'Disable extension' : 'Enable extension'}
+              aria-label={enabled ? 'Disable extension' : 'Enable extension'}
+              className="mt-0.5 flex-shrink-0"
+            />
           </div>
           <p className="text-[10px] opacity-50 mt-2 font-mono leading-relaxed">
             Renders this portfolio in human-readable mode. Disable to view raw source files.
           </p>
-          {/* Barre d'actions façon VS Code : bouton rectangulaire + engrenage */}
-          <div className="flex items-center gap-1.5 mt-2">
-            <button
-              onClick={toggle}
-              className="px-2 py-0.5 text-[11px] font-mono rounded-[3px] bg-accent text-accent-foreground hover:opacity-90 transition-opacity"
-            >
-              {enabled ? 'Disable' : 'Enable'}
-            </button>
-            <button
-              onClick={toggle}
-              title={enabled ? 'Disable extension' : 'Enable extension'}
-              aria-label="Extension settings"
-              className="p-1 rounded-[3px] hover:bg-background/60 transition-colors opacity-60 hover:opacity-100"
-            >
-              <Settings className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </div>
       </div>
     </div>

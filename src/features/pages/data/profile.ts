@@ -12,8 +12,8 @@ export const profile: Profile = {
     en: 'Full-Stack Developer — Cloud & DevOps',
   },
   bio: {
-    fr: "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital sur les données du véhicule électrique, je construis des services backend robustes et l'infrastructure cloud qui les fait tourner. Mes terrains de jeu : Java/Spring Boot et TypeScript côté code ; Google Cloud, Docker et Terraform côté infrastructure. À la recherche d'un CDI.",
-    en: "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital on electric-vehicle data, I build robust backend services and the cloud infrastructure they run on. Comfort zone: Java/Spring Boot and TypeScript for code; Google Cloud, Docker and Terraform for infrastructure. Looking for a permanent position.",
+    fr: "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital sur les données du véhicule électrique, je construis des services backend robustes et l'infrastructure cloud qui les fait tourner. Mes terrains de jeu : Java/Spring Boot et TypeScript côté code, Google Cloud, Docker et Terraform côté infrastructure.",
+    en: "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital on electric-vehicle data, I build robust backend services and the cloud infrastructure they run on. Comfort zone: Java/Spring Boot and TypeScript for code; Google Cloud, Docker and Terraform for infrastructure.",
   },
   email: 'matthieumarin51@gmail.com',
   linkedin: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',

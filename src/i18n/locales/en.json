@@ -35,6 +35,9 @@
       "email": "Email",
       "openToWork": "Open to work"
     },
+    "chronology": {
+      "title": "Journey"
+    },
     "experience": {
       "title": "Professional Experience",
       "kind": {
@@ -94,7 +97,7 @@
     "email": "Email",
     "message": "Message",
     "send": "Send",
-    "availability": "Available now — looking for a permanent position",
+    "availability": "Available now",
     "placeholder": {
       "name": "Your name",
       "email": "your@email.com",
