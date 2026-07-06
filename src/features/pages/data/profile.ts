@@ -17,8 +17,10 @@ export const profile: Profile = {
   },
   email: 'matthieumarin51@gmail.com',
   linkedin: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
-  cvPath: '/cv-matthieu-marin.pdf',
-  avatarImage: '/images/profile/avatar.jpg',
+  // BASE_URL ends with '/' — keeps public/ assets working when the site is
+  // served under a sub-path (GitHub Pages project site).
+  cvPath: `${import.meta.env.BASE_URL}cv-matthieu-marin.pdf`,
+  avatarImage: `${import.meta.env.BASE_URL}images/profile/avatar.jpg`,
   stats: [
     { label: { fr: "Années d'expérience pro", en: 'Years of pro experience' }, value: 2, suffix: '+' },
     { label: { fr: 'Expériences en entreprise', en: 'Professional experiences' }, value: 4 },

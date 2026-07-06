@@ -4,6 +4,9 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
+  // GitHub Pages serves the site under /<repo>/ — the deploy workflow sets
+  // VITE_BASE accordingly; every other host (dev, Vercel, Netlify…) stays at /.
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
