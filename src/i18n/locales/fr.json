@@ -55,6 +55,17 @@
       "educationTitle": "Formations",
       "interestsTitle": "Centres d'intérêt",
       "softSkillsTitle": "Soft skills"
+    },
+    "projects": {
+      "title": "Mes Projets",
+      "gallery": "Aperçus",
+      "viewCode": "Voir le code",
+      "viewDemo": "Voir la démo"
+    },
+    "contact": {
+      "title": "Contactez-moi",
+      "coordinatesTitle": "Coordonnées",
+      "formTitle": "Envoyer un message"
     }
   },
   "about": {

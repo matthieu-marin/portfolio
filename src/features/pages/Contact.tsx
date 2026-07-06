@@ -1,241 +1,60 @@
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Linkedin,
-  MessageSquare,
-  Globe,
-} from 'lucide-react';
-import { useState, useMemo } from 'react';
-import { useLanguage } from '../../i18n/hooks';
-import { EditableText } from '../../shared/components/EditableText';
-import {
-  PageShell,
-  CodeCard,
-  ClassHeader,
-  ClassBody,
-  ClassClose,
-  CodeProperty,
-  CodeArrayProperty,
-} from '../../shared/components/layout';
-import { getContactProvider } from '../contact';
 import { toast } from 'sonner';
-import { contact } from './data';
+import { useRenderer } from '../../shared/contexts/RendererContext';
+import { useLanguage } from '../../i18n/hooks';
+import { useEditContext } from '../../shared/contexts/EditContext';
+import { ContactRecruiter } from './recruiter/ContactRecruiter';
+import { CodeFileView } from '../../shared/components/CodeFileView';
+import { buildContactHttp } from './code/contactHttp';
+import { getContactProvider } from '../contact';
 
-// UI-only metadata (icon per contact property) — ContactData holds only
-// content, not presentation.
-const CONTACT_ICONS: Record<string, typeof Mail> = {
-  email: Mail,
-  phone: Phone,
-  location: MapPin,
-};
-
-// Social link presentation (icon, color) keyed by label — ContactData.socials
-// only holds { label, url }.
-const SOCIAL_UI: Record<string, { icon: typeof Linkedin; color: string }> = {
-  LinkedIn: { icon: Linkedin, color: 'text-blue-400' },
+// Fallback placeholders — mirror code/contactHttp.ts's PLACEHOLDERS, used
+// when the recruiter/visitor hasn't edited a field via ed() in code view.
+const FALLBACKS: Record<'fr' | 'en', { email: string; name: string; message: string }> = {
+  fr: {
+    email: 'votre.email@exemple.com',
+    name: 'Votre nom',
+    message: 'Bonjour Matthieu, je vous contacte au sujet de…',
+  },
+  en: {
+    email: 'your.email@example.com',
+    name: 'Your name',
+    message: 'Hi Matthieu, reaching out about…',
+  },
 };
 
 export function Contact() {
+  const { enabled } = useRenderer();
   const { t, language } = useLanguage();
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitting, setSubmitting] = useState(false);
-  const provider = useMemo(() => getContactProvider(), []);
+  const { edits } = useEditContext();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (submitting) return;
-    setSubmitting(true);
-    try {
-      const result = await provider.send({ ...formData, language });
-      if (result.ok) {
-        if (provider.isAsync) {
-          toast.success(t('contact.toast.sent'), {
-            description: t('contact.toast.sentDescription'),
-          });
-          setFormData({ name: '', email: '', message: '' });
-        }
-        // Mailto opens the client — no toast needed.
-      } else {
-        toast.error(t('contact.toast.failed'), {
-          description: result.error,
+  const handleSend = async () => {
+    const fallback = FALLBACKS[language];
+    const email = edits['contact.form.email'] ?? fallback.email;
+    const name = edits['contact.form.name'] ?? fallback.name;
+    const message = edits['contact.form.message'] ?? fallback.message;
+
+    const provider = getContactProvider();
+    const result = await provider.send({ name, email, message, language });
+    if (result.ok) {
+      if (provider.isAsync) {
+        toast.success(t('contact.toast.sent'), {
+          description: t('contact.toast.sentDescription'),
         });
       }
-    } finally {
-      setSubmitting(false);
+      // Mailto opens the client — no toast needed.
+    } else {
+      toast.error(t('contact.toast.failed'), {
+        description: result.error,
+      });
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const contactInfoRows = [
-    {
-      icon: CONTACT_ICONS.email,
-      property: 'email',
-      value: contact.email,
-      href: `mailto:${contact.email}`,
-    },
-    {
-      icon: CONTACT_ICONS.phone,
-      property: 'phone',
-      value: contact.phone,
-      href: 'tel:+33783334750',
-    },
-    {
-      icon: CONTACT_ICONS.location,
-      property: 'location',
-      value: contact.location[language],
-      href: undefined,
-    },
-  ];
-
-  const social = contact.socials.map((s) => ({
-    icon: SOCIAL_UI[s.label]?.icon ?? Linkedin,
-    label: s.label,
-    href: s.url,
-    color: SOCIAL_UI[s.label]?.color ?? 'text-blue-400',
-  }));
-
-  return (
-    <PageShell commentTitle={t('contact.title')} commentEditKey="contact.comment">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CodeCard accentColor="blue" delay={0.1} initialX={-20}>
-          <ClassHeader
-            icon={MessageSquare}
-            title="ContactInfo"
-            titleEditKey="contact.class.contactInfo"
-          />
-          <ClassBody>
-            {contactInfoRows.map((info) => (
-              <CodeProperty
-                key={info.property}
-                name={info.property}
-                nameEditKey={`contact.prop.info.${info.property}`}
-                value={info.value}
-                valueEditKey={`contact.info.${info.property}`}
-                link={info.href}
-                icon={info.icon}
-              />
-            ))}
-            <CodeArrayProperty name="social" variant="inline">
-              {social.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-1.5 px-3 py-2 bg-background hover:bg-hover rounded-lg transition-colors border ${s.color} border-current/30`}
-                    title={s.label}
-                    aria-label={s.label}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-xs md:text-sm font-mono">{s.label}</span>
-                  </a>
-                );
-              })}
-            </CodeArrayProperty>
-            <CodeProperty
-              name="availability"
-              nameEditKey="contact.prop.availability"
-              value={t('contact.availability')}
-              valueEditKey="contact.availability"
-              icon={Globe}
-            />
-          </ClassBody>
-          <ClassClose />
-        </CodeCard>
-
-        <CodeCard accentColor="green" delay={0.2} initialX={20}>
-          <ClassHeader
-            icon={Send}
-            title="SendMessage"
-            titleEditKey="contact.class.sendMessage"
-          />
-          <form onSubmit={handleSubmit} className="ml-4 md:ml-8 space-y-4 overflow-hidden">
-            <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="font-mono text-xs md:text-sm flex items-center gap-2"
-              >
-                <span className="text-syntax-property">name</span>
-                <span className="text-syntax-punctuation">:</span>
-                <span className="text-syntax-keyword">string</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground text-sm md:text-base font-mono"
-                placeholder={`"${t('contact.placeholder.name')}"`}
-              />
-            </div>
-            <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="font-mono text-xs md:text-sm flex items-center gap-2"
-              >
-                <span className="text-syntax-property">email</span>
-                <span className="text-syntax-punctuation">:</span>
-                <span className="text-syntax-keyword">string</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground text-sm md:text-base font-mono"
-                placeholder={`"${t('contact.placeholder.email')}"`}
-              />
-            </div>
-            <div className="space-y-2">
-              <label
-                htmlFor="message"
-                className="font-mono text-xs md:text-sm flex items-center gap-2"
-              >
-                <span className="text-syntax-property">message</span>
-                <span className="text-syntax-punctuation">:</span>
-                <span className="text-syntax-keyword">string</span>
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={6}
-                className="w-full px-3 md:px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-accent transition-colors text-foreground resize-none text-sm md:text-base font-mono"
-                placeholder={`"${t('contact.placeholder.message')}"`}
-              />
-            </div>
-            <div className="flex items-center gap-2 pt-2">
-              <span className="text-syntax-keyword font-mono text-sm">this</span>
-              <span className="text-syntax-punctuation font-mono text-sm">.</span>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-accent hover:bg-accent/80 disabled:opacity-60 disabled:cursor-not-allowed text-accent-foreground rounded-lg transition-colors font-mono text-sm md:text-base"
-              >
-                <Send className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                <span>{submitting ? '...' : 'send()'}</span>
-              </button>
-              <span className="text-syntax-punctuation font-mono text-sm">;</span>
-            </div>
-          </form>
-          <ClassClose />
-        </CodeCard>
-      </div>
-    </PageShell>
+  return enabled ? (
+    <ContactRecruiter />
+  ) : (
+    <CodeFileView
+      model={buildContactHttp(language)}
+      action={{ label: 'Send Request', beforeLine: 3, onClick: handleSend }}
+    />
   );
 }
