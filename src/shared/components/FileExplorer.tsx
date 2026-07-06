@@ -110,7 +110,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
       <div className="flex-1 overflow-auto">
         <div className="select-none">
           <div
-            className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer"
+            className="flex items-center gap-1 px-2 py-2 md:py-1 hover:bg-hover cursor-pointer"
             onClick={() => toggleFolder('portfolio')}
           >
             {expandedFolders.includes('portfolio') ? (
@@ -136,7 +136,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
                 className="ml-4 overflow-hidden"
               >
                 <div
-                  className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer"
+                  className="flex items-center gap-1 px-2 py-2 md:py-1 hover:bg-hover cursor-pointer"
                   onClick={() => toggleFolder('src')}
                 >
                   {expandedFolders.includes('src') ? (
@@ -162,7 +162,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
                       className="ml-4 overflow-hidden"
                     >
                       <div
-                        className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer"
+                        className="flex items-center gap-1 px-2 py-2 md:py-1 hover:bg-hover cursor-pointer"
                         onClick={() => toggleFolder('pages')}
                       >
                         {expandedFolders.includes('pages') ? (
@@ -197,7 +197,7 @@ export function FileExplorer({ onFileSelect, onVisibilityChange }: FileExplorerP
                                   animate={{ opacity: 1, x: 0 }}
                                   exit={{ opacity: 0, x: -10 }}
                                   transition={{ duration: 0.15, delay: index * 0.03 }}
-                                  className="flex items-center gap-1 px-2 py-1 hover:bg-hover cursor-pointer group"
+                                  className="flex items-center gap-1.5 px-2 py-2.5 md:py-1 hover:bg-hover cursor-pointer group"
                                   onClick={() => onFileSelect(id)}
                                 >
                                   {enabled ? (

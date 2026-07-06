@@ -1,6 +1,5 @@
 import { GitBranch } from 'lucide-react';
 import { cn } from '../../shared/components/ui/utils';
-import { MOD, SEP } from '../../shared/utils/platform';
 import {
   PageShell,
   CodeCard,
@@ -10,31 +9,33 @@ import {
 } from '../../shared/components/layout';
 
 // ─── Column x positions ────────────────────────────────────────────
-const MX = 36  // main  (purple)
-const SX = 90  // école (blue)
-const WX = 144 // travail (green)
+const MX = 36  // main  (trunk)
+const SX = 90  // école
+const WX = 144 // travail
 
-// ─── Colors ────────────────────────────────────────────────────────
-const CM = '#cba6f7'
-const CS = '#89b4fa'
-const CW = '#a6e3a1'
+// ─── Colors — variables de thème, jamais d'hex en dur ──────────────
+const CM = 'var(--syntax-keyword)'
+const CS = 'var(--syntax-property)'
+const CW = 'var(--syntax-string)'
 
 // ─── SVG dimensions ────────────────────────────────────────────────
 const SW = 168
-const SH = 560
+const SH = 590
 
 // ─── Y positions (top = newest, bottom = oldest) ───────────────────
 const Y = {
-  head:     30,   // 2026 — HEAD (en cours)
-  master:   100,  // Master Cloud Computing (école, ongoing)
-  renault:  148,  // Alternance Renault Digital (travail, ongoing)
-  mFork:    200,  // fork sur main → Master + Renault (sept. 2024)
-  lMerge:   238,  // merge sur main ← Licence + Faubourg (août 2024)
-  licence:  318,  // Licence Pro INSSET (école)
-  faubourg: 360,  // Alternance Faubourg Numérique (travail)
-  lFork:    415,  // fork sur main → Licence + Faubourg (sept. 2023)
-  bts:      468,  // BTS SIO option B (école)
-  init:     535,  // Initial commit — sept. 2021
+  head:      30,  // 2026 — HEAD (open to work)
+  mMerge:    78,  // merge sur main ← Master + Renault (août 2026)
+  master:   140,  // Master Cloud Computing & Mobility (école)
+  renault:  188,  // Alternance Renault Digital (travail)
+  mFork:    236,  // fork sur main → Master + Renault (sept. 2024)
+  lMerge:   274,  // merge sur main ← Licence + Faubourg (août 2024)
+  licence:  336,  // Licence Pro INSSET (école)
+  faubourg: 380,  // Stage Faubourg Numérique (travail)
+  lFork:    428,  // fork sur main → Licence + Faubourg (sept. 2023)
+  bts:      470,  // BTS SIO option B (école)
+  chatterie: 514, // Stages Chatterie ×2 (travail)
+  init:     560,  // Initial commit — sept. 2021
 }
 
 // ─── Bezier helper ─────────────────────────────────────────────────
@@ -52,16 +53,22 @@ interface Commit {
   title: string
   sub: string
   period?: string
-  navEvent?: string   // dispatched on Ctrl+clic
+  navEvent?: string   // dispatched au clic
   navLabel?: string   // shown in tooltip
 }
 
 const COMMITS: Commit[] = [
   {
     x: MX, y: Y.head, color: CM, isMain: true,
-    title: 'HEAD — fix/visual',
-    sub: 'Portfolio IDE — en cours',
-    period: '2026',
+    title: 'HEAD — open-to-work',
+    sub: 'disponible · recherche CDI',
+    period: '2026 →',
+  },
+  {
+    x: MX, y: Y.mMerge, color: CM, isMain: true,
+    title: 'Master obtenu · alternance terminée',
+    sub: 'merge: école + alternance',
+    period: 'août 2026',
   },
   {
     x: SX, y: Y.master, color: CS, isMain: false,
@@ -74,15 +81,15 @@ const COMMITS: Commit[] = [
   {
     x: WX, y: Y.renault, color: CW, isMain: false,
     title: 'Alternance Renault Digital',
-    sub: 'Développeur full-stack',
-    period: '2024 →',
+    sub: 'Développeur — données véhicule électrique',
+    period: '2024 – 2026',
     navEvent: 'navigate-to-experience',
     navLabel: 'Experience → Renault',
   },
   {
     x: MX, y: Y.lMerge, color: CM, isMain: true,
     title: 'Licence Pro obtenue',
-    sub: 'merge: école + alternance',
+    sub: 'merge: école + stage',
     period: 'août 2024',
   },
   {
@@ -95,17 +102,11 @@ const COMMITS: Commit[] = [
   },
   {
     x: WX, y: Y.faubourg, color: CW, isMain: false,
-    title: 'Alternance Faubourg Numérique',
-    sub: 'Développeur web',
-    period: '2023 – 2024',
+    title: 'Stage Faubourg Numérique',
+    sub: 'Plateforme IoT — Territoire Connecté Durable',
+    period: 'mai – août 2024',
     navEvent: 'navigate-to-experience',
     navLabel: 'Experience → Faubourg',
-  },
-  {
-    x: MX, y: Y.lFork, color: CM, isMain: true,
-    title: 'BTS SIO obtenu',
-    sub: 'fork: Licence Pro + alternance',
-    period: 'juin 2023',
   },
   {
     x: SX, y: Y.bts, color: CS, isMain: false,
@@ -114,6 +115,14 @@ const COMMITS: Commit[] = [
     period: '2021 – 2023',
     navEvent: 'navigate-to-about',
     navLabel: 'About → Formation',
+  },
+  {
+    x: WX, y: Y.chatterie, color: CW, isMain: false,
+    title: 'Stages Chatterie ×2',
+    sub: 'Site vitrine WordPress',
+    period: '2022 – 2023',
+    navEvent: 'navigate-to-experience',
+    navLabel: 'Experience → Chatterie',
   },
   {
     x: MX, y: Y.init, color: CM, isMain: true,
@@ -125,8 +134,8 @@ const COMMITS: Commit[] = [
 
 // ─── Component ─────────────────────────────────────────────────────
 export function Chronology() {
-  const handleCommitClick = (commit: Commit) => (e: React.MouseEvent) => {
-    if ((e.ctrlKey || e.metaKey) && commit.navEvent) {
+  const handleCommitClick = (commit: Commit) => () => {
+    if (commit.navEvent) {
       window.dispatchEvent(new CustomEvent(commit.navEvent))
     }
   }
@@ -148,9 +157,9 @@ export function Chronology() {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: CW }} />
-              <span className="opacity-60">alternance</span>
+              <span className="opacity-60">travail</span>
             </span>
-            <span className="opacity-30 ml-auto">{MOD}{SEP}clic pour naviguer</span>
+            <span className="opacity-30 ml-auto hidden sm:inline">clic pour naviguer</span>
           </div>
 
           <div className="flex overflow-x-auto">
@@ -165,43 +174,41 @@ export function Chronology() {
               <line x1={MX} y1={Y.head} x2={MX} y2={Y.init}
                 stroke={CM} strokeWidth={2} />
 
-              {/* School dashed — ongoing Master */}
-              <line x1={SX} y1={Y.head} x2={SX} y2={Y.master}
-                stroke={CS} strokeWidth={2} strokeDasharray="3 3" />
-
-              {/* Work dashed — ongoing Renault */}
-              <line x1={WX} y1={Y.head} x2={WX} y2={Y.renault}
-                stroke={CW} strokeWidth={2} strokeDasharray="3 3" />
-
-              {/* Fork main → Master (école) */}
+              {/* Master (école) : fork sept. 2024 → merge août 2026 */}
               <path d={bez(MX, Y.mFork, SX, Y.master)}
                 fill="none" stroke={CS} strokeWidth={2} />
+              <path d={bez(SX, Y.master, MX, Y.mMerge)}
+                fill="none" stroke={CS} strokeWidth={2} />
 
-              {/* Fork main → Renault (travail) */}
+              {/* Renault (travail) : fork sept. 2024 → merge août 2026 */}
               <path d={bez(MX, Y.mFork, WX, Y.renault)}
                 fill="none" stroke={CW} strokeWidth={2} />
+              <path d={bez(WX, Y.renault, MX, Y.mMerge)}
+                fill="none" stroke={CW} strokeWidth={2} />
 
-              {/* Merge Licence école → main */}
+              {/* Licence (école) : fork sept. 2023 → merge août 2024 */}
+              <path d={bez(MX, Y.lFork, SX, Y.licence)}
+                fill="none" stroke={CS} strokeWidth={2} />
               <path d={bez(SX, Y.licence, MX, Y.lMerge)}
                 fill="none" stroke={CS} strokeWidth={2} />
 
-              {/* Merge Faubourg travail → main */}
+              {/* Faubourg (travail) : fork sept. 2023 → merge août 2024 */}
+              <path d={bez(MX, Y.lFork, WX, Y.faubourg)}
+                fill="none" stroke={CW} strokeWidth={2} />
               <path d={bez(WX, Y.faubourg, MX, Y.lMerge)}
                 fill="none" stroke={CW} strokeWidth={2} />
 
-              {/* Fork main → Licence (école) */}
-              <path d={bez(MX, Y.lFork, SX, Y.licence)}
-                fill="none" stroke={CS} strokeWidth={2} />
-
-              {/* Fork main → Faubourg (travail) */}
-              <path d={bez(MX, Y.lFork, WX, Y.faubourg)}
-                fill="none" stroke={CW} strokeWidth={2} />
-
-              {/* BTS arch: fork from init, commit, merge back at lFork */}
+              {/* BTS arch : fork à l'init, merge au lFork */}
               <path d={bez(MX, Y.init, SX, Y.bts)}
                 fill="none" stroke={CS} strokeWidth={2} />
               <path d={bez(SX, Y.bts, MX, Y.lFork)}
                 fill="none" stroke={CS} strokeWidth={2} />
+
+              {/* Chatterie arch : stages pendant le BTS */}
+              <path d={bez(MX, Y.init, WX, Y.chatterie)}
+                fill="none" stroke={CW} strokeWidth={2} />
+              <path d={bez(WX, Y.chatterie, MX, Y.lFork)}
+                fill="none" stroke={CW} strokeWidth={2} />
 
               {/* Commit dots */}
               {COMMITS.map((c, i) => (
@@ -228,10 +235,10 @@ export function Chronology() {
                   )}
                   style={{ left: 16, top: c.y - 17 }}
                   onClick={c.navEvent ? handleCommitClick(c) : undefined}
-                  title={c.navEvent ? `${MOD}${SEP}clic pour naviguer` : undefined}
+                  title={c.navEvent ? 'clic pour naviguer' : undefined}
                 >
                   <div className="text-xs leading-snug">
-                    <span style={{ color: c.color }} className="font-medium">
+                    <span style={{ color: c.color }} className="font-medium group-hover:underline">
                       {c.title}
                     </span>
                     {c.period && (
@@ -245,7 +252,7 @@ export function Chronology() {
                   </div>
                   {c.navEvent && (
                     <div className="text-[9px] text-muted-foreground/25 opacity-0 group-hover:opacity-100 transition-opacity">
-                      {MOD}{SEP}clic → {c.navLabel}
+                      clic → {c.navLabel}
                     </div>
                   )}
                 </div>

@@ -1,6 +1,5 @@
 import { Files, Puzzle } from 'lucide-react';
 import { cn } from './ui/utils';
-import { MOD, SEP } from '../utils/platform';
 import type { PanelId } from '../../app/types';
 
 interface ActivityBarProps {
@@ -9,7 +8,7 @@ interface ActivityBarProps {
 }
 
 const PANELS: { id: PanelId; icon: React.ElementType; label: string }[] = [
-  { id: 'explorer',   icon: Files,  label: `Explorer (${MOD}${SEP}B)` },
+  { id: 'explorer',   icon: Files,  label: 'Explorer' },
   { id: 'extensions', icon: Puzzle, label: 'Extensions' },
 ];
 

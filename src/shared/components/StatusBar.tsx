@@ -12,7 +12,6 @@ import {
   Rocket,
   Snowflake,
   RotateCcw,
-  Keyboard,
   FileCode,
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
@@ -20,7 +19,6 @@ import { useLanguage } from '../../i18n/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { useEditContext } from '../contexts/EditContext';
 import { useRenderer } from '../contexts/RendererContext';
-import { MOD, SHIFT, SEP } from '../utils/platform';
 
 interface StatusBarProps {
   onTerminalToggle: () => void;
@@ -29,13 +27,6 @@ interface StatusBarProps {
   onOpenChronology?: () => void;
   onOpenExtensions?: () => void;
 }
-
-const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
-  { keys: `${MOD}${SEP}B`, label: { fr: "Basculer l'explorateur", en: 'Toggle explorer' } },
-  { keys: `${MOD}${SEP}\``, label: { fr: 'Basculer le terminal', en: 'Toggle terminal' } },
-  { keys: `${MOD}${SEP}${SHIFT}${SEP}W`, label: { fr: "Fermer l'onglet actif", en: 'Close active tab' } },
-  { keys: `${MOD}${SEP}1…6`, label: { fr: 'Aller à l’onglet n', en: 'Go to tab n' } },
-];
 
 function useNow(intervalMs = 60_000) {
   const [now, setNow] = useState(() => new Date());
@@ -58,9 +49,7 @@ export function StatusBar({
   const { hasEdits, resetEdits } = useEditContext();
   const { enabled } = useRenderer();
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
-  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const themeMenuRef = useRef<HTMLDivElement>(null);
-  const shortcutsRef = useRef<HTMLDivElement>(null);
   const now = useNow();
 
   const themes = [
@@ -85,9 +74,6 @@ export function StatusBar({
     const handleClickOutside = (event: MouseEvent) => {
       if (themeMenuRef.current && !themeMenuRef.current.contains(event.target as Node)) {
         setIsThemeMenuOpen(false);
-      }
-      if (shortcutsRef.current && !shortcutsRef.current.contains(event.target as Node)) {
-        setIsShortcutsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -155,32 +141,6 @@ export function StatusBar({
             <span>Reset edits</span>
           </button>
         )}
-        <div ref={shortcutsRef} className="relative">
-          <button
-            onClick={() => setIsShortcutsOpen((v) => !v)}
-            className="hidden md:flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover"
-            title={t('statusBar.shortcutsTitle')}
-            aria-label={t('statusBar.shortcutsTitle')}
-          >
-            <Keyboard className="w-3 h-3" />
-          </button>
-          {isShortcutsOpen && (
-            <div
-              className="absolute right-0 bottom-full mb-1 border border-border rounded shadow-lg overflow-hidden min-w-[240px] z-50 font-mono"
-              style={{ backgroundColor: menuBackground }}
-            >
-              <div className="px-3 py-2 border-b border-border text-[11px] uppercase tracking-wide opacity-70">
-                {t('statusBar.shortcuts')}
-              </div>
-              {SHORTCUTS.map((s) => (
-                <div key={s.keys} className="flex items-center justify-between px-3 py-1.5 text-xs">
-                  <span>{s.label[language]}</span>
-                  <span className="opacity-70 ml-3">{s.keys}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
         <button
           onClick={onTerminalToggle}
           className={`flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover ${

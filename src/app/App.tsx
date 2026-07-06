@@ -10,7 +10,6 @@ import { StatusBar } from '../shared/components/StatusBar';
 import { OutputPanel } from '../features/output-panel';
 import { LanguageSwitcher } from '../shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
-import { useKeyboardShortcuts } from '../shared/hooks/useKeyboardShortcuts';
 import {
   SteampunkGears,
   PixelEffects,
@@ -29,7 +28,6 @@ import { ActivityBar } from '../shared/components/ActivityBar';
 import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
 import { Chronology } from '../features/pages/Chronology';
 import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
-import { MOD, SEP } from '../shared/utils/platform';
 import { Toaster } from 'sonner';
 import type { Page, Tab, PanelId } from './types';
 
@@ -157,25 +155,6 @@ function PortfolioContent() {
     [activeTab]
   );
 
-  const closeActiveTab = useCallback(() => {
-    closeTab(activeTab);
-  }, [activeTab, closeTab]);
-
-  const switchTabByIndex = useCallback(
-    (index: number) => {
-      const target = openTabs[index];
-      if (target) setActiveTab(target.id);
-    },
-    [openTabs]
-  );
-
-  useKeyboardShortcuts({
-    onToggleExplorer: toggleExplorer,
-    onToggleTerminal: () => setIsTerminalVisible((v) => !v),
-    onCloseTab: closeActiveTab,
-    onSwitchTab: switchTabByIndex,
-  });
-
   const renderPage = () => {
     switch (activeTab) {
       case 'home':
@@ -211,7 +190,7 @@ function PortfolioContent() {
             onClick={toggleExplorer}
             className="p-1 hover:bg-accent rounded transition-colors"
             aria-label="Toggle explorer"
-            title={`Toggle explorer (${MOD}${SEP}B)`}
+            title="Toggle explorer"
           >
             {(activePanel !== null || isMobileExplorerVisible) ? (
               <PanelLeftClose className="w-5 h-5" />

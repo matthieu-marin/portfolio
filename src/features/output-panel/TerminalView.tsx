@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import { useLanguage } from '../../i18n/hooks';
 import { useEditContext } from '../../shared/contexts/EditContext';
 import { useRenderer } from '../../shared/contexts/RendererContext';
-import { EXTENSIONS } from '../../shared/components/ExtensionsPanel';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -387,14 +386,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
             text: `  ${enabled ? '✔ enabled ' : '✖ disabled'}  portfolio-renderer  — Matthieu Marin · v2.0.1`,
             className: enabled ? 'text-green-400' : 'text-red-400',
           };
-          return [
-            'Installed extensions:',
-            rendererLine,
-            ...EXTENSIONS.map((ext) => ({
-              text: `  ✔ enabled  ${ext.id}  — ${ext.name} · ${ext.publisher} · v${ext.version}`,
-              className: 'text-green-400',
-            })),
-          ];
+          return ['Installed extensions:', rendererLine];
         }
 
         if (sub === 'disable' || sub === 'enable') {
@@ -408,11 +400,6 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
             }
             setEnabled(true);
             return [{ text: "Extension 'portfolio-renderer' enabled. Back to human-readable.", className: 'text-green-400' }];
-          }
-
-          const core = EXTENSIONS.find((ext) => ext.id === id);
-          if (core) {
-            return [{ text: 'Cannot disable built-in extension.', className: 'text-red-400' }];
           }
 
           return [{ text: `Extension not found: ${id}`, className: 'text-red-400' }];

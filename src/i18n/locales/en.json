@@ -106,10 +106,6 @@
       "failed": "Sending failed"
     }
   },
-  "statusBar": {
-    "shortcuts": "Shortcuts",
-    "shortcutsTitle": "Keyboard shortcuts"
-  },
   "experience": {
     "title": "Professional Experience",
     "current": "Current"
