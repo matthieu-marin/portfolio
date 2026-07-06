@@ -9,7 +9,7 @@ import type { ProjectEntry } from './types';
 export const projects: ProjectEntry[] = [
   {
     id: 'portfolio',
-    title: 'PortfolioIDE',
+    title: 'Portfolio IDE',
     description: {
       fr: 'Portfolio interactif inspiré de VS Code avec terminal intégré et thèmes personnalisés',
       en: 'Interactive portfolio inspired by VS Code with integrated terminal and custom themes',
@@ -38,7 +38,7 @@ export const projects: ProjectEntry[] = [
   },
   {
     id: 'iot-territoire',
-    title: 'TerritoireConnecteDurable',
+    title: 'Territoire Connecté Durable',
     description: {
       fr: 'Plateforme web IoT pour la gestion de données capteurs, développée chez Faubourg Numérique en collaboration avec La Somme Numérique',
       en: 'IoT web platform for sensor data management, developed at Faubourg Numérique in collaboration with La Somme Numérique',
@@ -67,7 +67,7 @@ export const projects: ProjectEntry[] = [
   },
   {
     id: 'chatterie-vitrine',
-    title: 'ChatterieTerreBrascoSite',
+    title: 'Site vitrine — Chatterie de la Terre de Brasco',
     description: {
       fr: "Site vitrine de l'association Chatterie de la Terre de Brasco, démarré en 2022 et finalisé lors du second stage en 2023",
       en: 'Showcase website for the Chatterie de la Terre de Brasco association, started in 2022 and finalized during the second internship in 2023',
