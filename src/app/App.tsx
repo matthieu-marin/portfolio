@@ -279,6 +279,7 @@ function PortfolioContent() {
         isTerminalVisible={isTerminalVisible}
         openTabsCount={openTabs.length}
         onOpenChronology={() => openFile('chronology')}
+        onOpenExtensions={() => setActivePanel('extensions')}
       />
 
       <Toaster

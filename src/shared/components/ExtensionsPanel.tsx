@@ -11,7 +11,7 @@ interface Extension {
   core: boolean;
 }
 
-const EXTENSIONS: Extension[] = [
+export const EXTENSIONS: Extension[] = [
   { id: 'react',      name: 'React',        publisher: 'Meta',         version: '18.3.1',  icon: '⚛',  core: true },
   { id: 'vite',       name: 'Vite',         publisher: 'vitejs',       version: '6.3.5',   icon: '⚡', core: true },
   { id: 'tailwind',   name: 'Tailwind CSS', publisher: 'tailwindlabs', version: '4.0',     icon: '🎨', core: true },

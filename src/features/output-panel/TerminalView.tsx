@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { useLanguage } from '../../i18n/hooks';
 import { useEditContext } from '../../shared/contexts/EditContext';
+import { useRenderer } from '../../shared/contexts/RendererContext';
+import { EXTENSIONS } from '../../shared/components/ExtensionsPanel';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -291,6 +293,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
   const [pendingSudo, setPendingSudo] = useState<string | null>(null);
   const [sudoAttempts, setSudoAttempts] = useState(0);
   const { resetEdits } = useEditContext();
+  const { enabled, setEnabled } = useRenderer();
 
   const inputRef     = useRef<HTMLInputElement>(null);
   const cmdHistory   = useRef<string[]>([]);
@@ -333,6 +336,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
           `  whoami      — ${t('terminal.helpWhoami')}`,
           `  clear       — ${t('terminal.helpClear')}`,
           `  reset-edits — ${t('terminal.helpResetEdits')}`,
+          `  extensions  — manage editor extensions`,
           '',
           t('terminal.helpExtra'),
         ];
@@ -371,6 +375,51 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
       case 'reset-edits':
         setTimeout(() => resetEdits(), 0);
         return [{ text: 'All edits reset.', className: 'text-green-400' }];
+
+      case 'extensions': {
+        const sub = args[0];
+        if (!sub || sub === '--help') {
+          return ['usage: extensions <list|disable|enable> [extension-id]'];
+        }
+
+        if (sub === 'list') {
+          const rendererLine = {
+            text: `  ${enabled ? '✔ enabled ' : '✖ disabled'}  portfolio-renderer  — Matthieu Marin · v2.0.1`,
+            className: enabled ? 'text-green-400' : 'text-red-400',
+          };
+          return [
+            'Installed extensions:',
+            rendererLine,
+            ...EXTENSIONS.map((ext) => ({
+              text: `  ✔ enabled  ${ext.id}  — ${ext.name} · ${ext.publisher} · v${ext.version}`,
+              className: 'text-green-400',
+            })),
+          ];
+        }
+
+        if (sub === 'disable' || sub === 'enable') {
+          const id = args[1];
+          if (!id) return ['usage: extensions <list|disable|enable> [extension-id]'];
+
+          if (id === 'portfolio-renderer') {
+            if (sub === 'disable') {
+              setEnabled(false);
+              return [{ text: "Extension 'portfolio-renderer' disabled. Reality unfiltered.", className: 'text-yellow-300' }];
+            }
+            setEnabled(true);
+            return [{ text: "Extension 'portfolio-renderer' enabled. Back to human-readable.", className: 'text-green-400' }];
+          }
+
+          const core = EXTENSIONS.find((ext) => ext.id === id);
+          if (core) {
+            return [{ text: 'Cannot disable built-in extension.', className: 'text-red-400' }];
+          }
+
+          return [{ text: `Extension not found: ${id}`, className: 'text-red-400' }];
+        }
+
+        return ['usage: extensions <list|disable|enable> [extension-id]'];
+      }
 
       // ── Navigation ───────────────────────────────────────────────────────
       case 'pwd':

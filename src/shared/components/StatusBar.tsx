@@ -19,6 +19,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../../i18n/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { useEditContext } from '../contexts/EditContext';
+import { useRenderer } from '../contexts/RendererContext';
 import { MOD, SHIFT, SEP } from '../utils/platform';
 
 interface StatusBarProps {
@@ -26,6 +27,7 @@ interface StatusBarProps {
   isTerminalVisible: boolean;
   openTabsCount?: number;
   onOpenChronology?: () => void;
+  onOpenExtensions?: () => void;
 }
 
 const SHORTCUTS: Array<{ keys: string; label: { fr: string; en: string } }> = [
@@ -49,10 +51,12 @@ export function StatusBar({
   isTerminalVisible,
   openTabsCount = 0,
   onOpenChronology,
+  onOpenExtensions,
 }: StatusBarProps) {
   const { theme, setTheme } = useTheme();
   const { t, language } = useLanguage();
   const { hasEdits, resetEdits } = useEditContext();
+  const { enabled } = useRenderer();
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const themeMenuRef = useRef<HTMLDivElement>(null);
@@ -110,6 +114,14 @@ export function StatusBar({
         >
           <GitBranch className="w-3 h-3" />
           <span>main</span>
+        </button>
+        <button
+          onClick={onOpenExtensions}
+          title="Portfolio Renderer extension"
+          className="flex items-center gap-1 px-1 py-0.5 rounded hover:bg-hover transition-colors"
+        >
+          <Zap className="w-3 h-3" />
+          <span className="hidden md:inline">Renderer: {enabled ? 'ON' : 'OFF'}</span>
         </button>
         <div className="hidden md:flex items-center gap-1">
           <AlertCircle className="w-3 h-3" />
