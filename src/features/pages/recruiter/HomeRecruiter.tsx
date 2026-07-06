@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Code2, Rocket, Linkedin, Mail, Download } from 'lucide-react';
 import { useLanguage } from '../../../i18n/hooks';
 import { useEdited, useEditContext } from '../../../shared/contexts/EditContext';
+import { fireConfetti } from '../../../shared/effects/confetti';
 import { profile } from '../data';
 import { RecruiterShell, Section, Chip, StatCounter } from './primitives';
 
@@ -126,6 +127,7 @@ export function HomeRecruiter() {
         <a
           href={profile.cvPath}
           download
+          onClick={() => fireConfetti()}
           aria-label={t('recruiter.home.downloadCv')}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-background font-medium text-sm md:text-base hover:opacity-90 transition-opacity"
         >
