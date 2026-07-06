@@ -10,7 +10,7 @@ import type { CodeFileModel, CodeLine } from './tokens';
 
 // Badge décor pour shields.io — valeur fixe (pas de données CV), un slug
 // dérivé du role accentué casserait l'URL du badge (ex: "développeur_en").
-const STATUS_BADGE_SLUG = 'en_alternance';
+const STATUS_BADGE_SLUG = 'open_to_work';
 
 function badgeLine(label: string, value: string, color: string): CodeLine {
   const url = `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(value)}-${color}`;

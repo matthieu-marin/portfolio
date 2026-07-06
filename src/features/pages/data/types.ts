@@ -4,6 +4,7 @@ export type ProfileStat = { label: Localized; value: number; suffix?: string };
 
 export type Profile = {
   name: string;
+  openToWork: boolean; // badge « Open to work » sur le hero recruteur
   role: Localized;
   bio: Localized;
   email: string;
@@ -15,6 +16,11 @@ export type Profile = {
   principles: Localized[];
 };
 
+export type ExperienceSubProject = {
+  title: string;
+  description: Localized;
+};
+
 export type ExperienceEntry = {
   id: string;
   company: string;
@@ -23,7 +29,11 @@ export type ExperienceEntry = {
   location: string;
   kind: 'apprenticeship' | 'internship';
   highlights: Localized[];
+  // Projets menés pendant l'expérience — affichés dans la carte, pas sur la page Projects.
+  subProjects?: ExperienceSubProject[];
   technologies: string[]; // skillIds quand ils existent
+  // Compétences non techniques (méthode, humain) — groupe « Autres compétences ».
+  otherSkills?: Localized[];
 };
 
 export type ProjectImage = { label: string; path: string };
@@ -40,14 +50,11 @@ export type ProjectEntry = {
   demo?: string;
 };
 
-export type SkillLevel = 'beginner' | 'intermediate' | 'advanced';
-
 export type SkillEntry = {
   id: string;
   name: string;
-  level: SkillLevel;
   description: Localized;
-  acquiredAt: string[]; // ids d'expériences ou de projets
+  acquiredAt: string[]; // ids d'expériences ou de projets — le badge affiche leur nombre
 };
 
 export type SkillCategory = { id: string; name: Localized; skills: SkillEntry[] };

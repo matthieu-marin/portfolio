@@ -13,7 +13,7 @@ function extractYear(periodEn: string): string {
   return match ? match[0] : '';
 }
 
-// "renault" -> "RENAULT", "chatterie2" -> "CHATTERIE_2"
+// "renault" -> "RENAULT" (et "abc2" -> "ABC_2" si un id se termine par un chiffre)
 function constName(id: string): string {
   return id.replace(/([a-z])(\d+)$/i, '$1_$2').toUpperCase();
 }

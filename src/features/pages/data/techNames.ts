@@ -21,15 +21,25 @@ export const SKILL_ID_BY_NAME: Record<string, string> = Object.fromEntries(
 // sur la page Skills (pas de skillId, donc pas de navigation au clic) —
 // display-only, par id d'expérience.
 export const EXTRA_TECH_NAMES: Record<string, string[]> = {
-  renault: ['GoogleCloud', 'Docker', 'GitLab', 'Dynatrace'],
+  renault: ['Pub/Sub', 'GitLab', 'Dynatrace', 'Bruno'],
   faubourg: ['IoT', 'Grafana'],
 };
 
 // Ordre d'affichage des pills technos par expérience (noms canoniques).
 // Garantit l'ordre d'origine quand on fusionne skills cliquables + extras.
 export const TECH_DISPLAY_ORDER: Record<string, string[]> = {
-  renault: ['Java', 'Spring Boot', 'GoogleCloud', 'Docker', 'GitLab', 'Dynatrace', 'Agile/SCRUM'],
-  faubourg: ['Node.js', 'Vue.js', 'IoT', 'Grafana'],
-  chatterie2: ['PHP', 'WordPress'],
-  chatterie1: ['PHP', 'WordPress'],
+  renault: [
+    'Java',
+    'Spring Boot',
+    'Google Cloud',
+    'Pub/Sub',
+    'Kubernetes',
+    'Docker',
+    'GitLab',
+    'Dynatrace',
+    'Bruno',
+    'SQL',
+  ],
+  faubourg: ['Node.js', 'Vue.js', 'MongoDB', 'IoT', 'Grafana'],
+  chatterie: ['PHP', 'WordPress'],
 };

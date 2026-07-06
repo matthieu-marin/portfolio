@@ -43,11 +43,8 @@
     "skills": {
       "title": "Compétences",
       "acquiredAt": "Appris chez :",
-      "level": {
-        "beginner": "Débutant",
-        "intermediate": "Intermédiaire",
-        "advanced": "Avancé"
-      }
+      "experienceCount_one": "{{count}} expérience",
+      "experienceCount_other": "{{count}} expériences"
     },
     "about": {
       "title": "À propos de moi",
@@ -70,7 +67,7 @@
   },
   "about": {
     "title": "À propos de moi",
-    "description": "Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/WordPress associatifs.",
+    "description": "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/WordPress associatifs.",
     "experience": "Expérience",
     "education": "Formation"
   },
@@ -96,7 +93,7 @@
     "email": "Email",
     "message": "Message",
     "send": "Envoyer",
-    "availability": "Disponible à partir de fin août 2026",
+    "availability": "Disponible immédiatement — à la recherche d'un CDI",
     "placeholder": {
       "name": "Votre nom",
       "email": "votre@email.com",

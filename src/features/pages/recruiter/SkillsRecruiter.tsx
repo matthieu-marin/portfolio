@@ -1,4 +1,4 @@
-import { Server, Code2, Database, Wrench, GraduationCap } from 'lucide-react';
+import { Server, Code2, Cloud, Database, Wrench, GraduationCap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useLanguage } from '../../../i18n/hooks';
@@ -7,7 +7,6 @@ import { useNavigation } from '../../../shared/contexts/NavigationContext';
 import { TechIcon } from '../../../shared/components/TechIcon';
 import { cn } from '../../../shared/components/ui/utils';
 import { skillCategories, experiences, projects } from '../data';
-import type { SkillLevel } from '../data/types';
 import { RecruiterShell, Section, Chip } from './primitives';
 
 // UI-only per-category icon — the data layer (data/skills.ts) holds only
@@ -15,23 +14,17 @@ import { RecruiterShell, Section, Chip } from './primitives';
 const CATEGORY_ICON: Record<string, LucideIcon> = {
   backend: Server,
   frontend: Code2,
+  cloud: Cloud,
   database: Database,
   tools: Wrench,
 };
 
-const LEVEL_DOT: Record<SkillLevel, string> = {
-  advanced: 'bg-green-400',
-  intermediate: 'bg-amber-400',
-  beginner: 'bg-blue-400',
-};
-
-// displayName overrides for acquiredAt ids that are NOT experiences — those
-// have no entry in the data layer to derive a name from. Experience labels
-// are derived below from `experiences[].company` (data/experiences.ts) so
-// that adding an experience only requires touching that one file.
+// displayName overrides for acquiredAt ids that are NOT experiences/projects —
+// those have no entry in the data layer to derive a name from. Experience and
+// project labels are derived below from `experiences[].company` and
+// `projects[].title` so adding one only requires touching its data file.
 const DISPLAY_NAMES: Record<string, string> = {
   studies: 'BTS SIO / Master UPJV',
-  portfolio: 'Portfolio IDE',
 };
 
 const DISPLAY_NAMES_STUDIES_SQL = 'BTS SIO / Licence Pro';
@@ -54,8 +47,9 @@ function resolveAcquiredFrom(id: string, skillId: string): AcquiredFrom {
   if (experience) {
     return { type: 'experience', id, displayName: experience.company };
   }
-  if (projects.some((p) => p.id === id)) {
-    return { type: 'project', id, displayName: DISPLAY_NAMES[id] ?? id };
+  const project = projects.find((p) => p.id === id);
+  if (project) {
+    return { type: 'project', id, displayName: project.title };
   }
   // Fallback — should not happen if acquiredAt ids stay in sync with data.
   return { type: 'other', id, displayName: DISPLAY_NAMES[id] ?? id };
@@ -81,8 +75,7 @@ function SkillRow({ categoryId, skillId, index }: { categoryId: string; skillId:
         <TechIcon name={skill.name} fallback={GraduationCap} className="w-4 h-4 flex-shrink-0" />
         <span className="font-medium text-foreground">{skill.name}</span>
         <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs">
-          <span className={cn('w-1.5 h-1.5 rounded-full', LEVEL_DOT[skill.level])} />
-          {t(`recruiter.skills.level.${skill.level}`)}
+          {t('recruiter.skills.experienceCount', { count: skill.acquiredAt.length })}
         </span>
       </div>
       <p className="text-foreground/70 text-sm mt-1.5">{description}</p>

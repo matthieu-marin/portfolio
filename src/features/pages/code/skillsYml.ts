@@ -14,13 +14,10 @@ function flowListTokens(values: string[]) {
   return [pn('['), ...inner, pn(']')];
 }
 
-// Lignes YAML pour un skill : name / level / acquired_at + commentaire description.
+// Lignes YAML pour un skill : name / acquired_at + commentaire description.
 function skillEntryLines(skill: (typeof skillCategories)[number]['skills'][number], language: 'fr' | 'en'): CodeLine[] {
   return [
     ln(2, pn('- '), prop('name'), pn(':'), p(' '), str(skill.id)),
-    // level n'est PAS éditable ici : c'est un union type consommé ailleurs
-    // (badge recruteur) — l'éditer librement casserait ce lookup.
-    ln(3, prop('level'), pn(':'), p(' '), str(skill.level), p('          '), cmt('# éditable côté recruteur, figé ici')),
     ln(3, prop('acquired_at'), pn(':'), p(' '), ...flowListTokens(skill.acquiredAt)),
     ln(
       3,

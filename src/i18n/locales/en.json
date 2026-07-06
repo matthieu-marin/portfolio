@@ -43,11 +43,8 @@
     "skills": {
       "title": "Skills",
       "acquiredAt": "Learned at:",
-      "level": {
-        "beginner": "Beginner",
-        "intermediate": "Intermediate",
-        "advanced": "Advanced"
-      }
+      "experienceCount_one": "{{count}} experience",
+      "experienceCount_other": "{{count}} experiences"
     },
     "about": {
       "title": "About Me",
@@ -70,7 +67,7 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Master Cloud Computing & Mobility student (UPJV / INSSET) and apprentice at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/WordPress internships.",
+    "description": "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/WordPress internships.",
     "experience": "Experience",
     "education": "Education"
   },
@@ -92,7 +89,7 @@
     "email": "Email",
     "message": "Message",
     "send": "Send",
-    "availability": "Available from late August 2026",
+    "availability": "Available now — looking for a permanent position",
     "placeholder": {
       "name": "Your name",
       "email": "your@email.com",

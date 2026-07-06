@@ -6,39 +6,44 @@ import type { Profile } from './types';
 
 export const profile: Profile = {
   name: 'Matthieu Marin',
+  openToWork: true,
   role: {
-    fr: 'Développeur en alternance — Master Cloud Computing & Mobility',
-    en: 'Apprentice developer — Master Cloud Computing & Mobility',
+    fr: 'Développeur Full-Stack — Cloud & DevOps',
+    en: 'Full-Stack Developer — Cloud & DevOps',
   },
   bio: {
-    fr: "Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital, je m'appuie sur quatre expériences en développement web pour construire des applications robustes et bien testées. Mes terrains de jeu : Java/Spring Boot côté backend, JavaScript/React côté frontend, et les outils cloud (Google Cloud, Docker) en infrastructure.",
-    en: 'Master Cloud Computing & Mobility student at UPJV / INSSET and apprentice at Renault Digital, drawing on four web-development experiences to build robust, well-tested applications. Comfort zone: Java/Spring Boot on the back end, JavaScript/React on the front end, and cloud tooling (Google Cloud, Docker) for infrastructure.',
+    fr: "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital sur les données du véhicule électrique, je construis des services backend robustes et l'infrastructure cloud qui les fait tourner. Mes terrains de jeu : Java/Spring Boot et TypeScript côté code ; Google Cloud, Docker et Terraform côté infrastructure. À la recherche d'un CDI.",
+    en: "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital on electric-vehicle data, I build robust backend services and the cloud infrastructure they run on. Comfort zone: Java/Spring Boot and TypeScript for code; Google Cloud, Docker and Terraform for infrastructure. Looking for a permanent position.",
   },
   email: 'matthieumarin51@gmail.com',
   linkedin: 'https://www.linkedin.com/in/matthieu-marin-b46865267/',
   cvPath: '/cv-matthieu-marin.pdf',
   avatarImage: '/images/profile/avatar.jpg',
   stats: [
-    { label: { fr: "Années d'expérience pro", en: 'Years of pro experience' }, value: 1, suffix: '+' },
+    { label: { fr: "Années d'expérience pro", en: 'Years of pro experience' }, value: 2, suffix: '+' },
     { label: { fr: 'Expériences en entreprise', en: 'Professional experiences' }, value: 4 },
-    { label: { fr: 'Technologies pratiquées', en: 'Technologies used' }, value: 10, suffix: '+' },
+    { label: { fr: 'Technologies pratiquées', en: 'Technologies used' }, value: 15, suffix: '+' },
   ],
   expertise: [
     {
-      fr: 'Développement web full-stack (JavaScript, Java)',
-      en: 'Full-stack web development (JavaScript, Java)',
+      fr: 'Développement backend (Java/Spring Boot, TypeScript/Node.js)',
+      en: 'Backend development (Java/Spring Boot, TypeScript/Node.js)',
     },
     {
-      fr: 'Frameworks modernes : React, Spring Boot',
-      en: 'Modern frameworks: React, Spring Boot',
+      fr: 'Cloud & DevOps : Google Cloud, Docker, Kubernetes, Terraform, CI/CD',
+      en: 'Cloud & DevOps: Google Cloud, Docker, Kubernetes, Terraform, CI/CD',
     },
     {
-      fr: 'Cloud Computing & applications mobiles',
-      en: 'Cloud Computing & mobile applications',
+      fr: 'Architectures microservices et événementielles (Pub/Sub)',
+      en: 'Microservices and event-driven architectures (Pub/Sub)',
     },
     {
-      fr: 'Bases de données relationnelles (MySQL, PostgreSQL) et non relationnelles (MongoDB)',
-      en: 'Relational databases (MySQL, PostgreSQL) and non-relational (MongoDB)',
+      fr: 'Frontend moderne : React, Vue.js',
+      en: 'Modern frontend: React, Vue.js',
+    },
+    {
+      fr: 'Bases de données relationnelles (PostgreSQL) et NoSQL (Firestore, MongoDB)',
+      en: 'Relational databases (PostgreSQL) and NoSQL (Firestore, MongoDB)',
     },
     {
       fr: 'Méthode agile (SCRUM) et gestion de projet',
