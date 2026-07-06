@@ -39,6 +39,22 @@
         "apprenticeship": "Alternance",
         "internship": "Stage"
       }
+    },
+    "skills": {
+      "title": "Compétences",
+      "acquiredAt": "Appris chez :",
+      "level": {
+        "beginner": "Débutant",
+        "intermediate": "Intermédiaire",
+        "advanced": "Avancé"
+      }
+    },
+    "about": {
+      "title": "À propos de moi",
+      "locationTitle": "Localisation",
+      "educationTitle": "Formations",
+      "interestsTitle": "Centres d'intérêt",
+      "softSkillsTitle": "Soft skills"
     }
   },
   "about": {

@@ -39,6 +39,22 @@
         "apprenticeship": "Apprenticeship",
         "internship": "Internship"
       }
+    },
+    "skills": {
+      "title": "Skills",
+      "acquiredAt": "Learned at:",
+      "level": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced"
+      }
+    },
+    "about": {
+      "title": "About Me",
+      "locationTitle": "Location",
+      "educationTitle": "Education",
+      "interestsTitle": "Interests",
+      "softSkillsTitle": "Soft skills"
     }
   },
   "about": {
