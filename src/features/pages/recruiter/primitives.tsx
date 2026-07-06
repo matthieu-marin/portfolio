@@ -33,7 +33,7 @@ export function Section({ icon: Icon, title, children, index = 0, className }: S
     <motion.section
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.12, duration: 0.3, ease: 'easeOut' }}
+      transition={{ delay: Math.min(index * 0.12, 0.3), duration: 0.3, ease: 'easeOut' }}
       whileHover={{ y: -2 }}
       className={cn(
         'bg-editor/50 border border-border rounded-xl p-5 md:p-7',

@@ -104,27 +104,6 @@
       "failed": "Sending failed"
     }
   },
-  "commandPalette": {
-    "title": "Command Palette",
-    "description": "Type a command, switch theme, open a page…",
-    "placeholder": "Type a command…",
-    "noResults": "No results found.",
-    "group": {
-      "goTo": "Go to",
-      "theme": "Theme",
-      "language": "Language",
-      "view": "View",
-      "actions": "Actions"
-    },
-    "active": "active",
-    "toggleExplorer": "Toggle Explorer",
-    "toggleTerminal": "Toggle Terminal",
-    "downloadCV": "Download CV",
-    "openLinkedin": "Open LinkedIn",
-    "copyEmail": "Copy email",
-    "emailCopied": "Email copied",
-    "copyFailed": "Copy failed"
-  },
   "statusBar": {
     "shortcuts": "Shortcuts",
     "shortcutsTitle": "Keyboard shortcuts"
@@ -159,6 +138,7 @@
     "unknownCommandHelp": "Type 'help' to see available commands",
     "helpExtra": "Standard commands also work. Try ls, cd, cat, git, npm…",
     "helpResetEdits": "Reset all local content edits",
+    "helpExtensions": "Manage editor extensions",
     "contactEmail": "Email",
     "contactGithub": "GitHub",
     "contactLinkedin": "LinkedIn",
@@ -170,11 +150,6 @@
     "sudoHint": "(hint: it's \"password\")",
     "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
     "sudoSuccess2": "Oh wait — we're in a fake terminal."
-  },
-  "skill": {
-    "keyFeatures": "Key Features",
-    "relatedProjects": "Related projects",
-    "endDoc": "End of documentation"
   },
   "status": {
     "terminal": "Terminal",

@@ -23,8 +23,7 @@ export function RendererProvider({ children }: { children: ReactNode }) {
     }
   });
 
-  const setEnabled = useCallback((v: boolean) => {
-    setEnabledState(v);
+  const persist = useCallback((v: boolean) => {
     try {
       localStorage.setItem(STORAGE_KEY, String(v));
     } catch {
@@ -32,7 +31,21 @@ export function RendererProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const toggle = useCallback(() => setEnabled(!enabled), [enabled, setEnabled]);
+  const setEnabled = useCallback(
+    (v: boolean) => {
+      setEnabledState(v);
+      persist(v);
+    },
+    [persist]
+  );
+
+  const toggle = useCallback(() => {
+    setEnabledState((v) => {
+      const next = !v;
+      persist(next);
+      return next;
+    });
+  }, [persist]);
 
   const value = useMemo(() => ({ enabled, setEnabled, toggle }), [enabled, setEnabled, toggle]);
   return <RendererContext.Provider value={value}>{children}</RendererContext.Provider>;

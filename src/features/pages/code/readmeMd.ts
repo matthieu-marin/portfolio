@@ -8,15 +8,9 @@ import { profile, about } from '../data';
 import { ln, blank, p, kw, str, ed, pn } from './tokens';
 import type { CodeFileModel, CodeLine } from './tokens';
 
-// "en_alternance" — dérivé du role FR, en snake_case, pour le badge shields.io.
-function statusSlug(role: string): string {
-  return role
-    .toLowerCase()
-    .split(/\s|—|,/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('_');
-}
+// Badge décor pour shields.io — valeur fixe (pas de données CV), un slug
+// dérivé du role accentué casserait l'URL du badge (ex: "développeur_en").
+const STATUS_BADGE_SLUG = 'en_alternance';
 
 function badgeLine(label: string, value: string, color: string): CodeLine {
   const url = `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(value)}-${color}`;
@@ -55,13 +49,12 @@ function editableInterestLines(language: 'fr' | 'en'): CodeLine[] {
 
 export function buildReadmeMd(language: 'fr' | 'en'): CodeFileModel {
   const role = profile.role[language];
-  const slug = statusSlug(profile.role.fr);
 
   return {
     lines: [
       ln(0, kw(`# ${profile.name}`)),
       blank(),
-      badgeLine('statut', slug, 'success'),
+      badgeLine('statut', STATUS_BADGE_SLUG, 'success'),
       badgeLine('cloud', 'GCP', 'blue'),
       badgeLine('licence', 'MIT', 'lightgrey'),
       blank(),

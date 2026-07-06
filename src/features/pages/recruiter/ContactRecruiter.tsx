@@ -70,7 +70,7 @@ export function ContactRecruiter() {
             {contact.email}
           </a>
           <a
-            href="tel:+33783334750"
+            href={contact.phoneHref}
             className="flex items-center gap-2.5 hover:text-accent transition-colors"
           >
             <Phone className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />

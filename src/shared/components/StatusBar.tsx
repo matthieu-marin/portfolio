@@ -122,6 +122,7 @@ export function StatusBar({
         <button
           onClick={onOpenExtensions}
           title="Portfolio Renderer extension"
+          aria-label="Portfolio Renderer extension"
           className="flex items-center gap-1 px-1 py-0.5 rounded hover:bg-hover transition-colors"
         >
           <Zap className="w-3 h-3" />

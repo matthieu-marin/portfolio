@@ -85,27 +85,6 @@
     "backend": "Backend",
     "tools": "Outils"
   },
-  "commandPalette": {
-    "title": "Palette de commandes",
-    "description": "Tape une commande, change de thème, ouvre une page…",
-    "placeholder": "Tape une commande…",
-    "noResults": "Aucun résultat.",
-    "group": {
-      "goTo": "Aller à",
-      "theme": "Thème",
-      "language": "Langue",
-      "view": "Affichage",
-      "actions": "Actions"
-    },
-    "active": "actif",
-    "toggleExplorer": "Basculer l'explorateur",
-    "toggleTerminal": "Basculer le terminal",
-    "downloadCV": "Télécharger le CV",
-    "openLinkedin": "Ouvrir LinkedIn",
-    "copyEmail": "Copier l'email",
-    "emailCopied": "Email copié",
-    "copyFailed": "Échec de la copie"
-  },
   "statusBar": {
     "shortcuts": "Raccourcis",
     "shortcutsTitle": "Raccourcis clavier"
@@ -159,6 +138,7 @@
     "unknownCommandHelp": "Tapez 'help' pour voir les commandes disponibles",
     "helpExtra": "Les commandes standard fonctionnent aussi. Essayez ls, cd, cat, git, npm…",
     "helpResetEdits": "Réinitialise les modifications locales",
+    "helpExtensions": "Gère les extensions de l'éditeur",
     "contactEmail": "Email",
     "contactGithub": "GitHub",
     "contactLinkedin": "LinkedIn",
@@ -170,11 +150,6 @@
     "sudoHint": "(indice : c'est \"password\")",
     "sudoSuccess1": "Mot de passe accepté... pas très sécurisé mais le mot de passe est bon.",
     "sudoSuccess2": "Ah mais attendez — on est dans un faux terminal."
-  },
-  "skill": {
-    "keyFeatures": "Fonctionnalités clés",
-    "relatedProjects": "Projets concernés",
-    "endDoc": "Fin de la documentation"
   },
   "status": {
     "terminal": "Terminal",

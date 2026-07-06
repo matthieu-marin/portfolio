@@ -7,6 +7,7 @@ import type { ContactData } from './types';
 export const contact: ContactData = {
   email: 'matthieumarin51@gmail.com',
   phone: '07.83.33.47.50',
+  phoneHref: 'tel:+33783334750',
   location: {
     fr: 'Saint-Quentin, Hauts-de-France, France',
     en: 'Saint-Quentin, Hauts-de-France, France',

@@ -336,7 +336,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
           `  whoami      — ${t('terminal.helpWhoami')}`,
           `  clear       — ${t('terminal.helpClear')}`,
           `  reset-edits — ${t('terminal.helpResetEdits')}`,
-          `  extensions  — manage editor extensions`,
+          `  extensions  — ${t('terminal.helpExtensions')}`,
           '',
           t('terminal.helpExtra'),
         ];

@@ -70,6 +70,7 @@ export type AboutData = {
 export type ContactData = {
   email: string;
   phone: string;
+  phoneHref: string;
   location: Localized;
   socials: Array<{ label: string; url: string }>;
 };

@@ -121,7 +121,7 @@ export function HomeRecruiter() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.48, duration: 0.3, ease: 'easeOut' }}
+        transition={{ delay: 0.3, duration: 0.3, ease: 'easeOut' }}
         className="flex flex-wrap gap-3 justify-center sm:justify-start"
       >
         <a

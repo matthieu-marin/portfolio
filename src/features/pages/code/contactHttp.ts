@@ -7,7 +7,9 @@
 import { ln, blank, p, kw, str, cmt, prop, ed, pn } from './tokens';
 import type { CodeFileModel } from './tokens';
 
-const PLACEHOLDERS: Record<'fr' | 'en', { email: string; name: string; message: string }> = {
+// Shared with Contact.tsx: used both as the code-view display placeholder
+// and as the fallback when a recruiter/visitor hasn't edited a field yet.
+export const CONTACT_PLACEHOLDERS: Record<'fr' | 'en', { email: string; name: string; message: string }> = {
   fr: {
     email: 'votre.email@exemple.com',
     name: 'Votre nom',
@@ -21,7 +23,7 @@ const PLACEHOLDERS: Record<'fr' | 'en', { email: string; name: string; message: 
 };
 
 export function buildContactHttp(language: 'fr' | 'en'): CodeFileModel {
-  const placeholder = PLACEHOLDERS[language];
+  const placeholder = CONTACT_PLACEHOLDERS[language];
 
   return {
     lines: [

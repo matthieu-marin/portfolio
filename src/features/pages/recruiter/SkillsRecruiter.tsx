@@ -25,15 +25,11 @@ const LEVEL_DOT: Record<SkillLevel, string> = {
   beginner: 'bg-blue-400',
 };
 
-// displayName overrides — the source's raw `name`/`company` (id-like, e.g.
-// "faubourg") differs from the human-friendly label shown as a Chip.
-// 'studies' is not an experience nor a project — it refers to education
-// (about.ts) and has no entry of its own in the data layer.
+// displayName overrides for acquiredAt ids that are NOT experiences — those
+// have no entry in the data layer to derive a name from. Experience labels
+// are derived below from `experiences[].company` (data/experiences.ts) so
+// that adding an experience only requires touching that one file.
 const DISPLAY_NAMES: Record<string, string> = {
-  renault: 'Renault Digital',
-  faubourg: 'Faubourg Numérique',
-  chatterie2: 'Chatterie de la Terre de Brasco',
-  chatterie1: 'Chatterie de la Terre de Brasco',
   studies: 'BTS SIO / Master UPJV',
   portfolio: 'Portfolio IDE',
 };
@@ -50,20 +46,19 @@ type AcquiredFrom = {
 // display label + whether it's clickable. Mirrors the resolution used
 // previously in Skills.tsx (source pills) — same fallbacks, same ids.
 function resolveAcquiredFrom(id: string, skillId: string): AcquiredFrom {
-  const displayName =
-    id === 'studies' && skillId === 'sql' ? DISPLAY_NAMES_STUDIES_SQL : (DISPLAY_NAMES[id] ?? id);
-
   if (id === 'studies') {
+    const displayName = skillId === 'sql' ? DISPLAY_NAMES_STUDIES_SQL : (DISPLAY_NAMES[id] ?? id);
     return { type: 'other', id, displayName };
   }
-  if (experiences.some((e) => e.id === id)) {
-    return { type: 'experience', id, displayName };
+  const experience = experiences.find((e) => e.id === id);
+  if (experience) {
+    return { type: 'experience', id, displayName: experience.company };
   }
   if (projects.some((p) => p.id === id)) {
-    return { type: 'project', id, displayName };
+    return { type: 'project', id, displayName: DISPLAY_NAMES[id] ?? id };
   }
   // Fallback — should not happen if acquiredAt ids stay in sync with data.
-  return { type: 'other', id, displayName: id };
+  return { type: 'other', id, displayName: DISPLAY_NAMES[id] ?? id };
 }
 
 function SkillRow({ categoryId, skillId, index }: { categoryId: string; skillId: string; index: number }) {

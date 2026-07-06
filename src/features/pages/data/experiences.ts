@@ -7,7 +7,7 @@ import type { ExperienceEntry } from './types';
 export const experiences: ExperienceEntry[] = [
   {
     id: 'renault',
-    company: 'RenaultDigital',
+    company: 'Renault Digital',
     role: {
       fr: 'Développeur (Alternance)',
       en: 'Developer (Apprenticeship)',
@@ -48,7 +48,7 @@ export const experiences: ExperienceEntry[] = [
   },
   {
     id: 'faubourg',
-    company: 'FabourgNumerique',
+    company: 'Faubourg Numérique',
     role: {
       fr: 'Stagiaire Développement Web',
       en: 'Web Development Intern',
@@ -81,7 +81,7 @@ export const experiences: ExperienceEntry[] = [
   },
   {
     id: 'chatterie2',
-    company: 'ChatterieTerreBrasco',
+    company: 'Chatterie de la Terre de Brasco',
     role: {
       fr: 'Stagiaire Développement Web',
       en: 'Web Development Intern',
@@ -106,7 +106,7 @@ export const experiences: ExperienceEntry[] = [
   },
   {
     id: 'chatterie1',
-    company: 'ChatterieTerreBrasco',
+    company: 'Chatterie de la Terre de Brasco',
     role: {
       fr: 'Stagiaire Développement Web',
       en: 'Web Development Intern',
