@@ -30,7 +30,7 @@ export function sectionColor(index: number): string {
 
 export function RecruiterShell({ children }: { children: ReactNode }) {
   return (
-    <div className="h-full bg-editor/90 backdrop-blur-sm overflow-auto relative z-10">
+    <div className="h-full bg-editor/90 overflow-auto relative z-10">
       <div className="max-w-3xl mx-auto p-6 md:p-10 space-y-6 min-h-full pb-16 font-sans">
         {children}
       </div>

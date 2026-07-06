@@ -19,7 +19,7 @@ const SH = 590
 
 // ─── Y positions (top = newest, bottom = oldest) ───────────────────
 const Y = {
-  head:      30,  // 2026 — HEAD (open to work)
+  head:      30,  // 2026 — HEAD (aujourd'hui)
   mMerge:    78,  // merge sur main ← Master + Renault (août 2026)
   master:   140,  // Master Cloud Computing & Mobility (école)
   renault:  188,  // Alternance Renault Digital (travail)
@@ -55,8 +55,8 @@ interface Commit {
 const COMMITS: Commit[] = [
   {
     x: MX, y: Y.head, color: CM, isMain: true,
-    title: 'HEAD — open-to-work',
-    sub: 'disponible',
+    title: 'HEAD',
+    sub: 'aujourd\'hui',
     period: '2026 →',
   },
   {

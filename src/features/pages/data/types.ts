@@ -4,7 +4,6 @@ export type ProfileStat = { label: Localized; value: number; suffix?: string };
 
 export type Profile = {
   name: string;
-  openToWork: boolean; // badge « Open to work » sur le hero recruteur
   role: Localized;
   bio: Localized;
   email: string;

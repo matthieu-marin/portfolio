@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Send, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useLanguage } from '../../../i18n/hooks';
@@ -79,10 +79,6 @@ export function ContactRecruiter() {
           <div className="flex items-center gap-2.5">
             <MapPin className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
             {contact.location[language]}
-          </div>
-          <div className="flex items-center gap-2.5">
-            <Globe className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
-            {t('contact.availability')}
           </div>
           {social.length > 0 && (
             <div className="flex flex-wrap gap-3 pt-1">

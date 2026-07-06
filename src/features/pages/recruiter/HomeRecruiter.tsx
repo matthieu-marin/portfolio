@@ -33,25 +33,6 @@ function Avatar({ src }: { src: string }) {
   );
 }
 
-function OpenToWorkBadge({ label }: { label: string }) {
-  const green = 'var(--syntax-string)';
-  return (
-    <span
-      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium"
-      style={{ color: green, backgroundColor: 'color-mix(in srgb, var(--syntax-string) 12%, transparent)' }}
-    >
-      <span className="relative flex h-2 w-2" aria-hidden="true">
-        <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-          style={{ backgroundColor: green }}
-        />
-        <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: green }} />
-      </span>
-      {label}
-    </span>
-  );
-}
-
 export function HomeRecruiter() {
   const { t, language } = useLanguage();
 
@@ -70,11 +51,6 @@ export function HomeRecruiter() {
       >
         <Avatar src={profile.avatarImage} />
         <div className="min-w-0">
-          {profile.openToWork && (
-            <div className="mb-2">
-              <OpenToWorkBadge label={t('recruiter.home.openToWork')} />
-            </div>
-          )}
           <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 justify-center sm:justify-start flex-wrap">
             {name}
             <motion.span

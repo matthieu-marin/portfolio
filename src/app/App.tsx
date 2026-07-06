@@ -27,7 +27,7 @@ import { Experience } from '../features/pages/Experience';
 import { ActivityBar } from '../shared/components/ActivityBar';
 import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
 import { Chronology } from '../features/pages/Chronology';
-import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose, FileX } from 'lucide-react';
 import { Toaster } from 'sonner';
 import type { Page, Tab, PanelId } from './types';
 
@@ -236,7 +236,17 @@ function PortfolioContent() {
             onTabClose={closeTab}
           />
 
-          <div className="flex-1 overflow-auto">{renderPage()}</div>
+          <div className="flex-1 overflow-auto">
+            {openTabs.length > 0 ? (
+              renderPage()
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center gap-2 text-comment">
+                <FileX className="w-10 h-10 opacity-50" />
+                <p className="text-sm">{t('editor.emptyState.title')}</p>
+                <p className="text-xs opacity-70">{t('editor.emptyState.hint')}</p>
+              </div>
+            )}
+          </div>
           {isTerminalVisible && (
             <div
               className="border-t border-border relative"

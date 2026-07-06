@@ -6,7 +6,6 @@ import type { Profile } from './types';
 
 export const profile: Profile = {
   name: 'Matthieu Marin',
-  openToWork: true,
   role: {
     fr: 'Développeur Full-Stack — Cloud & DevOps',
     en: 'Full-Stack Developer — Cloud & DevOps',

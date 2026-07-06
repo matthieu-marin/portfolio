@@ -25,7 +25,7 @@ export function TechIcon({ name, fallback: Fallback, className }: TechIconProps)
   return (
     <svg
       role="img"
-      viewBox="0 0 24 24"
+      viewBox={icon.viewBox ?? '0 0 24 24'}
       aria-hidden
       fill="currentColor"
       className={cn('w-3.5 h-3.5 shrink-0', className)}

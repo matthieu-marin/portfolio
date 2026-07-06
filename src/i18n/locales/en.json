@@ -19,6 +19,12 @@
       "code": "portfolio-dev"
     }
   },
+  "editor": {
+    "emptyState": {
+      "title": "No file open",
+      "hint": "Pick a page from the explorer to open it."
+    }
+  },
   "home": {
     "greeting": "Hi, I'm",
     "title": "Full-Stack Developer — Cloud & DevOps",
@@ -32,8 +38,7 @@
       "statsAriaLabel": "Key figures",
       "downloadCv": "Download CV",
       "linkedin": "LinkedIn",
-      "email": "Email",
-      "openToWork": "Open to work"
+      "email": "Email"
     },
     "chronology": {
       "title": "Journey"
@@ -97,7 +102,6 @@
     "email": "Email",
     "message": "Message",
     "send": "Send",
-    "availability": "Available now",
     "placeholder": {
       "name": "Your name",
       "email": "your@email.com",
