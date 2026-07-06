@@ -7,8 +7,26 @@
 // ─────────────────────────────────────────────────────────────
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { motion } from 'motion/react';
+import { ArrowUpRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useLanguage } from '../../../i18n/hooks';
 import { cn } from '../../../shared/components/ui/utils';
+
+// Palette d'accents des sections, dérivée des variables de thème --syntax-*
+// (jamais d'hex en dur) : chaque carte reçoit une couleur qui tourne avec
+// son index pour casser le monochrome de la vue recruteur.
+const SECTION_COLORS = [
+  'var(--syntax-property)',
+  'var(--syntax-string)',
+  'var(--syntax-variable)',
+  'var(--syntax-keyword)',
+  'var(--syntax-class)',
+  'var(--syntax-operator)',
+] as const;
+
+export function sectionColor(index: number): string {
+  return SECTION_COLORS[index % SECTION_COLORS.length];
+}
 
 export function RecruiterShell({ children }: { children: ReactNode }) {
   return (
@@ -29,6 +47,7 @@ interface SectionProps {
 }
 
 export function Section({ icon: Icon, title, children, index = 0, className }: SectionProps) {
+  const color = sectionColor(index);
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}
@@ -36,13 +55,14 @@ export function Section({ icon: Icon, title, children, index = 0, className }: S
       transition={{ delay: Math.min(index * 0.12, 0.3), duration: 0.3, ease: 'easeOut' }}
       whileHover={{ y: -2 }}
       className={cn(
-        'bg-editor/50 border border-border rounded-xl p-5 md:p-7',
-        'shadow-sm hover:shadow-md hover:border-accent/40 transition-shadow',
+        'relative bg-editor/50 border border-border border-l-[3px] rounded-xl p-5 md:p-7',
+        'shadow-sm hover:shadow-md transition-shadow',
         className
       )}
+      style={{ borderLeftColor: color }}
     >
       <h2 className="flex items-center gap-2.5 text-lg md:text-xl font-semibold text-foreground mb-4">
-        <Icon className="w-5 h-5 text-accent flex-shrink-0" aria-hidden="true" />
+        <Icon className="w-5 h-5 flex-shrink-0" style={{ color }} aria-hidden="true" />
         {title}
       </h2>
       <div className="text-sm md:text-base text-foreground/80 leading-relaxed">{children}</div>
@@ -53,22 +73,32 @@ export function Section({ icon: Icon, title, children, index = 0, className }: S
 interface ChipProps {
   children: ReactNode;
   onClick?: () => void;
+  // Style discret pour les chips non techniques (« Autres compétences »).
+  muted?: boolean;
 }
 
-export function Chip({ children, onClick }: ChipProps) {
+export function Chip({ children, onClick, muted }: ChipProps) {
+  const { t } = useLanguage();
   if (onClick) {
     return (
       <button
         type="button"
         onClick={onClick}
-        className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm hover:bg-accent/20 transition-colors cursor-pointer"
+        title={t('recruiter.chipNavigate')}
+        className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm hover:bg-accent/25 hover:shadow-sm transition-all cursor-pointer"
       >
         {children}
+        <ArrowUpRight className="w-3 h-3 ml-1 opacity-60" aria-hidden="true" />
       </button>
     );
   }
   return (
-    <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">
+    <span
+      className={cn(
+        'inline-flex items-center px-3 py-1 rounded-full text-sm',
+        muted ? 'bg-foreground/5 text-foreground/70' : 'bg-accent/10 text-accent'
+      )}
+    >
       {children}
     </span>
   );
@@ -104,13 +134,17 @@ interface StatCounterProps {
   value: number;
   suffix?: string;
   label: string;
+  color?: string;
 }
 
-export function StatCounter({ value, suffix, label }: StatCounterProps) {
+export function StatCounter({ value, suffix, label, color }: StatCounterProps) {
   const count = useCountUp(value);
   return (
     <div className="text-center">
-      <div className="text-2xl md:text-3xl font-bold text-accent tabular-nums">
+      <div
+        className={cn('text-2xl md:text-3xl font-bold tabular-nums', !color && 'text-accent')}
+        style={color ? { color } : undefined}
+      >
         {count}
         {suffix ?? ''}
       </div>

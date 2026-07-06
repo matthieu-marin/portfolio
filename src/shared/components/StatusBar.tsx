@@ -21,7 +21,6 @@ import { useState, useRef, useEffect } from 'react';
 import { useEditContext } from '../contexts/EditContext';
 import { useRenderer } from '../contexts/RendererContext';
 import { MOD, SHIFT, SEP } from '../utils/platform';
-import { StatusBarCat } from './StatusBarCat';
 
 interface StatusBarProps {
   onTerminalToggle: () => void;
@@ -107,9 +106,6 @@ export function StatusBar({
 
   return (
     <div className="h-6 bg-statusbar text-statusbar-text flex items-center justify-between px-3 md:px-2 text-xs border-t border-border relative">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <StatusBarCat />
-      </div>
       <div className="flex items-center gap-3 md:gap-4">
         <button
           onClick={onOpenChronology}
@@ -152,7 +148,8 @@ export function StatusBar({
           <button
             onClick={resetEdits}
             title="Reset all edits"
-            className="flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover text-yellow-400"
+            className="flex items-center gap-1 px-2 py-0.5 rounded hover:bg-hover"
+            style={{ color: 'var(--syntax-variable)' }}
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reset edits</span>

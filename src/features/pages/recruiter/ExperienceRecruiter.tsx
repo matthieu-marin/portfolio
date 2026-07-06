@@ -5,7 +5,8 @@ import { useEdited } from '../../../shared/contexts/EditContext';
 import { useNavigation } from '../../../shared/contexts/NavigationContext';
 import { TechIcon } from '../../../shared/components/TechIcon';
 import { experiences, SKILL_NAME_BY_ID, EXTRA_TECH_NAMES, TECH_DISPLAY_ORDER } from '../data';
-import { RecruiterShell, Section, Chip } from './primitives';
+import { RecruiterShell, Section, Chip, sectionColor } from './primitives';
+import { WalkingCat } from './WalkingCat';
 
 // Tech display names are derived from data/skills.ts via data/techNames.ts —
 // no local name maps here. EXTRA_TECH_NAMES (display-only techs without a
@@ -75,31 +76,77 @@ function ExperienceCard({
           <ul className="space-y-1.5">
             {exp.highlights.map((highlight, idx) => (
               <li key={idx} className="flex items-start gap-2">
-                <Target className="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <Target
+                  className="w-3.5 h-3.5 flex-shrink-0 mt-0.5"
+                  style={{ color: sectionColor(index) }}
+                  aria-hidden="true"
+                />
                 <span>{highlight[language]}</span>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-wrap gap-2">
-            {techs.map((tech, idx) =>
-              tech.skillId ? (
-                <Chip key={idx} onClick={() => {
-                  setTargetSkillId(tech.skillId);
-                  window.dispatchEvent(new CustomEvent('navigate-to-skill'));
-                }}>
-                  <TechIcon name={tech.name} className="w-3.5 h-3.5 mr-1.5" />
-                  {tech.name}
-                </Chip>
-              ) : (
-                <Chip key={idx}>
-                  <TechIcon name={tech.name} className="w-3.5 h-3.5 mr-1.5" />
-                  {tech.name}
-                </Chip>
-              )
-            )}
+          {exp.subProjects && exp.subProjects.length > 0 && (
+            <div>
+              <h3 className="text-xs uppercase tracking-wide text-foreground/50 font-semibold mb-2">
+                {t('recruiter.experience.projectsTitle')}
+              </h3>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {exp.subProjects.map((subProject, idx) => (
+                  <div key={idx} className="rounded-lg border border-border bg-background/40 p-3">
+                    <p className="font-medium text-sm" style={{ color: sectionColor(index) }}>
+                      {subProject.title}
+                    </p>
+                    <p className="text-xs md:text-sm text-foreground/70 mt-1 leading-relaxed">
+                      {subProject.description[language]}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <h3 className="text-xs uppercase tracking-wide text-foreground/50 font-semibold mb-2">
+              {t('recruiter.experience.techUsed')}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {techs.map((tech, idx) =>
+                tech.skillId ? (
+                  <Chip key={idx} onClick={() => {
+                    setTargetSkillId(tech.skillId);
+                    window.dispatchEvent(new CustomEvent('navigate-to-skill'));
+                  }}>
+                    <TechIcon name={tech.name} className="w-3.5 h-3.5 mr-1.5" />
+                    {tech.name}
+                  </Chip>
+                ) : (
+                  <Chip key={idx}>
+                    <TechIcon name={tech.name} className="w-3.5 h-3.5 mr-1.5" />
+                    {tech.name}
+                  </Chip>
+                )
+              )}
+            </div>
           </div>
+
+          {exp.otherSkills && exp.otherSkills.length > 0 && (
+            <div>
+              <h3 className="text-xs uppercase tracking-wide text-foreground/50 font-semibold mb-2">
+                {t('recruiter.experience.otherSkills')}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {exp.otherSkills.map((skill, idx) => (
+                  <Chip key={idx} muted>
+                    {skill[language]}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
+        {/* Le chat ne vit que sur la carte de la chatterie — évidemment. */}
+        {exp.id === 'chatterie' && <WalkingCat />}
       </Section>
     </div>
   );

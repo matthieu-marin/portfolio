@@ -5,7 +5,7 @@ import { useLanguage } from '../../../i18n/hooks';
 import { useEdited, useEditContext } from '../../../shared/contexts/EditContext';
 import { fireConfetti } from '../../../shared/effects/confetti';
 import { profile } from '../data';
-import { RecruiterShell, Section, Chip, StatCounter } from './primitives';
+import { RecruiterShell, Section, Chip, StatCounter, sectionColor } from './primitives';
 
 function ExpertiseChip({ index, language }: { index: number; language: 'fr' | 'en' }) {
   const { edits } = useEditContext();
@@ -14,34 +14,41 @@ function ExpertiseChip({ index, language }: { index: number; language: 'fr' | 'e
   return <Chip>{value}</Chip>;
 }
 
-function Avatar({ src, name }: { src: string; name: string }) {
+// Pas de photo → pas d'avatar du tout (le hero reprend toute la largeur).
+// Déposer une image à `profile.avatarImage` suffit pour le faire réapparaître.
+function Avatar({ src }: { src: string }) {
   const [imgFailed, setImgFailed] = useState(false);
 
-  // Derive initials from name: split words, take first letters, uppercase
-  const initials = name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word.charAt(0).toUpperCase())
-    .join('');
+  if (imgFailed) return null;
 
   return (
     <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden bg-accent/20 flex items-center justify-center flex-shrink-0">
-      {imgFailed ? (
-        <span
-          className="font-sans font-semibold text-accent text-xl"
-          aria-hidden="true"
-        >
-          {initials}
-        </span>
-      ) : (
-        <img
-          src={src}
-          alt=""
-          onError={() => setImgFailed(true)}
-          className="w-full h-full object-cover rounded-full"
-        />
-      )}
+      <img
+        src={src}
+        alt=""
+        onError={() => setImgFailed(true)}
+        className="w-full h-full object-cover rounded-full"
+      />
     </div>
+  );
+}
+
+function OpenToWorkBadge({ label }: { label: string }) {
+  const green = 'var(--syntax-string)';
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium"
+      style={{ color: green, backgroundColor: 'color-mix(in srgb, var(--syntax-string) 12%, transparent)' }}
+    >
+      <span className="relative flex h-2 w-2" aria-hidden="true">
+        <span
+          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
+          style={{ backgroundColor: green }}
+        />
+        <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: green }} />
+      </span>
+      {label}
+    </span>
   );
 }
 
@@ -61,8 +68,13 @@ export function HomeRecruiter() {
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left"
       >
-        <Avatar src={profile.avatarImage} name={name} />
+        <Avatar src={profile.avatarImage} />
         <div className="min-w-0">
+          {profile.openToWork && (
+            <div className="mb-2">
+              <OpenToWorkBadge label={t('recruiter.home.openToWork')} />
+            </div>
+          )}
           <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 justify-center sm:justify-start flex-wrap">
             {name}
             <motion.span
@@ -95,6 +107,7 @@ export function HomeRecruiter() {
             value={stat.value}
             suffix={stat.suffix}
             label={stat.label[language]}
+            color={sectionColor(idx)}
           />
         ))}
       </motion.div>
@@ -129,7 +142,7 @@ export function HomeRecruiter() {
           download
           onClick={() => fireConfetti()}
           aria-label={t('recruiter.home.downloadCv')}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-background font-medium text-sm md:text-base hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm md:text-base shadow-sm hover:opacity-90 transition-opacity"
         >
           <Download className="w-4 h-4" />
           {t('recruiter.home.downloadCv')}

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Matthieu Marin — Portfolio",
-    "description": "Matthieu Marin's portfolio — Apprentice developer at Renault Digital, Master's in Cloud Computing & Mobility (UPJV / INSSET). Java, Spring Boot, JavaScript, React, Vue.js.",
+    "description": "Matthieu Marin's portfolio — Full-Stack Developer, Cloud & DevOps. Master's in Cloud Computing & Mobility (UPJV / INSSET), two-year apprenticeship at Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
     "htmlLang": "en"
   },
   "nav": {
@@ -21,24 +21,29 @@
   },
   "home": {
     "greeting": "Hi, I'm",
-    "title": "Apprentice Developer — Master Cloud Computing & Mobility",
-    "subtitle": "Java, Spring Boot, JavaScript: from Renault Digital backends to React/Vue interfaces"
+    "title": "Full-Stack Developer — Cloud & DevOps",
+    "subtitle": "Java, Spring Boot, TypeScript: from Renault Digital backends to Google Cloud infrastructure"
   },
   "recruiter": {
+    "chipNavigate": "Click to open",
     "home": {
       "expertiseTitle": "Expertise",
       "approachTitle": "How I Work",
       "statsAriaLabel": "Key figures",
       "downloadCv": "Download CV",
       "linkedin": "LinkedIn",
-      "email": "Email"
+      "email": "Email",
+      "openToWork": "Open to work"
     },
     "experience": {
       "title": "Professional Experience",
       "kind": {
         "apprenticeship": "Apprenticeship",
         "internship": "Internship"
-      }
+      },
+      "projectsTitle": "Projects",
+      "techUsed": "Technologies used",
+      "otherSkills": "Other skills"
     },
     "skills": {
       "title": "Skills",

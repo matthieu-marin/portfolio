@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Matthieu Marin — Portfolio",
-    "description": "Portfolio de Matthieu Marin — Développeur en alternance chez Renault Digital, Master Cloud Computing & Mobility (UPJV / INSSET). Java, Spring Boot, JavaScript, React, Vue.js.",
+    "description": "Portfolio de Matthieu Marin — Développeur Full-Stack, Cloud & DevOps. Master Cloud Computing & Mobility (UPJV / INSSET), 2 ans d'alternance chez Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
     "htmlLang": "fr"
   },
   "nav": {
@@ -21,24 +21,29 @@
   },
   "home": {
     "greeting": "Bonjour, je suis",
-    "title": "Développeur en alternance — Master Cloud Computing & Mobility",
-    "subtitle": "Java, Spring Boot, JavaScript : du backend Renault Digital aux interfaces React/Vue"
+    "title": "Développeur Full-Stack — Cloud & DevOps",
+    "subtitle": "Java, Spring Boot, TypeScript : du backend Renault Digital à l'infrastructure Google Cloud"
   },
   "recruiter": {
+    "chipNavigate": "Cliquer pour ouvrir",
     "home": {
       "expertiseTitle": "Expertises",
       "approachTitle": "Ma façon de travailler",
       "statsAriaLabel": "Chiffres clés",
       "downloadCv": "Télécharger le CV",
       "linkedin": "LinkedIn",
-      "email": "Email"
+      "email": "Email",
+      "openToWork": "Open to work"
     },
     "experience": {
       "title": "Expérience Professionnelle",
       "kind": {
         "apprenticeship": "Alternance",
         "internship": "Stage"
-      }
+      },
+      "projectsTitle": "Projets menés",
+      "techUsed": "Technos utilisées",
+      "otherSkills": "Autres compétences"
     },
     "skills": {
       "title": "Compétences",
