@@ -23,10 +23,11 @@ function camel(label: string): string {
 }
 
 export function buildProfilTsx(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
+
   return {
     lines: [
-      ln(0, cmt('// profil.tsx — la personne derrière le portfolio')),
-      ln(0, cmt('// NOTE: désactiver Portfolio Renderer ne me désactive pas moi.')),
+      ln(0, cmt(L('// profil.tsx — la personne derrière le portfolio', '// profil.tsx — the person behind the portfolio'))),
       blank(),
       ln(0, kw('import'), p(' { '), ty('Developer'), p(' } '), kw('from'), p(' '), str("'@matthieu/core'"), pn(';')),
       blank(),
@@ -39,7 +40,6 @@ export function buildProfilTsx(language: 'fr' | 'en'): CodeFileModel {
         ln(2, prop(camel(s.label.en)), pn(':'), p(' '), num(`${s.value}${s.suffix ?? ''}`), pn(','))
       ),
       ln(1, pn('},')),
-      ln(1, cmt('// aucune de ces lignes ne ment — la source, c’est data/profile.ts')),
       ln(1, prop('expertise'), pn(': [')),
       ...profile.expertise.map((e, i) =>
         ln(2, ed(`profile.expertise.${i}.${language}`, e[language]), pn(','))
@@ -51,7 +51,7 @@ export function buildProfilTsx(language: 'fr' | 'en'): CodeFileModel {
       ln(1, pn('},')),
       ln(0, pn('};')),
       blank(),
-      ln(0, kw('export default'), p(' '), fn('profil'), pn(';'), p(' '), cmt('// aucun test ne couvre ma motivation : elle est infaillible')),
+      ln(0, kw('export default'), p(' '), fn('profil'), pn(';')),
     ],
   };
 }

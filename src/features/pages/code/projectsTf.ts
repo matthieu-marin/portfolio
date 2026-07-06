@@ -17,6 +17,7 @@ function stringListTokens(values: string[]) {
 
 // Bloc `resource "portfolio_project" "<id>" { ... }` pour un projet.
 function projectBlock(project: (typeof projects)[number], language: 'fr' | 'en'): CodeLine[] {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   // Nom d'affichage canonique dérivé de data/skills.ts (voir data/techNames.ts).
   const stack = project.technologies.map((skillId) => SKILL_NAME_BY_ID[skillId] ?? skillId);
   const firstImage = project.images[0];
@@ -42,6 +43,9 @@ function projectBlock(project: (typeof projects)[number], language: 'fr' | 'en')
     ),
     ln(1, prop('status'), p('     '), pn('='), p(' '), str(`"${project.status[language]}"`)),
     ln(1, prop('stack'), p('      '), pn('='), p(' '), ...stringListTokens(stack)),
+    ...(project.repository
+      ? [ln(1, prop('repository'), p(' '), pn('='), p(' '), str(`"${project.repository}"`))]
+      : []),
     ...(firstImage
       ? [
           ln(
@@ -52,7 +56,7 @@ function projectBlock(project: (typeof projects)[number], language: 'fr' | 'en')
             p(' '),
             img(firstImage.path, firstImage.label),
             p('  '),
-            cmt('# survolez le chemin → aperçu')
+            cmt(L('# survolez le chemin → aperçu', '# hover the path → preview'))
           ),
         ]
       : []),
@@ -61,9 +65,11 @@ function projectBlock(project: (typeof projects)[number], language: 'fr' | 'en')
 }
 
 export function buildProjectsTf(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
+
   return {
     lines: [
-      ln(0, cmt('# projects.tf — infrastructure du parcours')),
+      ln(0, cmt(L('# projects.tf — projets personnels & académiques', '# projects.tf — personal & academic projects'))),
       blank(),
       ln(0, kw('terraform'), p(' '), pn('{')),
       ln(1, prop('required_providers'), p(' '), pn('{')),
@@ -92,14 +98,11 @@ export function buildProjectsTf(language: 'fr' | 'en'): CodeFileModel {
       ),
       ln(1, pn('}')),
       ln(0, pn('}')),
-      ln(0, cmt('# terraform destroy ne fonctionne pas sur l’expérience acquise')),
       blank(),
       ...projects.flatMap((project, idx) => [
         ...projectBlock(project, language),
         ...(idx === projects.length - 1 ? [] : [blank()]),
       ]),
-      blank(),
-      ln(0, cmt('# terraform plan ne montre jamais les nuits blanches passées à déboguer')),
     ],
   };
 }

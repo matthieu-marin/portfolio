@@ -29,10 +29,11 @@ function skillEntryLines(skill: (typeof skillCategories)[number]['skills'][numbe
 }
 
 export function buildSkillsYml(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
+
   return {
     lines: [
-      ln(0, cmt('# skills.yml — inventaire des compétences')),
-      ln(0, cmt('# ⚠ ce fichier est généré par l’expérience, pas par un LLM')),
+      ln(0, cmt(L('# skills.yml — inventaire des compétences', '# skills.yml — skills inventory'))),
       blank(),
       ln(0, prop('version'), pn(':'), p(' '), str('2026.07')),
       blank(),

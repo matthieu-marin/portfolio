@@ -19,8 +19,9 @@ function badgeLine(label: string, value: string, color: string): CodeLine {
 
 // Table markdown | Diplôme | École | Période | générée depuis about.education.
 function educationTableLines(language: 'fr' | 'en'): CodeLine[] {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   return [
-    ln(0, pn('| '), p('Diplôme'), pn(' | '), p('École'), pn(' | '), p('Période'), pn(' |')),
+    ln(0, pn('| '), p(L('Diplôme', 'Degree')), pn(' | '), p(L('École', 'School')), pn(' | '), p(L('Période', 'Period')), pn(' |')),
     ln(0, pn('| --- | --- | --- |')),
     ...about.education.map((edu) =>
       ln(
@@ -48,22 +49,23 @@ function editableInterestLines(language: 'fr' | 'en'): CodeLine[] {
 }
 
 export function buildReadmeMd(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   const role = profile.role[language];
 
   return {
     lines: [
       ln(0, kw(`# ${profile.name}`)),
       blank(),
-      badgeLine('statut', STATUS_BADGE_SLUG, 'success'),
+      badgeLine(L('statut', 'status'), STATUS_BADGE_SLUG, 'success'),
       badgeLine('cloud', 'GCP', 'blue'),
-      badgeLine('licence', 'MIT', 'lightgrey'),
+      badgeLine(L('licence', 'license'), 'MIT', 'lightgrey'),
       blank(),
       ln(0, pn('> '), ed(`profile.role.${language}`, role, false)),
       blank(),
-      ln(0, kw('## 🎓 Formations')),
+      ln(0, kw(L('## 🎓 Formations', '## 🎓 Education'))),
       ...educationTableLines(language),
       blank(),
-      ln(0, kw('## Centres d’intérêt')),
+      ln(0, kw(L('## Centres d’intérêt', '## Interests'))),
       ...editableInterestLines(language),
       blank(),
       ln(0, kw('## Soft skills')),

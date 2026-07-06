@@ -23,12 +23,13 @@ export const CONTACT_PLACEHOLDERS: Record<'fr' | 'en', { email: string; name: st
 };
 
 export function buildContactHttp(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   const placeholder = CONTACT_PLACEHOLDERS[language];
 
   return {
     lines: [
-      ln(0, cmt('### Contacter Matthieu Marin')),
-      ln(0, cmt('# REST Client — cliquez sur "Send Request" pour envoyer réellement.')),
+      ln(0, cmt(L('### Contacter Matthieu Marin', '### Contact Matthieu Marin'))),
+      ln(0, cmt(L('# REST Client — le bouton "Send Request" envoie réellement ce message.', '# REST Client — the "Send Request" button really sends this message.'))),
       ln(0, kw('POST'), p(' '), str('https://matthieu-marin.dev/api/contact'), p(' '), p('HTTP/1.1')),
       ln(0, prop('Content-Type'), pn(':'), p(' '), str('application/json')),
       blank(),

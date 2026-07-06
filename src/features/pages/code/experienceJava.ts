@@ -30,11 +30,13 @@ function identifierListTokens(values: string[]) {
 
 // Lignes Java pour une expérience : annotations + constante + appel constructeur.
 function experienceBlock(exp: (typeof experiences)[number], language: 'fr' | 'en'): CodeLine[] {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   const constId = constName(exp.id);
   // Nom d'affichage canonique dérivé de data/skills.ts (voir data/techNames.ts).
   const techNames = exp.technologies.map((skillId) => SKILL_NAME_BY_ID[skillId] ?? skillId);
   const year = extractYear(exp.period.en);
   const shownHighlights = exp.highlights.slice(0, 2);
+  const hiddenCount = exp.highlights.length - shownHighlights.length;
 
   return [
     ln(1, ann('@Company'), pn('('), str(`name = "${exp.company}"`), pn(','), p(' '), str(`location = "${exp.location}"`), pn(')')),
@@ -54,16 +56,20 @@ function experienceBlock(exp: (typeof experiences)[number], language: 'fr' | 'en
       ty('Experience'),
       pn('(')
     ),
-    ln(2, ed(`exp.${exp.id}.role.${language}`, exp.role[language]), pn(','), p(' '), cmt('// ← éditable (ed())')),
+    ln(2, ed(`exp.${exp.id}.role.${language}`, exp.role[language]), pn(',')),
     ln(2, kw('List'), pn('.'), p('of'), pn('('), ...stringListTokens(techNames), pn('),')),
     ...shownHighlights.map((highlight, idx) =>
       ln(2, str(`"${highlight[language]}"`), pn(idx === shownHighlights.length - 1 ? '' : ','))
     ),
+    ...(hiddenCount > 0
+      ? [ln(2, cmt(L(`// + ${hiddenCount} autres — voir la vue recruteur`, `// + ${hiddenCount} more — see the recruiter view`)))]
+      : []),
     ln(1, pn(');')),
   ];
 }
 
 export function buildExperienceJava(language: 'fr' | 'en'): CodeFileModel {
+  const L = (fr: string, en: string) => (language === 'fr' ? fr : en);
   const constNames = experiences.map((e) => constName(e.id));
 
   return {
@@ -73,8 +79,7 @@ export function buildExperienceJava(language: 'fr' | 'en'): CodeFileModel {
       ln(0, kw('import'), p(' '), ty('java.util.List'), pn(';')),
       blank(),
       ln(0, cmt('/**')),
-      ln(0, cmt(' * Parcours professionnel — trié par ordre chronologique inverse.')),
-      ln(0, cmt(' * NOTE : cette classe est append-only, comme la motivation qui va avec.')),
+      ln(0, cmt(L(' * Parcours professionnel — du plus récent au plus ancien.', ' * Career history — newest first.'))),
       ln(0, cmt(' */')),
       ln(0, kw('public class'), p(' '), ty('Experience'), p(' '), pn('{')),
       blank(),
@@ -83,7 +88,6 @@ export function buildExperienceJava(language: 'fr' | 'en'): CodeFileModel {
         ...(idx === experiences.length - 1 ? [] : [blank()]),
       ]),
       blank(),
-      ln(1, cmt('// aucune de ces lignes ne ment — la source, c’est data/experiences.ts')),
       ln(1, kw('public static'), p(' '), ty('List<Experience>'), p(' '), p('career'), pn('() {')),
       ln(2, kw('return'), p(' '), kw('List'), pn('.'), p('of'), pn('('), ...identifierListTokens(constNames), pn(');')),
       ln(1, pn('}')),

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { toast } from 'sonner';
 import { useRenderer } from '../../shared/contexts/RendererContext';
 import { useLanguage } from '../../i18n/hooks';
@@ -13,6 +13,7 @@ export function Contact() {
   const { t, language } = useLanguage();
   const { edits } = useEditContext();
   const sendingRef = useRef(false);
+  const model = useMemo(() => buildContactHttp(language), [language]);
 
   const handleSend = async () => {
     if (sendingRef.current) return;
@@ -47,8 +48,9 @@ export function Contact() {
     <ContactRecruiter />
   ) : (
     <CodeFileView
-      model={buildContactHttp(language)}
-      action={{ label: 'Send Request', beforeLine: 3, onClick: handleSend }}
+      model={model}
+      syntax="http"
+      action={{ label: 'Send Request', onClick: handleSend }}
     />
   );
 }
