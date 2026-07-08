@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { useLanguage } from '../../i18n/hooks';
 import { useEditContext } from '../../shared/contexts/EditContext';
+import { useRenderer } from '../../shared/contexts/RendererContext';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -102,7 +103,6 @@ const ROOT_FS: FSDir = {
                 effects: {
                   type: 'dir', modified: 'Mar 18 14:00',
                   children: {
-                    'CyberpunkEffects.tsx': { type: 'file', size: 2134, modified: 'Mar 18 14:00' },
                     'GalaxyEffects.tsx':    { type: 'file', size: 2543, modified: 'Mar 18 14:00' },
                     'NordEffects.tsx':      { type: 'file', size: 1654, modified: 'Mar 18 14:00' },
                     'PixelEffects.tsx':     { type: 'file', size: 1987, modified: 'Mar 18 14:00' },
@@ -142,7 +142,6 @@ const ROOT_FS: FSDir = {
                 themes: {
                   type: 'dir', modified: 'Mar 22 09:00',
                   children: {
-                    '_cyberpunk.scss': { type: 'file', size: 1987, modified: 'Mar 22 09:00' },
                     '_dark.scss':      { type: 'file', size: 1234, modified: 'Mar 22 09:00' },
                     '_galaxy.scss':    { type: 'file', size: 1654, modified: 'Mar 22 09:00' },
                     '_light.scss':     { type: 'file', size: 1123, modified: 'Mar 22 09:00' },
@@ -269,17 +268,17 @@ function fmtSize(n: number): string {
 // ─── Fortune messages ─────────────────────────────────────────────────────────
 
 const FORTUNES = [
-  'There are only two hard things in CS: cache invalidation and naming things. — Phil Karlton',
-  'Any fool can write code a computer understands. Good programmers write code humans understand. — Fowler',
-  'First, solve the problem. Then, write the code. — John Johnson',
-  'Code is like humor. When you have to explain it, it\'s bad. — Cory House',
-  'Make it work, make it right, make it fast. — Kent Beck',
-  'The best error message is the one that never shows up. — Thomas Fuchs',
-  'Debugging is twice as hard as writing the code in the first place. — Brian Kernighan',
-  '"It works on my machine." — Every developer, ever',
-  'A ship in port is safe, but that\'s not what ships are for. — Grace Hopper',
-  'Talk is cheap. Show me the code. — Linus Torvalds',
-  'Programs must be written for people to read, and only incidentally for machines to execute. — Abelson',
+  'There are only two hard things in CS: cache invalidation and naming things. - Phil Karlton',
+  'Any fool can write code a computer understands. Good programmers write code humans understand. - Fowler',
+  'First, solve the problem. Then, write the code. - John Johnson',
+  'Code is like humor. When you have to explain it, it\'s bad. - Cory House',
+  'Make it work, make it right, make it fast. - Kent Beck',
+  'The best error message is the one that never shows up. - Thomas Fuchs',
+  'Debugging is twice as hard as writing the code in the first place. - Brian Kernighan',
+  '"It works on my machine." - Every developer, ever',
+  'A ship in port is safe, but that\'s not what ships are for. - Grace Hopper',
+  'Talk is cheap. Show me the code. - Linus Torvalds',
+  'Programs must be written for people to read, and only incidentally for machines to execute. - Abelson',
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -291,6 +290,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
   const [pendingSudo, setPendingSudo] = useState<string | null>(null);
   const [sudoAttempts, setSudoAttempts] = useState(0);
   const { resetEdits } = useEditContext();
+  const { enabled, setEnabled } = useRenderer();
 
   const inputRef     = useRef<HTMLInputElement>(null);
   const cmdHistory   = useRef<string[]>([]);
@@ -325,14 +325,15 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
       case 'help':
         return [
           `${t('terminal.helpTitle')}:`,
-          `  help        — ${t('terminal.helpHelp')}`,
-          `  about       — ${t('terminal.helpAbout')}`,
-          `  skills      — ${t('terminal.helpSkills')}`,
-          `  projects    — ${t('terminal.helpProjects')}`,
-          `  contact     — ${t('terminal.helpContact')}`,
-          `  whoami      — ${t('terminal.helpWhoami')}`,
-          `  clear       — ${t('terminal.helpClear')}`,
-          `  reset-edits — ${t('terminal.helpResetEdits')}`,
+          `  help        - ${t('terminal.helpHelp')}`,
+          `  about       - ${t('terminal.helpAbout')}`,
+          `  skills      - ${t('terminal.helpSkills')}`,
+          `  projects    - ${t('terminal.helpProjects')}`,
+          `  contact     - ${t('terminal.helpContact')}`,
+          `  whoami      - ${t('terminal.helpWhoami')}`,
+          `  clear       - ${t('terminal.helpClear')}`,
+          `  reset-edits - ${t('terminal.helpResetEdits')}`,
+          `  extensions  - ${t('terminal.helpExtensions')}`,
           '',
           t('terminal.helpExtra'),
         ];
@@ -342,17 +343,17 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
 
       case 'skills':
         return [
-          `Frontend : JavaScript, React, Vue.js, WordPress`,
-          `Backend  : Java, Spring Boot, Node.js, PHP, Python`,
-          `Database : MongoDB, SQL, NoSQL`,
+          `Frontend : JavaScript, TypeScript, React, Vue.js`,
+          `Backend  : Java, Spring Boot, Node.js, PHP`,
+          `Database : PostgreSQL, MySQL, Firestore, MongoDB`,
           `Tools    : Git, Agile/SCRUM`,
         ];
 
       case 'projects':
         return [
-          '1. Portfolio IDE              — VS Code-inspired portfolio (React/TS)',
-          '2. Territoire Connecté Durable — IoT platform (Vue.js + Node.js)',
-          '3. Chatterie Terre de Brasco  — Showcase site (PHP/WordPress)',
+          '1. Portfolio IDE               - VS Code-inspired portfolio (React/TS)',
+          '2. Territoire Connecté Durable - IoT platform (Vue.js + Node.js)',
+          '3. Chatterie Terre de Brasco   - Showcase site (PHP/MySQL)',
         ];
 
       case 'contact':
@@ -371,6 +372,39 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
       case 'reset-edits':
         setTimeout(() => resetEdits(), 0);
         return [{ text: 'All edits reset.', className: 'text-green-400' }];
+
+      case 'extensions': {
+        const sub = args[0];
+        if (!sub || sub === '--help') {
+          return ['usage: extensions <list|disable|enable> [extension-id]'];
+        }
+
+        if (sub === 'list') {
+          const rendererLine = {
+            text: `  ${enabled ? '✔ enabled ' : '✖ disabled'}  portfolio-renderer  · Matthieu Marin · v2.0.1`,
+            className: enabled ? 'text-green-400' : 'text-red-400',
+          };
+          return ['Installed extensions:', rendererLine];
+        }
+
+        if (sub === 'disable' || sub === 'enable') {
+          const id = args[1];
+          if (!id) return ['usage: extensions <list|disable|enable> [extension-id]'];
+
+          if (id === 'portfolio-renderer') {
+            if (sub === 'disable') {
+              setEnabled(false);
+              return [{ text: "Extension 'portfolio-renderer' disabled. Reality unfiltered.", className: 'text-yellow-300' }];
+            }
+            setEnabled(true);
+            return [{ text: "Extension 'portfolio-renderer' enabled. Back to human-readable.", className: 'text-green-400' }];
+          }
+
+          return [{ text: `Extension not found: ${id}`, className: 'text-red-400' }];
+        }
+
+        return ['usage: extensions <list|disable|enable> [extension-id]'];
+      }
 
       // ── Navigation ───────────────────────────────────────────────────────
       case 'pwd':
@@ -447,7 +481,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
           if (content) {
             content.split('\n').forEach(l => lines.push(l));
           } else {
-            lines.push(`[binary file — ${fmtSize((node as FSFile).size)} bytes]`);
+            lines.push(`[binary file - ${fmtSize((node as FSFile).size)} bytes]`);
           }
         }
         return lines;
@@ -620,7 +654,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
         return [
           'Welcome to Node.js v20.11.0.',
           'Type ".exit" to exit.',
-          '> ', '(interactive mode not available — this is a fake terminal)',
+          '> ', '(interactive mode not available - this is a fake terminal)',
         ];
 
       case 'npm':
@@ -667,7 +701,7 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
           { text: '* clean-figma-code', className: 'text-green-400' },
           '  main',
         ];
-        if (sub === 'diff') return ['(nothing to diff — working tree clean)'];
+        if (sub === 'diff') return ['(nothing to diff - working tree clean)'];
         if (sub === 'stash') return [{ text: 'Saved working directory and index state WIP on clean-figma-code', className: 'text-green-400' }];
         if (sub === 'pull') return [{ text: 'Already up to date.', className: 'text-green-400' }];
         if (sub === 'push') return [{ text: 'Everything up-to-date', className: 'text-green-400' }];
@@ -714,18 +748,18 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
         return [
           { text: '~', className: 'text-blue-400' },
           { text: '~', className: 'text-blue-400' },
-          { text: '~  VIM — you are trapped. Type :q! to escape.', className: 'text-blue-400' },
+          { text: '~  VIM - you are trapped. Type :q! to escape.', className: 'text-blue-400' },
           { text: '~  (but this isn\'t a real vim, so you\'re safe)', className: 'text-gray-500' },
         ];
 
       case 'nano':
-        return ['  GNU nano  — [ New Buffer ]', '^X Exit  ^O Write  ^R Read', '(nano is simulated — edits don\'t persist here)'];
+        return ['  GNU nano  - [ New Buffer ]', '^X Exit  ^O Write  ^R Read', '(nano is simulated - edits don\'t persist here)'];
 
       case 'emacs':
         return [
           { text: 'GNU Emacs 29.1', className: 'text-purple-400' },
           'Welcome to the extensible, customizable editor.',
-          '(C-x C-c to exit — good luck finding it)',
+          '(C-x C-c to exit - good luck finding it)',
         ];
 
       // ── Process management ────────────────────────────────────────────────
@@ -771,12 +805,12 @@ export const TerminalView = forwardRef<HTMLDivElement>((props, ref) => {
         const topic = args[0];
         if (!topic) return ['What manual page do you want?'];
         const pages: Record<string, string[]> = {
-          ls:  ['LS(1) — list directory contents', 'OPTIONS: -a all files, -l long format, -la both'],
-          cd:  ['CD(1) — change directory', 'USAGE: cd [dir]   cd .. to go up, cd ~ to go home'],
-          cat: ['CAT(1) — concatenate and print files', 'USAGE: cat [file...]'],
-          git: ['GIT(1) — the stupid content tracker', 'SUBCOMMANDS: status, log, branch, diff, push, pull, clone, stash'],
-          npm: ['NPM(1) — node package manager', 'USAGE: npm run dev|build|preview   npm install   npm list'],
-          node:['NODE(1) — server-side JavaScript', 'VERSION: v20.11.0  (not interactive in this environment)'],
+          ls:  ['LS(1) - list directory contents', 'OPTIONS: -a all files, -l long format, -la both'],
+          cd:  ['CD(1) - change directory', 'USAGE: cd [dir]   cd .. to go up, cd ~ to go home'],
+          cat: ['CAT(1) - concatenate and print files', 'USAGE: cat [file...]'],
+          git: ['GIT(1) - the stupid content tracker', 'SUBCOMMANDS: status, log, branch, diff, push, pull, clone, stash'],
+          npm: ['NPM(1) - node package manager', 'USAGE: npm run dev|build|preview   npm install   npm list'],
+          node:['NODE(1) - server-side JavaScript', 'VERSION: v20.11.0  (not interactive in this environment)'],
         };
         return pages[topic] ?? [`No manual entry for ${topic}`];
       }

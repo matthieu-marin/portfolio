@@ -5,7 +5,11 @@ export function useLanguage() {
   const { i18n, t } = useTranslation();
 
   useEffect(() => {
-    localStorage.setItem('portfolio-language', i18n.language);
+    try {
+      localStorage.setItem('portfolio-language', i18n.language);
+    } catch {
+      // Storage disabled — language won't persist across reloads.
+    }
   }, [i18n.language]);
 
   const setLanguage = (lang: 'fr' | 'en') => {

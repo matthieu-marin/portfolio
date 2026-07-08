@@ -1,58 +1,76 @@
-# Getting Started with Create React App
+# Portfolio — Matthieu Marin
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Personal portfolio built as an interactive **VS Code-style IDE**: file explorer, tabs, status bar, a working fake terminal… the whole editor experience, used as a portfolio. 100% static — no backend.
 
-## Available Scripts
+**Live:** https://pvcsam.github.io/portfolio-dev/
 
-In the project directory, you can run:
+> Tip: poke around. The IDE hides a few easter eggs for the curious — the terminal's `help` command is a good place to start.
 
-### `npm start`
+## Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+| Layer | Choice |
+|-------|--------|
+| Framework | React 18 + TypeScript 5 |
+| Bundler | Vite (`@vitejs/plugin-react-swc`) |
+| Styling | Tailwind CSS v4 + SCSS theme variables |
+| UI primitives | Radix UI (shadcn-style components) |
+| Animation | `motion/react` |
+| i18n | i18next — French (default) / English |
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **IDE shell** — file explorer, multi-tab navigation, status bar, resizable output panel.
+- **Interactive terminal** — 40+ commands (`help`, `whoami`, `skills`, `ls`, …).
+- **8 visual themes** — dark, light, steampunk, pixel, cyberpunk, synthwave, galaxy, nord — some with animated canvas backgrounds. Auto-detects `prefers-color-scheme` on first visit.
+- **Bilingual** — full FR/EN switch, persisted.
+- **Single source of truth for content** — everything displayed (profile, experiences, projects, skills) lives in `src/features/pages/data/` and is rendered from there.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting started
 
-### `npm run build`
+```bash
+npm install
+npm run dev       # dev server on http://localhost:3000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Script | What it does |
+|--------|--------------|
+| `npm run dev` | Vite dev server (port 3000, exposed on LAN) |
+| `npm run build` | Production build into `build/` |
+| `npm run preview` | Serve the production build locally |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+src/
+├── app/App.tsx          # Root: tab state, theme wiring (no router — in-memory navigation)
+├── features/
+│   ├── pages/           # One component per page
+│   │   ├── data/        # ← content lives here (profile, experiences, projects, skills)
+│   │   └── recruiter/   # Page rendering components
+│   └── output-panel/    # Terminal & output panel
+├── i18n/                # i18next config + fr/en locales
+├── shared/
+│   ├── components/      # IDE chrome (explorer, tabs, status bar…) + UI kit
+│   ├── contexts/        # Theme, navigation, edit state
+│   └── effects/         # Per-theme canvas effects
+└── styles/              # SCSS themes (one file per theme)
+```
 
-### `npm run eject`
+## Editing content
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+All displayed content comes from `src/features/pages/data/` — edit those files, never the components. UI strings go through i18next (`src/i18n/locales/fr.json` / `en.json`), always in both languages.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Static assets go in `public/`:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `public/cv-matthieu-marin.pdf` — the downloadable CV
+- `public/images/profile/avatar.jpg` — profile photo (layout adapts if absent)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contact form
 
-## Learn More
+Defaults to `mailto:`. To send through [Formspree](https://formspree.io) instead, set `VITE_FORMSPREE_ID` at build time.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Every merge to `main` deploys automatically to GitHub Pages via `.github/workflows/deploy.yml` (build → upload artifact → deploy). One-time repo setting: **Settings → Pages → Source → GitHub Actions**.
 
-
-  # One-Page Portfolio Design
-
-  This is a code bundle for One-Page Portfolio Design. The original project is available at https://www.figma.com/design/LfkCfcIsglNSdflthuTcBz/One-Page-Portfolio-Design.
-
-  ## Running the code
-
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
+The site is host-agnostic: the workflow sets `VITE_BASE=/<repo>/` for the Pages sub-path; any other static host (Vercel, Netlify…) can just run `npm run build` and serve `build/` from the root.

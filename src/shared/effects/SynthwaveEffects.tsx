@@ -4,7 +4,7 @@ export function SynthwaveEffects() {
   const gridLines = Array.from({ length: 20 }, (_, i) => i);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden blur-[2px] z-0">
       <div
         className="absolute inset-0 opacity-30"
         style={{

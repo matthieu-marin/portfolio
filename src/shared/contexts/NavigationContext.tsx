@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
 interface NavigationContextType {
   targetSkillId: string | null;
@@ -12,22 +19,40 @@ interface NavigationContextType {
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 
 export function NavigationProvider({ children }: { children: ReactNode }) {
-  const [targetSkillId, setTargetSkillId] = useState<string | null>(null);
-  const [targetExperienceId, setTargetExperienceId] = useState<string | null>(null);
-  const [targetProjectId, setTargetProjectId] = useState<string | null>(null);
+  const [targetSkillId, setTargetSkillIdState] = useState<string | null>(null);
+  const [targetExperienceId, setTargetExperienceIdState] = useState<string | null>(null);
+  const [targetProjectId, setTargetProjectIdState] = useState<string | null>(null);
 
-  return (
-    <NavigationContext.Provider value={{ 
-      targetSkillId, 
+  const setTargetSkillId = useCallback((id: string | null) => setTargetSkillIdState(id), []);
+  const setTargetExperienceId = useCallback(
+    (id: string | null) => setTargetExperienceIdState(id),
+    []
+  );
+  const setTargetProjectId = useCallback(
+    (id: string | null) => setTargetProjectIdState(id),
+    []
+  );
+
+  const value = useMemo(
+    () => ({
+      targetSkillId,
       setTargetSkillId,
       targetExperienceId,
       setTargetExperienceId,
       targetProjectId,
-      setTargetProjectId
-    }}>
-      {children}
-    </NavigationContext.Provider>
+      setTargetProjectId,
+    }),
+    [
+      targetSkillId,
+      setTargetSkillId,
+      targetExperienceId,
+      setTargetExperienceId,
+      targetProjectId,
+      setTargetProjectId,
+    ]
   );
+
+  return <NavigationContext.Provider value={value}>{children}</NavigationContext.Provider>;
 }
 
 export function useNavigation() {
@@ -37,4 +62,3 @@ export function useNavigation() {
   }
   return context;
 }
-

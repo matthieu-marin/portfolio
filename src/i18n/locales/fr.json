@@ -1,20 +1,86 @@
 {
+  "meta": {
+    "title": "Matthieu Marin · Portfolio",
+    "description": "Portfolio de Matthieu Marin, Développeur Full-Stack, Cloud & DevOps. Master Cloud Computing & Mobility (UPJV / INSSET), 2 ans d'alternance chez Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
+    "htmlLang": "fr"
+  },
   "nav": {
     "home": "Accueil",
     "about": "À propos",
     "projects": "Projets",
     "skills": "Compétences",
     "contact": "Contact",
-    "experience": "Expérience"
+    "experience": "Expérience",
+    "chronology": "Chronologie"
+  },
+  "explorer": {
+    "root": {
+      "human": "Mon Portfolio",
+      "code": "portfolio-dev"
+    }
+  },
+  "editor": {
+    "emptyState": {
+      "title": "Aucun fichier ouvert",
+      "hint": "Choisissez une page dans l'explorateur pour l'ouvrir."
+    }
   },
   "home": {
     "greeting": "Bonjour, je suis",
-    "title": "Développeur en alternance — Master Cloud Computing & Mobility",
-    "subtitle": "Java, Spring Boot, JavaScript : du backend Renault Digital aux interfaces React/Vue"
+    "title": "Développeur Full-Stack · Cloud & DevOps",
+    "subtitle": "Java, Spring Boot, TypeScript : du backend Renault Digital à l'infrastructure Google Cloud"
+  },
+  "recruiter": {
+    "chipNavigate": "Cliquer pour ouvrir",
+    "home": {
+      "expertiseTitle": "Expertises",
+      "approachTitle": "Ma façon de travailler",
+      "statsAriaLabel": "Chiffres clés",
+      "downloadCv": "Télécharger le CV",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "chronology": {
+      "title": "Parcours"
+    },
+    "experience": {
+      "title": "Expérience Professionnelle",
+      "kind": {
+        "apprenticeship": "Alternance",
+        "internship": "Stage"
+      },
+      "projectsTitle": "Projets menés",
+      "techUsed": "Technos utilisées",
+      "otherSkills": "Autres compétences"
+    },
+    "skills": {
+      "title": "Compétences",
+      "acquiredAt": "Appris chez :",
+      "experienceCount_one": "{{count}} expérience",
+      "experienceCount_other": "{{count}} expériences"
+    },
+    "about": {
+      "title": "À propos de moi",
+      "locationTitle": "Localisation",
+      "educationTitle": "Formations",
+      "interestsTitle": "Centres d'intérêt",
+      "softSkillsTitle": "Soft skills"
+    },
+    "projects": {
+      "title": "Mes Projets",
+      "gallery": "Aperçus",
+      "viewCode": "Voir le code",
+      "viewDemo": "Voir la démo"
+    },
+    "contact": {
+      "title": "Contactez-moi",
+      "coordinatesTitle": "Coordonnées",
+      "formTitle": "Envoyer un message"
+    }
   },
   "about": {
     "title": "À propos de moi",
-    "description": "Étudiant en Master Cloud Computing & Mobility (UPJV / INSSET) et alternant chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/WordPress associatifs.",
+    "description": "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/MySQL associatifs.",
     "experience": "Expérience",
     "education": "Formation"
   },
@@ -36,11 +102,15 @@
     "email": "Email",
     "message": "Message",
     "send": "Envoyer",
-    "availability": "Disponible à partir de fin août 2026",
     "placeholder": {
       "name": "Votre nom",
       "email": "votre@email.com",
       "message": "Votre message..."
+    },
+    "toast": {
+      "sent": "Message envoyé !",
+      "sentDescription": "Je te recontacte dès que possible.",
+      "failed": "L'envoi a échoué"
     }
   },
   "experience": {
@@ -59,20 +129,21 @@
     "helpClear": "Efface le terminal",
     "helpWhoami": "Qui suis-je?",
     "aboutLine1": "Développeur en alternance chez Renault Digital, étudiant en Master Cloud Computing & Mobility.",
-    "aboutLine2": "Quatre expériences pro : Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/WordPress).",
+    "aboutLine2": "Quatre expériences pro : Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/MySQL).",
     "skillsFrontend": "Frontend",
     "skillsBackend": "Backend",
     "skillsTools": "Outils",
     "skillsOther": "Autres",
     "project1Desc": "Ce portfolio interactif (React + TypeScript)",
     "project2Desc": "Plateforme IoT Territoire Connecté & Durable (Vue.js + Node.js)",
-    "project3Desc": "Site vitrine Chatterie de la Terre de Brasco (PHP/WordPress)",
+    "project3Desc": "Site vitrine Chatterie de la Terre de Brasco (PHP/MySQL)",
     "project4Desc": "",
     "whoami": "Un alternant qui aime transformer le café en code Java ☕→💻",
     "unknownCommand": "Commande inconnue",
     "unknownCommandHelp": "Tapez 'help' pour voir les commandes disponibles",
     "helpExtra": "Les commandes standard fonctionnent aussi. Essayez ls, cd, cat, git, npm…",
     "helpResetEdits": "Réinitialise les modifications locales",
+    "helpExtensions": "Gère les extensions de l'éditeur",
     "contactEmail": "Email",
     "contactGithub": "GitHub",
     "contactLinkedin": "LinkedIn",
@@ -83,12 +154,7 @@
     "sudoMaxAttempts": "sudo : 3 tentatives de mot de passe incorrectes",
     "sudoHint": "(indice : c'est \"password\")",
     "sudoSuccess1": "Mot de passe accepté... pas très sécurisé mais le mot de passe est bon.",
-    "sudoSuccess2": "Ah mais attendez — on est dans un faux terminal."
-  },
-  "skill": {
-    "keyFeatures": "Fonctionnalités clés",
-    "relatedProjects": "Projets concernés",
-    "endDoc": "Fin de la documentation"
+    "sudoSuccess2": "Ah mais attendez... on est dans un faux terminal."
   },
   "status": {
     "terminal": "Terminal",

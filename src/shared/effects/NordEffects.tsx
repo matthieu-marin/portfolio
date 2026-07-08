@@ -19,7 +19,7 @@ export function NordEffects() {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden blur-[2px] z-0">
       <motion.div
         className="absolute top-0 left-0 right-0 h-[60%] opacity-20"
         style={{

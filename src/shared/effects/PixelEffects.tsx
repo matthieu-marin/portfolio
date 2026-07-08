@@ -20,7 +20,7 @@ export function PixelEffects() {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-20 z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden blur-[2px] opacity-20 z-0">
       {floatingPixels.map((pixel) => (
         <motion.div
           key={`float-${pixel.id}`}

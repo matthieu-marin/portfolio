@@ -16,7 +16,7 @@ export function GalaxyEffects() {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden blur-[2px] z-0">
       <motion.div
         className="absolute top-10 right-20 w-96 h-96 rounded-full blur-3xl opacity-20"
         style={{

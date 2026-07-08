@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
 interface EditContextType {
   edits: Record<string, string>;
@@ -17,17 +24,28 @@ const EditContext = createContext<EditContextType>({
 export function EditProvider({ children }: { children: ReactNode }) {
   const [edits, setEdits] = useState<Record<string, string>>({});
 
-  const setEdit = (key: string, value: string) => {
-    setEdits(prev => ({ ...prev, [key]: value }));
-  };
+  const setEdit = useCallback((key: string, value: string) => {
+    setEdits((prev) => ({ ...prev, [key]: value }));
+  }, []);
 
-  const resetEdits = () => setEdits({});
+  const resetEdits = useCallback(() => setEdits({}), []);
 
-  return (
-    <EditContext.Provider value={{ edits, setEdit, resetEdits, hasEdits: Object.keys(edits).length > 0 }}>
-      {children}
-    </EditContext.Provider>
+  const value = useMemo(
+    () => ({
+      edits,
+      setEdit,
+      resetEdits,
+      hasEdits: Object.keys(edits).length > 0,
+    }),
+    [edits, setEdit, resetEdits]
   );
+
+  return <EditContext.Provider value={value}>{children}</EditContext.Provider>;
 }
 
 export const useEditContext = () => useContext(EditContext);
+
+export function useEdited(key: string, fallback: string): string {
+  const { edits } = useContext(EditContext);
+  return edits[key] ?? fallback;
+}
