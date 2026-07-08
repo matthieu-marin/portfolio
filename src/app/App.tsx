@@ -1,0 +1,294 @@
+import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ThemeProvider, useTheme } from '../shared/contexts/ThemeContext';
+import { NavigationProvider } from '../shared/contexts/NavigationContext';
+import { EditProvider } from '../shared/contexts/EditContext';
+import { RendererProvider } from '../shared/contexts/RendererContext';
+import { TabBar } from '../shared/components/TabBar';
+import { FileExplorer } from '../shared/components/FileExplorer';
+import { StatusBar } from '../shared/components/StatusBar';
+import { OutputPanel } from '../features/output-panel';
+import { LanguageSwitcher } from '../shared/components/LanguageSwitcher';
+import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
+import {
+  SteampunkGears,
+  PixelEffects,
+  SynthwaveEffects,
+  GalaxyEffects,
+  NordEffects,
+} from '../shared/effects';
+import { Home } from '../features/pages/Home';
+import { About } from '../features/pages/About';
+import { Projects } from '../features/pages/Projects';
+import { Skills } from '../features/pages/Skills';
+import { Contact } from '../features/pages/Contact';
+import { Experience } from '../features/pages/Experience';
+import { ActivityBar } from '../shared/components/ActivityBar';
+import { ExtensionsPanel } from '../shared/components/ExtensionsPanel';
+import { Chronology } from '../features/pages/Chronology';
+import { PanelLeftOpen, PanelLeftClose, FileX } from 'lucide-react';
+import { Toaster } from 'sonner';
+import type { Page, Tab, PanelId } from './types';
+
+function PortfolioContent() {
+  const [openTabs, setOpenTabs] = useState<Tab[]>([{ id: 'home' }]);
+  const [activeTab, setActiveTab] = useState<Page>('home');
+  const [isTerminalVisible, setIsTerminalVisible] = useState(false);
+  const [terminalHeight, setTerminalHeight] = useState(256);
+  const [isResizingTerminal, setIsResizingTerminal] = useState(false);
+  const [activePanel, setActivePanel] = useState<PanelId | null>('explorer');
+  const [isMobileExplorerVisible, setIsMobileExplorerVisible] = useState(false);
+  const { theme } = useTheme();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const lang = i18n.language === 'en' ? 'en' : 'fr';
+    document.documentElement.setAttribute('lang', lang);
+    document.title = t('meta.title');
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute('content', t('meta.description'));
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', t('meta.description'));
+  }, [t, i18n.language]);
+
+  const MIN_TERMINAL_HEIGHT = 100;
+  const MAX_TERMINAL_HEIGHT = 600;
+
+  useEffect(() => {
+    // On mobile, hide explorer by default; desktop uses the activity bar.
+    const MOBILE_BREAKPOINT = 768;
+    const handleResize = () => {
+      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+      setIsMobileExplorerVisible(!isMobile);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const togglePanel = useCallback((id: PanelId) => {
+    setActivePanel((prev) => (prev === id ? null : id));
+  }, []);
+
+  const toggleExplorer = useCallback(() => {
+    if (window.innerWidth >= 768) {
+      togglePanel('explorer');
+    } else {
+      setIsMobileExplorerVisible((v) => !v);
+    }
+  }, [togglePanel]);
+
+  const openFile = useCallback((id: Page) => {
+    setOpenTabs((prev) => (prev.find((tab) => tab.id === id) ? prev : [...prev, { id }]));
+    setActiveTab(id);
+  }, []);
+
+  useEffect(() => {
+    const handleNavigateToSkill = () => openFile('skills');
+    const handleNavigateToExperience = () => openFile('experience');
+    const handleNavigateToProject = () => openFile('projects');
+    const handleNavigateToAbout = () => openFile('about');
+
+    window.addEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
+    window.addEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
+    window.addEventListener('navigate-to-project', handleNavigateToProject as EventListener);
+    window.addEventListener('navigate-to-about', handleNavigateToAbout as EventListener);
+
+    return () => {
+      window.removeEventListener('navigate-to-skill', handleNavigateToSkill as EventListener);
+      window.removeEventListener('navigate-to-experience', handleNavigateToExperience as EventListener);
+      window.removeEventListener('navigate-to-project', handleNavigateToProject as EventListener);
+      window.removeEventListener('navigate-to-about', handleNavigateToAbout as EventListener);
+    };
+  }, [openFile]);
+
+  useEffect(() => {
+    if (!isResizingTerminal) return;
+
+    let rafId: number | null = null;
+    let pendingClientY = 0;
+
+    const apply = () => {
+      rafId = null;
+      const newHeight = window.innerHeight - pendingClientY;
+      const clamped = Math.max(
+        MIN_TERMINAL_HEIGHT,
+        Math.min(MAX_TERMINAL_HEIGHT, newHeight)
+      );
+      setTerminalHeight(clamped);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingClientY = e.clientY;
+      if (rafId === null) rafId = requestAnimationFrame(apply);
+    };
+    const handleMouseUp = () => setIsResizingTerminal(false);
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isResizingTerminal]);
+
+  const closeTab = useCallback(
+    (id: Page) => {
+      setOpenTabs((prev) => {
+        const closedIdx = prev.findIndex((tab) => tab.id === id);
+        const newTabs = prev.filter((tab) => tab.id !== id);
+        if (activeTab === id && newTabs.length > 0) {
+          // Switch to the neighbour (prefer the tab on the left).
+          const nextIdx = Math.max(0, closedIdx - 1);
+          setActiveTab(newTabs[nextIdx].id);
+        }
+        return newTabs;
+      });
+    },
+    [activeTab]
+  );
+
+  const renderPage = () => {
+    switch (activeTab) {
+      case 'home':
+        return <Home />;
+      case 'about':
+        return <About />;
+      case 'projects':
+        return <Projects />;
+      case 'skills':
+        return <Skills />;
+      case 'contact':
+        return <Contact />;
+      case 'experience':
+        return <Experience />;
+      case 'chronology':
+        return <Chronology />;
+      default:
+        return <Home />;
+    }
+  };
+
+  return (
+    <div className="h-screen flex flex-col overflow-hidden bg-background text-foreground">
+      {theme === 'steampunk' && <SteampunkGears />}
+      {theme === 'pixel' && <PixelEffects />}
+      {theme === 'synthwave' && <SynthwaveEffects />}
+      {theme === 'galaxy' && <GalaxyEffects />}
+      {theme === 'nord' && <NordEffects />}
+      <div className="h-12 bg-titlebar border-b border-border flex items-center justify-between px-5 md:px-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggleExplorer}
+            className="p-1 hover:bg-accent rounded transition-colors"
+            aria-label="Toggle explorer"
+            title="Toggle explorer"
+          >
+            {(activePanel !== null || isMobileExplorerVisible) ? (
+              <PanelLeftClose className="w-5 h-5" />
+            ) : (
+              <PanelLeftOpen className="w-5 h-5" />
+            )}
+          </button>
+          <span className="font-mono text-sm md:text-base">Portfolio IDE</span>
+        </div>
+        <div className="flex items-center gap-2 md:gap-4">
+          <ThemeSwitcher />
+          <LanguageSwitcher />
+        </div>
+      </div>
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Desktop: Activity Bar + panel actif */}
+        <div className="hidden md:flex h-full">
+          <ActivityBar activePanel={activePanel} onPanelSelect={togglePanel} />
+          {activePanel === 'explorer' && (
+            <FileExplorer
+              onFileSelect={openFile}
+              onVisibilityChange={(v) => !v && setActivePanel(null)}
+            />
+          )}
+          {activePanel === 'extensions' && <ExtensionsPanel />}
+        </div>
+
+        {/* Mobile: Explorer classique contrôlé par le hamburger */}
+        {isMobileExplorerVisible && (
+          <div className="md:hidden">
+            <FileExplorer
+              onFileSelect={openFile}
+              onVisibilityChange={setIsMobileExplorerVisible}
+            />
+          </div>
+        )}
+
+        <div className="flex-1 flex flex-col min-w-0">
+          <TabBar
+            tabs={openTabs.map((tab) => tab.id)}
+            activeTab={activeTab}
+            onTabClick={setActiveTab}
+            onTabClose={closeTab}
+          />
+
+          <div className="flex-1 overflow-auto">
+            {openTabs.length > 0 ? (
+              renderPage()
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center gap-2 text-comment">
+                <FileX className="w-10 h-10 opacity-50" />
+                <p className="text-sm">{t('editor.emptyState.title')}</p>
+                <p className="text-xs opacity-70">{t('editor.emptyState.hint')}</p>
+              </div>
+            )}
+          </div>
+          {isTerminalVisible && (
+            <div
+              className="border-t border-border relative"
+              style={{ height: terminalHeight }}
+            >
+              <div
+                className="absolute top-0 left-0 right-0 h-1 bg-transparent hover:bg-accent cursor-row-resize transition-colors z-10"
+                onMouseDown={() => setIsResizingTerminal(true)}
+              >
+                <div className="absolute inset-x-0 -top-1 h-3" />
+              </div>
+              <OutputPanel mode="terminal" onClose={() => setIsTerminalVisible(false)} />
+            </div>
+          )}
+        </div>
+      </div>
+      <StatusBar
+        onTerminalToggle={() => setIsTerminalVisible(!isTerminalVisible)}
+        isTerminalVisible={isTerminalVisible}
+        openTabsCount={openTabs.length}
+        onOpenChronology={() => openFile('chronology')}
+        onOpenExtensions={() => setActivePanel('extensions')}
+      />
+
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          className: 'font-mono text-xs',
+        }}
+      />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <NavigationProvider>
+        <EditProvider>
+          <RendererProvider>
+            <PortfolioContent />
+          </RendererProvider>
+        </EditProvider>
+      </NavigationProvider>
+    </ThemeProvider>
+  );
+}

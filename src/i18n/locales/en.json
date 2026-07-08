@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "title": "Matthieu Marin · Portfolio",
+    "description": "Matthieu Marin's portfolio: Full-Stack Developer, Cloud & DevOps. Master's in Cloud Computing & Mobility (UPJV / INSSET), two-year apprenticeship at Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
+    "htmlLang": "en"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
+    "experience": "Experience",
+    "chronology": "Timeline"
+  },
+  "explorer": {
+    "root": {
+      "human": "My Portfolio",
+      "code": "portfolio-dev"
+    }
+  },
+  "editor": {
+    "emptyState": {
+      "title": "No file open",
+      "hint": "Pick a page from the explorer to open it."
+    }
+  },
+  "home": {
+    "greeting": "Hi, I'm",
+    "title": "Full-Stack Developer · Cloud & DevOps",
+    "subtitle": "Java, Spring Boot, TypeScript: from Renault Digital backends to Google Cloud infrastructure"
+  },
+  "recruiter": {
+    "chipNavigate": "Click to open",
+    "home": {
+      "expertiseTitle": "Expertise",
+      "approachTitle": "How I Work",
+      "statsAriaLabel": "Key figures",
+      "downloadCv": "Download CV",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "chronology": {
+      "title": "Journey"
+    },
+    "experience": {
+      "title": "Professional Experience",
+      "kind": {
+        "apprenticeship": "Apprenticeship",
+        "internship": "Internship"
+      },
+      "projectsTitle": "Projects",
+      "techUsed": "Technologies used",
+      "otherSkills": "Other skills"
+    },
+    "skills": {
+      "title": "Skills",
+      "acquiredAt": "Learned at:",
+      "experienceCount_one": "{{count}} experience",
+      "experienceCount_other": "{{count}} experiences"
+    },
+    "about": {
+      "title": "About Me",
+      "locationTitle": "Location",
+      "educationTitle": "Education",
+      "interestsTitle": "Interests",
+      "softSkillsTitle": "Soft skills"
+    },
+    "projects": {
+      "title": "My Projects",
+      "gallery": "Previews",
+      "viewCode": "View code",
+      "viewDemo": "View demo"
+    },
+    "contact": {
+      "title": "Contact Me",
+      "coordinatesTitle": "Coordinates",
+      "formTitle": "Send a message"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/MySQL internships.",
+    "experience": "Experience",
+    "education": "Education"
+  },
+  "projects": {
+    "title": "My Projects",
+    "viewCode": "View Code",
+    "viewDemo": "View Demo"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "description": "Feel free to reach out about opportunities or collaborations",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "placeholder": {
+      "name": "Your name",
+      "email": "your@email.com",
+      "message": "Your message..."
+    },
+    "toast": {
+      "sent": "Message sent!",
+      "sentDescription": "I'll get back to you soon.",
+      "failed": "Sending failed"
+    }
+  },
+  "experience": {
+    "title": "Professional Experience",
+    "current": "Current"
+  },
+  "terminal": {
+    "welcome": "Welcome to the interactive terminal",
+    "help": "Type \"help\" to see available commands",
+    "helpTitle": "Available commands",
+    "helpHelp": "Show this help",
+    "helpAbout": "About me",
+    "helpSkills": "Skills",
+    "helpProjects": "List projects",
+    "helpContact": "Contact info",
+    "helpClear": "Clear terminal",
+    "helpWhoami": "Who am I?",
+    "aboutLine1": "Apprentice developer at Renault Digital, Master Cloud Computing & Mobility student.",
+    "aboutLine2": "Four pro experiences: Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/MySQL).",
+    "skillsFrontend": "Frontend",
+    "skillsBackend": "Backend",
+    "skillsTools": "Tools",
+    "skillsOther": "Other",
+    "project1Desc": "This interactive portfolio (React + TypeScript)",
+    "project2Desc": "Connected & Sustainable Territory IoT platform (Vue.js + Node.js)",
+    "project3Desc": "Chatterie de la Terre de Brasco showcase site (PHP/MySQL)",
+    "project4Desc": "",
+    "whoami": "An apprentice who loves turning coffee into Java code ☕→💻",
+    "unknownCommand": "Unknown command",
+    "unknownCommandHelp": "Type 'help' to see available commands",
+    "helpExtra": "Standard commands also work. Try ls, cd, cat, git, npm…",
+    "helpResetEdits": "Reset all local content edits",
+    "helpExtensions": "Manage editor extensions",
+    "contactEmail": "Email",
+    "contactGithub": "GitHub",
+    "contactLinkedin": "LinkedIn",
+    "contactLocation": "Location",
+    "exitMessage": "You can't leave. This is a portfolio, not a real terminal.",
+    "sudoPasswordPrompt": "[sudo] password for user:",
+    "sudoWrongPassword": "Sorry, try again. ({n}/3)",
+    "sudoMaxAttempts": "sudo: 3 incorrect password attempts",
+    "sudoHint": "(hint: it's \"password\")",
+    "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
+    "sudoSuccess2": "Oh wait... we're in a fake terminal."
+  },
+  "status": {
+    "terminal": "Terminal",
+    "theme": "Theme"
+  }
+}

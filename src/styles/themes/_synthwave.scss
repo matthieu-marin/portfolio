@@ -1,0 +1,38 @@
+:root[data-theme="synthwave"] {
+  --background: #2b1055;
+  --sidebar: #1f0841;
+  --titlebar: #16062e;
+  --tabs: #1f0841;
+  --editor: #2b1055;
+  --hover: #3d1675;
+  --statusbar: #16062e;
+  --terminal: #1f0841;
+  
+  --foreground: #f9c5d5;
+  --statusbar-text: #d9a5b5;
+  --terminal-text: #f9c5d5;
+  --terminal-prompt: #ff6ec7;
+  --terminal-output: #ffd319;
+  
+  --accent: #ff6ec7;
+  --accent-foreground: #16062e;
+  
+  --border: #7b2cbf;
+  
+  --folder: #ffd319;
+  --file-tsx: #00f5ff;
+  
+  --close-hover: #ff006e;
+  
+  --comment: #8b6ba8;
+  
+  --syntax-comment: #8b6ba8;
+  --syntax-keyword: #ff6ec7;
+  --syntax-string: #ffd319;
+  --syntax-function: #00f5ff;
+  --syntax-variable: #ff9e64;
+  --syntax-class: #b967ff;
+  --syntax-property: #00d4e6;
+  --syntax-operator: #ff6ec7;
+  --syntax-punctuation: #f9c5d5;
+}

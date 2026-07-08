@@ -1,0 +1,38 @@
+:root[data-theme="steampunk"] {
+  --background: #2b1810;
+  --sidebar: #1f0f08;
+  --titlebar: #120905;
+  --tabs: #1f0f08;
+  --editor: #2b1810;
+  --hover: #3d2415;
+  --statusbar: #120905;
+  --terminal: #1f0f08;
+  
+  --foreground: #e8d5b7;
+  --statusbar-text: #c9b89a;
+  --terminal-text: #e8d5b7;
+  --terminal-prompt: #d4a574;
+  --terminal-output: #b8956a;
+  
+  --accent: #d4a574;
+  --accent-foreground: #120905;
+  
+  --border: #4a3324;
+  
+  --folder: #c9a167;
+  --file-tsx: #8b7355;
+  
+  --close-hover: #a85a3a;
+  
+  --comment: #7a6752;
+  
+  --syntax-comment: #7a6752;
+  --syntax-keyword: #d4a574;
+  --syntax-string: #b8956a;
+  --syntax-function: #c9a167;
+  --syntax-variable: #ddb892;
+  --syntax-class: #e4c9a8;
+  --syntax-property: #c9a167;
+  --syntax-operator: #d4a574;
+  --syntax-punctuation: #b39b7e;
+}
