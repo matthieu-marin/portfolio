@@ -56,13 +56,16 @@ function experienceBlock(exp: (typeof experiences)[number], language: 'fr' | 'en
       ty('Experience'),
       pn('(')
     ),
-    ln(2, ed(`exp.${exp.id}.role.${language}`, exp.role[language]), pn(',')),
+    // Le marqueur /* role */ rend le préfixe d'ancrage unique : sans lui, la
+    // ligne du rôle partage son préfixe (indent + quote) avec les highlights
+    // et extractEdits associe le rôle suivant au mauvais littéral.
+    ln(2, cmt('/* role */'), p(' '), ed(`exp.${exp.id}.role.${language}`, exp.role[language]), pn(',')),
     ln(2, kw('List'), pn('.'), p('of'), pn('('), ...stringListTokens(techNames), pn('),')),
     ...shownHighlights.map((highlight, idx) =>
       ln(2, str(`"${highlight[language]}"`), pn(idx === shownHighlights.length - 1 ? '' : ','))
     ),
     ...(hiddenCount > 0
-      ? [ln(2, cmt(L(`// + ${hiddenCount} autres — voir la vue recruteur`, `// + ${hiddenCount} more — see the recruiter view`)))]
+      ? [ln(2, cmt(L(`// + ${hiddenCount} autres (voir la vue recruteur)`, `// + ${hiddenCount} more (see the recruiter view)`)))]
       : []),
     ln(1, pn(');')),
   ];
@@ -79,7 +82,7 @@ export function buildExperienceJava(language: 'fr' | 'en'): CodeFileModel {
       ln(0, kw('import'), p(' '), ty('java.util.List'), pn(';')),
       blank(),
       ln(0, cmt('/**')),
-      ln(0, cmt(L(' * Parcours professionnel — du plus récent au plus ancien.', ' * Career history — newest first.'))),
+      ln(0, cmt(L(' * Parcours professionnel, du plus récent au plus ancien.', ' * Career history, newest first.'))),
       ln(0, cmt(' */')),
       ln(0, kw('public class'), p(' '), ty('Experience'), p(' '), pn('{')),
       blank(),

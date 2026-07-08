@@ -14,10 +14,11 @@ export type Theme =
   | 'light'
   | 'steampunk'
   | 'pixel'
-  | 'cyberpunk'
   | 'synthwave'
   | 'galaxy'
   | 'nord';
+
+const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'steampunk', 'pixel', 'synthwave', 'galaxy', 'nord'];
 
 interface ThemeContextType {
   theme: Theme;
@@ -31,7 +32,10 @@ const STORAGE_KEY = 'portfolio-theme';
 function readSavedTheme(): Theme | null {
   if (typeof window === 'undefined') return null;
   try {
-    return localStorage.getItem(STORAGE_KEY) as Theme | null;
+    const saved = localStorage.getItem(STORAGE_KEY);
+    // A stored theme that no longer exists (e.g. removed from the app)
+    // must not leak into data-theme, or the UI loses all its variables.
+    return VALID_THEMES.includes(saved as Theme) ? (saved as Theme) : null;
   } catch {
     return null;
   }

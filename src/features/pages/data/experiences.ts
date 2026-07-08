@@ -9,8 +9,8 @@ export const experiences: ExperienceEntry[] = [
     id: 'renault',
     company: 'Renault Digital',
     role: {
-      fr: 'Développeur en alternance — Données véhicule électrique',
-      en: 'Apprentice Developer — Electric Vehicle Data',
+      fr: 'Développeur en alternance · Données véhicule électrique',
+      en: 'Apprentice Developer · Electric Vehicle Data',
     },
     period: {
       fr: 'sept. 2024 – août 2026 · 2 ans',
@@ -40,23 +40,7 @@ export const experiences: ExperienceEntry[] = [
         en: 'GitLab CI/CD pipelines and code review through merge requests',
       },
     ],
-    subProjects: [
-      {
-        title: 'Charge Status',
-        description: {
-          fr: "Service qui centralise les données du véhicule (charge, localisation, configuration) publiées en Pub/Sub et les prépare dans Firestore pour l'application mobile",
-          en: 'Service centralizing vehicle data (charge, location, configuration) published on Pub/Sub and preparing it in Firestore for the mobile app',
-        },
-      },
-      {
-        title: 'API POI',
-        description: {
-          fr: 'API REST de points d’intérêt adaptés au véhicule et à sa charge (stations de recharge, restaurants, parkings) via Google Places',
-          en: 'REST API serving points of interest tailored to the vehicle and its charge (charging stations, restaurants, parkings) through Google Places',
-        },
-      },
-    ],
-    technologies: ['java', 'springboot', 'googlecloud', 'docker', 'kubernetes', 'sql'],
+    technologies: ['java', 'springboot', 'googlecloud', 'docker', 'kubernetes', 'postgresql'],
     otherSkills: [
       { fr: 'Agile au quotidien (daily, sprint, PIP)', en: 'Day-to-day agile (daily, sprint, PIP)' },
       { fr: 'Revue de code', en: 'Code review' },
@@ -124,27 +108,27 @@ export const experiences: ExperienceEntry[] = [
     kind: 'internship',
     highlights: [
       {
-        fr: "Premier stage : démarrage du site vitrine et mise en place de l'environnement WordPress",
-        en: 'First internship: showcase website kick-off and WordPress environment setup',
+        fr: "Premier stage : démarrage du site vitrine et mise en place de l'environnement PHP / MySQL",
+        en: 'First internship: showcase website kick-off and PHP / MySQL environment setup',
       },
       {
         fr: 'Second stage : finalisation et livraison du site',
         en: 'Second internship: site finalization and delivery',
       },
       {
-        fr: 'Développement PHP et intégration WordPress',
-        en: 'PHP development and WordPress integration',
+        fr: 'Développement PHP et modélisation de la base MySQL',
+        en: 'PHP development and MySQL database design',
       },
     ],
     subProjects: [
       {
         title: 'Site vitrine de l’association',
         description: {
-          fr: "Site vitrine WordPress de l'association, démarré en 2022 et livré lors du second stage en 2023",
-          en: 'WordPress showcase website for the association, started in 2022 and delivered during the second internship in 2023',
+          fr: "Site vitrine PHP / MySQL de l'association, démarré en 2022 et livré lors du second stage en 2023",
+          en: 'PHP / MySQL showcase website for the association, started in 2022 and delivered during the second internship in 2023',
         },
       },
     ],
-    technologies: ['php', 'wordpress'],
+    technologies: ['php', 'mysql'],
   },
 ];

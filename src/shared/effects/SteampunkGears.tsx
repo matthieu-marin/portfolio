@@ -3,7 +3,7 @@ import { Settings, Cog } from 'lucide-react';
 
 export function SteampunkGears() {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-10 z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden blur-[2px] opacity-10 z-0">
       <motion.div
         className="absolute -top-20 -left-20"
         animate={{ rotate: 360 }}

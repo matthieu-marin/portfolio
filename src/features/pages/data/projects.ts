@@ -11,8 +11,8 @@ export const projects: ProjectEntry[] = [
     id: 'streamquest',
     title: 'StreamQuest',
     description: {
-      fr: "Extension Twitch gamifiée : les streamers créent des succès personnalisés que leurs viewers débloquent en interagissant (chat, points de chaîne), avec classements et badges — projet de 2e année de master en équipe",
-      en: 'Gamified Twitch extension: streamers create custom achievements that viewers unlock by interacting (chat, channel points), with leaderboards and badges — 2nd-year team master’s project',
+      fr: "Extension Twitch gamifiée : les streamers créent des succès personnalisés que leurs viewers débloquent en interagissant (chat, points de chaîne), avec classements et badges. Projet de 2e année de master en équipe",
+      en: 'Gamified Twitch extension: streamers create custom achievements that viewers unlock by interacting (chat, channel points), with leaderboards and badges. 2nd-year team master’s project',
     },
     status: { fr: 'Projet de master (M2)', en: "Master's project (M2)" },
     technologies: ['typescript', 'react', 'nodejs', 'googlecloud', 'docker', 'terraform', 'cicd'],
@@ -37,6 +37,10 @@ export const projects: ProjectEntry[] = [
         fr: 'Infrastructure Terraform + CI/CD GitHub Actions partagée entre les services',
         en: 'Terraform infrastructure + GitHub Actions CI/CD shared across services',
       },
+      {
+        fr: "Apprentissage de l'utilisation d'une IA (Claude) dans le cadre du projet",
+        en: 'Learned to work with an AI assistant (Claude) over the course of the project',
+      },
     ],
     images: [],
     repository: 'https://github.com/projet-ccm2',
@@ -45,11 +49,11 @@ export const projects: ProjectEntry[] = [
     id: 'locaccm',
     title: 'LocaCCM',
     description: {
-      fr: "Plateforme de gestion locative pour propriétaires (logements, locataires, documents, messagerie) en microservices — projet de 1re année de master en équipe de 9, où j'ai tenu le rôle d'architecte cloud",
-      en: 'Rental-management platform for landlords (housing, tenants, documents, messaging) built as microservices — 1st-year master’s project in a team of 9, where I was the cloud architect',
+      fr: "Plateforme de gestion locative pour propriétaires (logements, locataires, documents, messagerie) en microservices. Projet de 1re année de master en équipe de 9, où j'ai tenu le rôle d'architecte cloud",
+      en: 'Rental-management platform for landlords (housing, tenants, documents, messaging) built as microservices. 1st-year master’s project in a team of 9, where I was the cloud architect',
     },
     status: { fr: 'Projet de master (M1)', en: "Master's project (M1)" },
-    technologies: ['typescript', 'nodejs', 'googlecloud', 'docker', 'terraform', 'cicd', 'sql'],
+    technologies: ['typescript', 'nodejs', 'googlecloud', 'docker', 'terraform', 'cicd', 'postgresql'],
     features: [
       {
         fr: "Rôle : architecte cloud de l'équipe + développement du microservice d'authentification",
@@ -79,23 +83,19 @@ export const projects: ProjectEntry[] = [
     id: 'portfolio',
     title: 'Portfolio IDE',
     description: {
-      fr: 'Portfolio interactif inspiré de VS Code avec terminal intégré et thèmes personnalisés',
-      en: 'Interactive portfolio inspired by VS Code with integrated terminal and custom themes',
+      fr: 'Portfolio interactif inspiré de VS Code avec terminal intégré',
+      en: 'Interactive portfolio inspired by VS Code with an integrated terminal',
     },
     status: { fr: 'Production', en: 'Production' },
     technologies: ['react', 'typescript'],
     features: [
       {
-        fr: 'Système multi-thèmes (Dark, Light, Steampunk, Cyberpunk, Synthwave, Galaxy, Nord, Pixel)',
-        en: 'Multi-theme system (Dark, Light, Steampunk, Cyberpunk, Synthwave, Galaxy, Nord, Pixel)',
+        fr: 'Interface fidèle à un IDE : explorateur de fichiers, onglets, barre de statut',
+        en: 'IDE-faithful interface: file explorer, tabs, status bar',
       },
       {
         fr: 'Terminal interactif avec commandes Unix simulées',
         en: 'Interactive terminal with simulated Unix commands',
-      },
-      {
-        fr: 'Vue recruteur et vue code pilotées par une fausse extension « Portfolio Renderer »',
-        en: 'Recruiter view and code view driven by a fake "Portfolio Renderer" extension',
       },
       {
         fr: 'Bilingue (FR/EN) et responsive mobile',

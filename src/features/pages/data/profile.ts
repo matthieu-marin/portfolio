@@ -7,8 +7,8 @@ import type { Profile } from './types';
 export const profile: Profile = {
   name: 'Matthieu Marin',
   role: {
-    fr: 'Développeur Full-Stack — Cloud & DevOps',
-    en: 'Full-Stack Developer — Cloud & DevOps',
+    fr: 'Développeur Full-Stack · Cloud & DevOps',
+    en: 'Full-Stack Developer · Cloud & DevOps',
   },
   bio: {
     fr: "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital sur les données du véhicule électrique, je construis des services backend robustes et l'infrastructure cloud qui les fait tourner. Mes terrains de jeu : Java/Spring Boot et TypeScript côté code, Google Cloud, Docker et Terraform côté infrastructure.",
@@ -43,8 +43,8 @@ export const profile: Profile = {
       en: 'Modern frontend: React, Vue.js',
     },
     {
-      fr: 'Bases de données relationnelles (PostgreSQL) et NoSQL (Firestore, MongoDB)',
-      en: 'Relational databases (PostgreSQL) and NoSQL (Firestore, MongoDB)',
+      fr: 'Bases de données relationnelles (PostgreSQL, MySQL) et NoSQL (Firestore, MongoDB)',
+      en: 'Relational databases (PostgreSQL, MySQL) and NoSQL (Firestore, MongoDB)',
     },
     {
       fr: 'Méthode agile (SCRUM) et gestion de projet',

@@ -57,7 +57,6 @@ export function StatusBar({
     { id: 'light' as const, name: 'Light', icon: Sun },
     { id: 'steampunk' as const, name: 'Steampunk', icon: Settings },
     { id: 'pixel' as const, name: 'Pixel', icon: Gamepad2 },
-    { id: 'cyberpunk' as const, name: 'Cyberpunk', icon: Zap },
     { id: 'synthwave' as const, name: 'Synthwave', icon: Sunset },
     { id: 'galaxy' as const, name: 'Galaxy', icon: Rocket },
     { id: 'nord' as const, name: 'Nord', icon: Snowflake },

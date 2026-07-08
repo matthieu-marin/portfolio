@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Matthieu Marin — Portfolio",
-    "description": "Portfolio de Matthieu Marin — Développeur Full-Stack, Cloud & DevOps. Master Cloud Computing & Mobility (UPJV / INSSET), 2 ans d'alternance chez Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
+    "title": "Matthieu Marin · Portfolio",
+    "description": "Portfolio de Matthieu Marin, Développeur Full-Stack, Cloud & DevOps. Master Cloud Computing & Mobility (UPJV / INSSET), 2 ans d'alternance chez Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
     "htmlLang": "fr"
   },
   "nav": {
@@ -27,7 +27,7 @@
   },
   "home": {
     "greeting": "Bonjour, je suis",
-    "title": "Développeur Full-Stack — Cloud & DevOps",
+    "title": "Développeur Full-Stack · Cloud & DevOps",
     "subtitle": "Java, Spring Boot, TypeScript : du backend Renault Digital à l'infrastructure Google Cloud"
   },
   "recruiter": {
@@ -80,7 +80,7 @@
   },
   "about": {
     "title": "À propos de moi",
-    "description": "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/WordPress associatifs.",
+    "description": "Diplômé d'un Master Cloud Computing & Mobility (UPJV / INSSET) après deux ans d'alternance chez Renault Digital. Quatre expériences professionnelles en développement web : alternance Renault Digital, stage IoT chez Faubourg Numérique, et deux stages PHP/MySQL associatifs.",
     "experience": "Expérience",
     "education": "Formation"
   },
@@ -129,14 +129,14 @@
     "helpClear": "Efface le terminal",
     "helpWhoami": "Qui suis-je?",
     "aboutLine1": "Développeur en alternance chez Renault Digital, étudiant en Master Cloud Computing & Mobility.",
-    "aboutLine2": "Quatre expériences pro : Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/WordPress).",
+    "aboutLine2": "Quatre expériences pro : Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/MySQL).",
     "skillsFrontend": "Frontend",
     "skillsBackend": "Backend",
     "skillsTools": "Outils",
     "skillsOther": "Autres",
     "project1Desc": "Ce portfolio interactif (React + TypeScript)",
     "project2Desc": "Plateforme IoT Territoire Connecté & Durable (Vue.js + Node.js)",
-    "project3Desc": "Site vitrine Chatterie de la Terre de Brasco (PHP/WordPress)",
+    "project3Desc": "Site vitrine Chatterie de la Terre de Brasco (PHP/MySQL)",
     "project4Desc": "",
     "whoami": "Un alternant qui aime transformer le café en code Java ☕→💻",
     "unknownCommand": "Commande inconnue",
@@ -154,7 +154,7 @@
     "sudoMaxAttempts": "sudo : 3 tentatives de mot de passe incorrectes",
     "sudoHint": "(indice : c'est \"password\")",
     "sudoSuccess1": "Mot de passe accepté... pas très sécurisé mais le mot de passe est bon.",
-    "sudoSuccess2": "Ah mais attendez — on est dans un faux terminal."
+    "sudoSuccess2": "Ah mais attendez... on est dans un faux terminal."
   },
   "status": {
     "terminal": "Terminal",

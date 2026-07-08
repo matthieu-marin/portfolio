@@ -79,7 +79,7 @@ function ProjectCard({
           <ul className="space-y-1.5">
             {project.features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-2">
-                <Rocket className="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <Rocket className="w-3.5 h-3.5 text-accent flex-shrink-0 mt-1 md:mt-1.5" aria-hidden="true" />
                 <span>{feature[language]}</span>
               </li>
             ))}

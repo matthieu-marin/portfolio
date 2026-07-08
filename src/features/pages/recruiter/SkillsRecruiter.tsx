@@ -27,7 +27,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   studies: 'BTS SIO / Master UPJV',
 };
 
-const DISPLAY_NAMES_STUDIES_SQL = 'BTS SIO / Licence Pro';
+const DISPLAY_NAMES_STUDIES_MYSQL = 'BTS SIO / Licence Pro';
 
 type AcquiredFrom = {
   type: 'experience' | 'project' | 'other';
@@ -40,7 +40,7 @@ type AcquiredFrom = {
 // previously in Skills.tsx (source pills) — same fallbacks, same ids.
 function resolveAcquiredFrom(id: string, skillId: string): AcquiredFrom {
   if (id === 'studies') {
-    const displayName = skillId === 'sql' ? DISPLAY_NAMES_STUDIES_SQL : (DISPLAY_NAMES[id] ?? id);
+    const displayName = skillId === 'mysql' ? DISPLAY_NAMES_STUDIES_MYSQL : (DISPLAY_NAMES[id] ?? id);
     return { type: 'other', id, displayName };
   }
   const experience = experiences.find((e) => e.id === id);

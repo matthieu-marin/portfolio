@@ -33,7 +33,7 @@ export function buildSkillsYml(language: 'fr' | 'en'): CodeFileModel {
 
   return {
     lines: [
-      ln(0, cmt(L('# skills.yml — inventaire des compétences', '# skills.yml — skills inventory'))),
+      ln(0, cmt(L('# skills.yml : inventaire des compétences', '# skills.yml: skills inventory'))),
       blank(),
       ln(0, prop('version'), pn(':'), p(' '), str('2026.07')),
       blank(),

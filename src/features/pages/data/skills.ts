@@ -48,15 +48,6 @@ export const skillCategories: SkillCategory[] = [
         },
         acquiredAt: ['chatterie'],
       },
-      {
-        id: 'python',
-        name: 'Python',
-        description: {
-          fr: "Langage polyvalent pour le scripting et l'automatisation",
-          en: 'Versatile language for scripting and automation',
-        },
-        acquiredAt: ['studies'],
-      },
     ],
   },
   {
@@ -98,15 +89,6 @@ export const skillCategories: SkillCategory[] = [
           en: 'Progressive JavaScript framework for web development',
         },
         acquiredAt: ['faubourg'],
-      },
-      {
-        id: 'wordpress',
-        name: 'WordPress',
-        description: {
-          fr: 'CMS open source pour la création de sites web',
-          en: 'Open source CMS for website creation',
-        },
-        acquiredAt: ['chatterie'],
       },
     ],
   },
@@ -184,13 +166,22 @@ export const skillCategories: SkillCategory[] = [
         acquiredAt: ['faubourg'],
       },
       {
-        id: 'sql',
-        name: 'SQL',
+        id: 'postgresql',
+        name: 'PostgreSQL',
         description: {
-          fr: 'Langage de requête pour bases de données relationnelles (PostgreSQL via Prisma sur LocaCCM)',
-          en: 'Query language for relational databases (PostgreSQL through Prisma on LocaCCM)',
+          fr: 'Base relationnelle des services Renault Digital et de LocaCCM (via Prisma)',
+          en: 'Relational database behind the Renault Digital services and LocaCCM (through Prisma)',
         },
-        acquiredAt: ['renault', 'locaccm', 'studies'],
+        acquiredAt: ['renault', 'locaccm'],
+      },
+      {
+        id: 'mysql',
+        name: 'MySQL',
+        description: {
+          fr: "Base relationnelle du site de la chatterie et des projets d'études",
+          en: 'Relational database behind the cattery website and study projects',
+        },
+        acquiredAt: ['chatterie', 'studies'],
       },
     ],
   },
@@ -202,8 +193,8 @@ export const skillCategories: SkillCategory[] = [
         id: 'git',
         name: 'Git',
         description: {
-          fr: 'Versionnement, merge requests et revue de code au quotidien',
-          en: 'Everyday version control, merge requests and code review',
+          fr: 'Versionnement au quotidien : GitLab chez Renault Digital, GitHub sur les projets de master et perso',
+          en: 'Everyday version control: GitLab at Renault Digital, GitHub on master and personal projects',
         },
         acquiredAt: ['renault', 'faubourg', 'locaccm', 'streamquest'],
       },

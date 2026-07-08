@@ -10,10 +10,10 @@ export const about: AboutData = {
     {
       id: 'master_cloud_computing',
       degree: {
-        fr: 'Master — Cloud Computing & Mobility',
-        en: 'Master — Cloud Computing & Mobility',
+        fr: 'Master Cloud Computing & Mobility',
+        en: 'Master in Cloud Computing & Mobility',
       },
-      school: 'UPJV / INSSET — Saint-Quentin',
+      school: 'UPJV / INSSET, Saint-Quentin',
       period: 'sept. 2024 – juin 2026',
       highlights: [
         {
@@ -41,10 +41,10 @@ export const about: AboutData = {
     {
       id: 'licence_pro_web_mobile',
       degree: {
-        fr: "Licence Professionnelle — Conception et développement d'applications web et mobile",
-        en: 'Professional Bachelor — Web and Mobile Application Design and Development',
+        fr: "Licence Professionnelle en conception et développement d'applications web et mobile",
+        en: 'Professional Bachelor in Web and Mobile Application Design and Development',
       },
-      school: 'UPJV / INSSET — Saint-Quentin',
+      school: 'UPJV / INSSET, Saint-Quentin',
       period: 'sept. 2023 – août 2024',
       highlights: [
         {
@@ -68,10 +68,10 @@ export const about: AboutData = {
     {
       id: 'bts_sio_option_b',
       degree: {
-        fr: 'BTS SIO option B — Solutions logicielles et applications métiers',
-        en: 'BTS SIO option B — Software Solutions and Business Applications',
+        fr: 'BTS SIO option B (Solutions logicielles et applications métiers)',
+        en: 'BTS SIO option B (Software Solutions and Business Applications)',
       },
-      school: 'Lycée Paul Claudel — Laon',
+      school: 'Lycée Paul Claudel, Laon',
       period: 'sept. 2021 – juin 2023',
       highlights: [
         // TODO: miss info for education[2].highlights — détails des matières BTS non fournis

@@ -77,7 +77,7 @@ function ExperienceCard({
             {exp.highlights.map((highlight, idx) => (
               <li key={idx} className="flex items-start gap-2">
                 <Target
-                  className="w-3.5 h-3.5 flex-shrink-0 mt-0.5"
+                  className="w-3.5 h-3.5 flex-shrink-0 mt-1 md:mt-1.5"
                   style={{ color: sectionColor(index) }}
                   aria-hidden="true"
                 />

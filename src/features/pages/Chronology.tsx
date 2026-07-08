@@ -68,7 +68,7 @@ const COMMITS: Commit[] = [
   {
     x: SX, y: Y.master, color: CS, isMain: false,
     title: 'Master Cloud Computing & Mobility',
-    sub: 'UPJV / INSSET — Saint-Quentin',
+    sub: 'UPJV / INSSET, Saint-Quentin',
     period: '2024 – 2026',
     navEvent: 'navigate-to-about',
     navLabel: 'About → Formation',
@@ -76,7 +76,7 @@ const COMMITS: Commit[] = [
   {
     x: WX, y: Y.renault, color: CW, isMain: false,
     title: 'Alternance Renault Digital',
-    sub: 'Développeur — données véhicule électrique',
+    sub: 'Développeur · données véhicule électrique',
     period: '2024 – 2026',
     navEvent: 'navigate-to-experience',
     navLabel: 'Experience → Renault',
@@ -89,8 +89,8 @@ const COMMITS: Commit[] = [
   },
   {
     x: SX, y: Y.licence, color: CS, isMain: false,
-    title: 'Licence Pro — Dev Web & Mobile',
-    sub: 'UPJV / INSSET — Saint-Quentin',
+    title: 'Licence Pro Dev Web & Mobile',
+    sub: 'UPJV / INSSET, Saint-Quentin',
     period: '2023 – 2024',
     navEvent: 'navigate-to-about',
     navLabel: 'About → Formation',
@@ -98,7 +98,7 @@ const COMMITS: Commit[] = [
   {
     x: WX, y: Y.faubourg, color: CW, isMain: false,
     title: 'Stage Faubourg Numérique',
-    sub: 'Plateforme IoT — Territoire Connecté Durable',
+    sub: 'Plateforme IoT Territoire Connecté Durable',
     period: 'mai – août 2024',
     navEvent: 'navigate-to-experience',
     navLabel: 'Experience → Faubourg',
@@ -106,7 +106,7 @@ const COMMITS: Commit[] = [
   {
     x: SX, y: Y.bts, color: CS, isMain: false,
     title: 'BTS SIO option B',
-    sub: 'Lycée Paul Claudel — Laon',
+    sub: 'Lycée Paul Claudel, Laon',
     period: '2021 – 2023',
     navEvent: 'navigate-to-about',
     navLabel: 'About → Formation',
@@ -114,7 +114,7 @@ const COMMITS: Commit[] = [
   {
     x: WX, y: Y.chatterie, color: CW, isMain: false,
     title: 'Stages Chatterie ×2',
-    sub: 'Site vitrine WordPress',
+    sub: 'Site vitrine PHP/MySQL',
     period: '2022 – 2023',
     navEvent: 'navigate-to-experience',
     navLabel: 'Experience → Chatterie',

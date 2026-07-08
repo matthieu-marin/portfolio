@@ -13,7 +13,6 @@ import { ThemeSwitcher } from '../shared/components/ThemeSwitcher';
 import {
   SteampunkGears,
   PixelEffects,
-  CyberpunkEffects,
   SynthwaveEffects,
   GalaxyEffects,
   NordEffects,
@@ -180,7 +179,6 @@ function PortfolioContent() {
     <div className="h-screen flex flex-col overflow-hidden bg-background text-foreground">
       {theme === 'steampunk' && <SteampunkGears />}
       {theme === 'pixel' && <PixelEffects />}
-      {theme === 'cyberpunk' && <CyberpunkEffects />}
       {theme === 'synthwave' && <SynthwaveEffects />}
       {theme === 'galaxy' && <GalaxyEffects />}
       {theme === 'nord' && <NordEffects />}

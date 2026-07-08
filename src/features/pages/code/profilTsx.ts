@@ -27,7 +27,7 @@ export function buildProfilTsx(language: 'fr' | 'en'): CodeFileModel {
 
   return {
     lines: [
-      ln(0, cmt(L('// profil.tsx — la personne derrière le portfolio', '// profil.tsx — the person behind the portfolio'))),
+      ln(0, cmt(L('// profil.tsx : la personne derrière le portfolio', '// profil.tsx: the person behind the portfolio'))),
       blank(),
       ln(0, kw('import'), p(' { '), ty('Developer'), p(' } '), kw('from'), p(' '), str("'@matthieu/core'"), pn(';')),
       blank(),

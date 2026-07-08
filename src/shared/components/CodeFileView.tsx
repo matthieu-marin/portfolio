@@ -8,7 +8,7 @@
 // frappe. Le texte libre non mappé est éphémère (perdu au changement
 // d'onglet, de langue, ou via « Reset edits »).
 // ─────────────────────────────────────────────────────────────
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useEditContext } from '../contexts/EditContext';
 import { ImageWithFallback } from './ImageWithFallback';
 import type { CodeFileModel } from '../../features/pages/code/tokens';
@@ -16,7 +16,6 @@ import type { CodeFileModel } from '../../features/pages/code/tokens';
 export type CodeSyntax = 'tsx' | 'java' | 'md' | 'yaml' | 'tf' | 'http';
 
 const INDENT = '  ';
-const LINE_HEIGHT_PX = 24; // leading-6 (1.5rem) — partagé par le gutter et la détection de survol
 
 // ── Sérialisation du modèle en texte brut + matchers d'édition ────────────
 
@@ -177,12 +176,11 @@ function highlightSegment(segment: string, rules: Rule[]): string {
   return escapeHtml(segment);
 }
 
-function highlight(text: string, syntax: CodeSyntax): string {
+// Une entrée par ligne logique : le rendu par ligne permet au gutter de
+// suivre la hauteur réelle de chaque ligne quand elle wrappe.
+function highlightLines(text: string, syntax: CodeSyntax): string[] {
   const rules = RULES[syntax];
-  return text
-    .split('\n')
-    .map((line) => highlightSegment(line, rules))
-    .join('\n');
+  return text.split('\n').map((line) => highlightSegment(line, rules));
 }
 
 // ── Composant ──────────────────────────────────────────────────────────────
@@ -248,17 +246,30 @@ export function CodeFileView({ model, syntax, action }: CodeFileViewProps) {
     if (e.key === 'Escape') e.currentTarget.blur();
   };
 
+  // Refs des cellules de contenu (par index de ligne logique) : le survol
+  // d'une ligne wrappable se détecte via sa hauteur réelle, plus par un
+  // simple y / hauteur-de-ligne.
+  const lineCellRefs = useRef(new Map<number, HTMLDivElement>());
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (imgByLine.size === 0) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const line = Math.floor((e.clientY - rect.top) / LINE_HEIGHT_PX);
-    const hint = imgByLine.get(line);
-    setHoverImage(hint ? { hint, top: (line + 1) * LINE_HEIGHT_PX } : null);
+    const y = e.clientY - rect.top;
+    for (const [line, hint] of imgByLine) {
+      const cell = lineCellRefs.current.get(line);
+      if (!cell) continue;
+      if (y >= cell.offsetTop && y < cell.offsetTop + cell.offsetHeight) {
+        setHoverImage({ hint, top: cell.offsetTop + cell.offsetHeight });
+        return;
+      }
+    }
+    setHoverImage(null);
   };
 
-  const lineCount = text.split('\n').length;
-  const gutter = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
-  const highlighted = useMemo(() => highlight(text, syntax), [text, syntax]);
+  const lineHtmls = useMemo(() => highlightLines(text, syntax), [text, syntax]);
+  // Largeur du gutter = nb de chiffres + padding (pl-4 1rem, pr-3 0.75rem) ;
+  // le textarea superposé démarre juste après pour rester aligné au contenu.
+  const gutterWidth = `calc(${String(lineHtmls.length).length}ch + 1.75rem)`;
 
   return (
     <div className="relative h-full font-mono text-xs md:text-sm leading-6">
@@ -272,56 +283,61 @@ export function CodeFileView({ model, syntax, action }: CodeFileViewProps) {
       )}
 
       <div className="h-full overflow-auto">
-        <div className="flex min-w-full w-max">
-          {/* Gutter — sticky pour rester visible au scroll horizontal */}
-          <pre
-            aria-hidden="true"
-            className="sticky left-0 z-10 bg-editor text-right select-none opacity-30 pl-4 pr-3 py-4 md:py-6 m-0 whitespace-pre leading-6"
-          >
-            {gutter}
-          </pre>
-
+        <div
+          className="relative"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setHoverImage(null)}
+        >
           <div
-            className="relative flex-1 py-4 md:py-6 pr-8"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setHoverImage(null)}
+            aria-hidden="true"
+            className="grid py-4 md:py-6"
+            style={{ gridTemplateColumns: `${gutterWidth} 1fr` }}
           >
-            <pre
-              aria-hidden="true"
-              className="m-0 whitespace-pre leading-6 min-h-full"
-              dangerouslySetInnerHTML={{ __html: highlighted + '\n' }}
-            />
-            <textarea
-              value={text}
-              onChange={(e) => handleChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-              spellCheck={false}
-              autoCapitalize="off"
-              autoCorrect="off"
-              wrap="off"
-              aria-label="Source editor"
-              className="absolute inset-0 w-full h-full py-4 md:py-6 bg-transparent text-transparent outline-none resize-none overflow-hidden whitespace-pre leading-6"
-              style={{
-                font: 'inherit',
-                lineHeight: 'inherit',
-                caretColor: 'var(--foreground)',
-              }}
-            />
-
-            {hoverImage && (
-              <div
-                className="absolute left-8 z-30 pointer-events-none rounded-lg border border-border bg-editor shadow-lg p-1.5"
-                style={{ top: hoverImage.top + 8 }}
-              >
-                <ImageWithFallback
-                  src={hoverImage.hint.path}
-                  alt={hoverImage.hint.label}
-                  className="w-48 h-28 object-cover rounded"
+            {lineHtmls.map((html, i) => (
+              <Fragment key={i}>
+                <div className="text-right select-none opacity-30 pl-4 pr-3 min-h-6">{i + 1}</div>
+                <div
+                  ref={(el) => {
+                    if (el) lineCellRefs.current.set(i, el);
+                    else lineCellRefs.current.delete(i);
+                  }}
+                  className="whitespace-pre-wrap break-words pr-8 min-h-6"
+                  dangerouslySetInnerHTML={{ __html: html }}
                 />
-                <p className="text-[10px] opacity-60 mt-1 px-0.5">{hoverImage.hint.label}</p>
-              </div>
-            )}
+              </Fragment>
+            ))}
           </div>
+          <textarea
+            value={text}
+            onChange={(e) => handleChange(e.target.value)}
+            onKeyDown={handleKeyDown}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoCorrect="off"
+            wrap="soft"
+            aria-label="Source editor"
+            className="absolute top-0 bottom-0 right-0 py-4 md:py-6 pr-8 bg-transparent text-transparent outline-none resize-none overflow-hidden whitespace-pre-wrap break-words"
+            style={{
+              left: gutterWidth,
+              font: 'inherit',
+              lineHeight: 'inherit',
+              caretColor: 'var(--foreground)',
+            }}
+          />
+
+          {hoverImage && (
+            <div
+              className="absolute left-8 z-30 pointer-events-none rounded-lg border border-border bg-editor shadow-lg p-1.5"
+              style={{ top: hoverImage.top + 8 }}
+            >
+              <ImageWithFallback
+                src={hoverImage.hint.path}
+                alt={hoverImage.hint.label}
+                className="w-48 h-28 object-cover rounded"
+              />
+              <p className="text-[10px] opacity-60 mt-1 px-0.5">{hoverImage.hint.label}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

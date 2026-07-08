@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Matthieu Marin — Portfolio",
-    "description": "Matthieu Marin's portfolio — Full-Stack Developer, Cloud & DevOps. Master's in Cloud Computing & Mobility (UPJV / INSSET), two-year apprenticeship at Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
+    "title": "Matthieu Marin · Portfolio",
+    "description": "Matthieu Marin's portfolio: Full-Stack Developer, Cloud & DevOps. Master's in Cloud Computing & Mobility (UPJV / INSSET), two-year apprenticeship at Renault Digital. Java, Spring Boot, TypeScript, Google Cloud, Terraform.",
     "htmlLang": "en"
   },
   "nav": {
@@ -27,7 +27,7 @@
   },
   "home": {
     "greeting": "Hi, I'm",
-    "title": "Full-Stack Developer — Cloud & DevOps",
+    "title": "Full-Stack Developer · Cloud & DevOps",
     "subtitle": "Java, Spring Boot, TypeScript: from Renault Digital backends to Google Cloud infrastructure"
   },
   "recruiter": {
@@ -80,7 +80,7 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/WordPress internships.",
+    "description": "Master's graduate in Cloud Computing & Mobility (UPJV / INSSET) after a two-year apprenticeship at Renault Digital. Four professional web-development experiences: Renault Digital apprenticeship, IoT internship at Faubourg Numérique, and two associative PHP/MySQL internships.",
     "experience": "Experience",
     "education": "Education"
   },
@@ -129,14 +129,14 @@
     "helpClear": "Clear terminal",
     "helpWhoami": "Who am I?",
     "aboutLine1": "Apprentice developer at Renault Digital, Master Cloud Computing & Mobility student.",
-    "aboutLine2": "Four pro experiences: Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/WordPress).",
+    "aboutLine2": "Four pro experiences: Renault Digital (Java/Spring), Faubourg Numérique (Vue/Node IoT), Chatterie de Brasco ×2 (PHP/MySQL).",
     "skillsFrontend": "Frontend",
     "skillsBackend": "Backend",
     "skillsTools": "Tools",
     "skillsOther": "Other",
     "project1Desc": "This interactive portfolio (React + TypeScript)",
     "project2Desc": "Connected & Sustainable Territory IoT platform (Vue.js + Node.js)",
-    "project3Desc": "Chatterie de la Terre de Brasco showcase site (PHP/WordPress)",
+    "project3Desc": "Chatterie de la Terre de Brasco showcase site (PHP/MySQL)",
     "project4Desc": "",
     "whoami": "An apprentice who loves turning coffee into Java code ☕→💻",
     "unknownCommand": "Unknown command",
@@ -154,7 +154,7 @@
     "sudoMaxAttempts": "sudo: 3 incorrect password attempts",
     "sudoHint": "(hint: it's \"password\")",
     "sudoSuccess1": "Password accepted... not very secure but the password is correct.",
-    "sudoSuccess2": "Oh wait — we're in a fake terminal."
+    "sudoSuccess2": "Oh wait... we're in a fake terminal."
   },
   "status": {
     "terminal": "Terminal",

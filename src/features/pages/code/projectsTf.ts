@@ -69,7 +69,7 @@ export function buildProjectsTf(language: 'fr' | 'en'): CodeFileModel {
 
   return {
     lines: [
-      ln(0, cmt(L('# projects.tf — projets personnels & académiques', '# projects.tf — personal & academic projects'))),
+      ln(0, cmt(L('# projects.tf : projets personnels & académiques', '# projects.tf: personal & academic projects'))),
       blank(),
       ln(0, kw('terraform'), p(' '), pn('{')),
       ln(1, prop('required_providers'), p(' '), pn('{')),

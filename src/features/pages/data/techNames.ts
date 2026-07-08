@@ -38,8 +38,8 @@ export const TECH_DISPLAY_ORDER: Record<string, string[]> = {
     'GitLab',
     'Dynatrace',
     'Bruno',
-    'SQL',
+    'PostgreSQL',
   ],
   faubourg: ['Node.js', 'Vue.js', 'MongoDB', 'IoT', 'Grafana'],
-  chatterie: ['PHP', 'WordPress'],
+  chatterie: ['PHP', 'MySQL'],
 };

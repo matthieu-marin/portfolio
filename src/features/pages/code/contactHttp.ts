@@ -29,7 +29,7 @@ export function buildContactHttp(language: 'fr' | 'en'): CodeFileModel {
   return {
     lines: [
       ln(0, cmt(L('### Contacter Matthieu Marin', '### Contact Matthieu Marin'))),
-      ln(0, cmt(L('# REST Client — le bouton "Send Request" envoie réellement ce message.', '# REST Client — the "Send Request" button really sends this message.'))),
+      ln(0, cmt(L('# REST Client : le bouton "Send Request" envoie réellement ce message.', '# REST Client: the "Send Request" button really sends this message.'))),
       ln(0, kw('POST'), p(' '), str('https://matthieu-marin.dev/api/contact'), p(' '), p('HTTP/1.1')),
       ln(0, prop('Content-Type'), pn(':'), p(' '), str('application/json')),
       blank(),
